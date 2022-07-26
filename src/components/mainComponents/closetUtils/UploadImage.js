@@ -27,10 +27,13 @@ const UploadImage = () => {
         fd.append('image', selectedFile, selectedFile.name);
 
         //파일 서버로 post
-        axios.post('http://localhost:8000/upload', fd)
-            .then(res => {
-                console.log(res);
-            });
+        // axios.post('http://localhost:8000/upload', fd)
+        //     .then(res => {
+        //         console.log(res);
+        //     });
+
+
+
     }
 
 
