@@ -6,3 +6,32 @@
   width: 500px;
   border: solid 1px gray;
 }
+
+#headerBox {
+  border: 1px solid gray;
+}
+
+ul {
+  border: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+}
+
+li {
+  list-style: none;
+  padding: 30px;
+  border: 1px solid gray;
+}
+
+#uploadBox {
+  border: 1px solid gray;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center; /* center items horizontally, in this case */
+}
+
+#uploadBox > * {
+  margin: 10px;
+}

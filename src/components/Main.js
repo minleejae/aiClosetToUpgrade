@@ -4,23 +4,22 @@ import Closet from './mainComponents/Closet.js';
 import Community from './mainComponents/Community.js';
 import MyPage from './mainComponents/MyPage.js';
 import Sales from './mainComponents/Sales.js';
-import UploadImage from './UploadImage.js';
 
 
 const Main = () => {
     const [mainComponents, setMainComponents] = useState("Closet");
 
     const returnComponets = (componentName) => {
-        if (componentName == "Closet") {
+        if (componentName === "Closet") {
             return (<Closet />)
         }
-        else if (componentName == "Community") {
+        else if (componentName === "Community") {
             return (<Community />)
         }
-        else if (componentName == "MyPage") {
+        else if (componentName === "MyPage") {
             return (<MyPage />)
         }
-        else if (componentName == "Sales") {
+        else if (componentName === "Sales") {
             return (<Sales />)
         }
     }
@@ -28,9 +27,13 @@ const Main = () => {
     return (
         <div>
             Main
-            <Header />
-            {returnComponets(mainComponents)}
-            <UploadImage />
+            <Header
+                mainComponents={mainComponents}
+                setMainComponents={setMainComponents}
+            />
+            <div id="mainComponentBox">
+                {returnComponets(mainComponents)}
+            </div>
         </div>
     )
 }
