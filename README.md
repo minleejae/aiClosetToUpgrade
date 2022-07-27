@@ -2,7 +2,7 @@
 
 ## Used Stacks 
 
-##### node.js, express.js, MongoDB
+##### node.js, React.js, express.js, MongoDB
 
 ## How to use branch
 
