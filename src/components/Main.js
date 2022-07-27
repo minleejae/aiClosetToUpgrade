@@ -6,7 +6,8 @@ import MyPage from './mainComponents/MyPage.js';
 import Sales from './mainComponents/Sales.js';
 
 
-const Main = () => {
+const Main = ({ loginState, setLoginState }) => {
+    //헤더로 부터 선택된 렌더링할 main Component 정보 저장
     const [mainComponents, setMainComponents] = useState("Closet");
 
     const returnComponets = (componentName) => {
@@ -30,6 +31,7 @@ const Main = () => {
             <Header
                 mainComponents={mainComponents}
                 setMainComponents={setMainComponents}
+                setLoginState={setLoginState}
             />
             <div id="mainComponentBox">
                 {returnComponets(mainComponents)}

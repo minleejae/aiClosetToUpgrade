@@ -12,13 +12,13 @@ function App() {
   useEffect(() => {
   }, [loginState]);
 
-
-
   //login 여부에 따라 Main 렌더링
   return (
     <div className="App">
       {loginState ?
-        (<Main></Main>) :
+        (<Main loginState={loginState}
+          setLoginState={setLoginState}>
+        </Main>) :
         <Login
           loginState={loginState}
           setLoginState={setLoginState}
