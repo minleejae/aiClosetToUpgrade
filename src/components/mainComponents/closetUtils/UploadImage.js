@@ -63,8 +63,10 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
         <div id="uploadBox">
             업로드화면
             <img id="previewImage" src={imgSrc || require('./top1.jpg')} alt="preview"></img>
-            <input type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => fileSelectedHandler(e)} />
-            <button onClick={(e) => { fileUploadHandler(e); }} disabled={uploadButtonClicked}>Upload</button>
+            <form>
+                <input type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => fileSelectedHandler(e)} />
+                <button onClick={(e) => { fileUploadHandler(e); }} disabled={uploadButtonClicked}>Upload</button>
+            </form>
         </div>
     )
 }
