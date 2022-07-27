@@ -34,7 +34,6 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
         //버튼 여러번 클릭하는 것 차단
         setUploadButtonClicked(true);
 
-
         //이미지 분류 typeExample: {dressType: 'TOP', styleType: 'CASUAL'}
         const type = await DressClassifier(document.getElementById('previewImage'));
 
