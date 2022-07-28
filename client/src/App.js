@@ -17,6 +17,41 @@ function App() {
   //로그인한 회원 정보:{회원 이름, 옷 정보, ..}
   const [memberInfo, setMemberInfo] = useState(null);
 
+
+
+  // 로그인 입력받을 데이터를 props로 넘겨줌
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: ""
+  })
+
+  // 회원가입 입력받을 데이터를 props로 넘겨줌
+  const [signUpData, setSignUpdata] = useState({
+    email: "",
+    password: "",
+    rePassword: "",
+    name: ""
+  })
+
+  const onChangeSignInData = (e) => {
+    setSignInData({
+      ...signInData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const onChangeSignUpdata = (e) => {
+    setSignUpdata({
+      ...signUpData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+
+
+
+
+
   useEffect(() => {
   }, [loginState]);
 
@@ -26,8 +61,8 @@ function App() {
       <Header loginState={loginState} />
       <Routes>
         <Route path='/' element={<Home loginState={loginState} setLoginState={setLoginState} />} />
-        <Route path="login" element={<Login loginState={loginState} setLoginState={setLoginState} memberInfo={memberInfo} setMemberInfo={setMemberInfo} />} />
-        <Route path="signup" element={<Signup loginState={loginState} setLoginState={setLoginState} memberInfo={memberInfo} setMemberInfo={setMemberInfo} />} />
+        <Route path="login" element={<Login signInData={signInData} onChangeSignInData={onChangeSignInData} />} />
+        <Route path="signup" element={<Signup signUpData={signUpData} onChangeSignUpdata={onChangeSignUpdata} />} />
         <Route path='closet' element={<Closet />} />
         <Route path='board' element={<Community />} />
         <Route path='market' element={<Sales />} />
