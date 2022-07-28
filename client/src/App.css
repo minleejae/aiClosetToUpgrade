@@ -11,18 +11,6 @@
   border: 1px solid gray;
 }
 
-ul {
-  border: 1px solid gray;
-  display: flex;
-  justify-content: space-between;
-}
-
-li {
-  list-style: none;
-  padding: 30px;
-  border: 1px solid gray;
-}
-
 #uploadBox {
   border: 1px solid gray;
   padding: 20px;
