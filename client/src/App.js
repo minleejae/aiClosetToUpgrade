@@ -8,6 +8,8 @@ import Community from './components/Community.js';
 import Sales from './components/Sales.js';
 import MyPage from './components/MyPage.js';
 import Footer from './components/Footer.js';
+import Home from './components/Home';
+import Signup from './components/Signup';
 
 function App() {
   //로그인 여부
@@ -21,14 +23,11 @@ function App() {
   //login 여부에 따라 Main 렌더링
   return (
     <div className="App">
-      <Header />
+      <Header loginState={loginState} />
       <Routes>
-        <Route path="/" element={<Login
-          loginState={loginState}
-          setLoginState={setLoginState}
-          memberInfo={memberInfo}
-          setMemberInfo={setMemberInfo}
-        />} />
+        <Route path='/' element={<Home loginState={loginState} setLoginState={setLoginState} />} />
+        <Route path="login" element={<Login loginState={loginState} setLoginState={setLoginState} memberInfo={memberInfo} setMemberInfo={setMemberInfo} />} />
+        <Route path="signup" element={<Signup loginState={loginState} setLoginState={setLoginState} memberInfo={memberInfo} setMemberInfo={setMemberInfo} />} />
         <Route path='closet' element={<Closet />} />
         <Route path='board' element={<Community />} />
         <Route path='market' element={<Sales />} />

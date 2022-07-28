@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 
-const Header = ({ }) => {
+const Header = ({ loginState }) => {
     //작은화면일 때 햄버거버튼 토글에 따라 메뉴창 보이게 하기
     const handleClickToggleBtn = (e) => {
         e.preventDefault();
@@ -10,25 +10,34 @@ const Header = ({ }) => {
     }
 
     return (
-        <nav class="navbar">
-            <div class="navbar__logo">
-                <i class="fa-solid fa-shirt"></i>
-                <a href="/">O-Closet</a>
+        <nav className="navbar">
+            <div className="navbar__logo">
+                <i className="fa-solid fa-shirt"></i>
+                <a href="/">O-CLOSET</a>
             </div>
-            <ul class="navbar__menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/closet">Closet</a></li>
-                <li><a href="/board">Community</a></li>
-                <li><a href="/market">Sales</a></li>
-                <li><a href="/mypage">MyPage</a></li>
+            <ul className="navbar__menu">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/closet">CLOSET</a></li>
+                <li><a href="/board">OOTD</a></li>
+                <li><a href="/market">MARKET</a></li>
+
             </ul>
-            <div class="navbar__log">
-                <div>
-                    <a href="/">Logout</a>
-                </div>
-            </div>
-            <a href="" class="navbar__toggleBtn" onClick={(e) => handleClickToggleBtn(e)}>
-                <i class="fa-solid fa-bars"></i>
+            <ul className="navbar__log">
+                {
+                    loginState ? (
+                        <>
+                            <li><a href="/mypage">My Page</a></li>
+                            <li><a href="/">Log Out</a></li>
+                        </>) : (
+                        <>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </>)
+                }
+
+            </ul>
+            <a href="" className="navbar__toggleBtn" onClick={(e) => handleClickToggleBtn(e)}>
+                <i className="fa-solid fa-bars"></i>
             </a>
         </nav>
     )
