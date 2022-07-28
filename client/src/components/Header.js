@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
 
-const Header = ({ mainComponents, setMainComponents, setLoginState }) => {
+const Header = ({ }) => {
+    //작은화면일 때 햄버거버튼 토글에 따라 메뉴창 보이게 하기
+    const handleClickToggleBtn = (e) => {
+        e.preventDefault();
+        $(".navbar__menu").toggleClass("active");
+        $(".navbar__log").toggleClass("active");
+    }
+
     return (
-        <div class="container">
-            <header class="d-flex justify-content-center py-3">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-                    <li class="nav-item"><a href="/closet" class="nav-link">Closet</a></li>
-                    <li class="nav-item"><a href="/board" class="nav-link">Community</a></li>
-                    <li class="nav-item"><a href="/market" class="nav-link">Sales</a></li>
-                    <li class="nav-item"><a href="/mypage" class="nav-link">MyPage</a></li>
-                </ul>
-            </header>
-        </div>
+        <nav class="navbar">
+            <div class="navbar__logo">
+                <i class="fa-solid fa-shirt"></i>
+                <a href="/">O-Closet</a>
+            </div>
+            <ul class="navbar__menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/closet">Closet</a></li>
+                <li><a href="/board">Community</a></li>
+                <li><a href="/market">Sales</a></li>
+                <li><a href="/mypage">MyPage</a></li>
+            </ul>
+            <div class="navbar__log">
+                <div>
+                    <a href="/">Logout</a>
+                </div>
+            </div>
+            <a href="" class="navbar__toggleBtn" onClick={(e) => handleClickToggleBtn(e)}>
+                <i class="fa-solid fa-bars"></i>
+            </a>
+        </nav>
     )
 }
 
