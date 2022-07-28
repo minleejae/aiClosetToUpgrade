@@ -20,4 +20,6 @@ root 폴더에서 npm run dev 실행시 백서버와 프론트 서버 병행실�
 
 
 
+##노션
+
 https://upbeat-shaker-348.notion.site/O-Closet-079228bc34114c5ab72de9530699b024
