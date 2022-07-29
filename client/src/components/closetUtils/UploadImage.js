@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FormData from 'form-data'
 import DressClassifier from './DressClassifier';
+import port from "./../../data/port.json";
 
 import axios from 'axios';
 
@@ -45,7 +46,7 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
         formData.append('img', selectedFile);
 
         //파일 data 서버로 post
-        await axios.post('http://localhost:8080/upload', formData)
+        await axios.post(port.url + '/upload', formData)
             .then(res => {
                 console.log(res);
             })
