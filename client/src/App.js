@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { Routes, Route } from "react-router-dom";
 import './App.css';
 import Login from './components/Login.js';
-import Main from './components/Main.js';
+import Header from './components/Header.js';
+import Closet from './components/Closet.js';
+import Community from './components/Community.js';
+import Sales from './components/Sales.js';
+import MyPage from './components/MyPage.js';
+import Footer from './components/Footer.js';
+import Home from './components/Home';
+import Signup from './components/Signup';
 
 function App() {
   //로그인 여부
@@ -9,22 +17,58 @@ function App() {
   //로그인한 회원 정보:{회원 이름, 옷 정보, ..}
   const [memberInfo, setMemberInfo] = useState(null);
 
+
+
+  // 로그인 입력받을 데이터를 props로 넘겨줌
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: ""
+  })
+
+  // 회원가입 입력받을 데이터를 props로 넘겨줌
+  const [signUpData, setSignUpdata] = useState({
+    email: "",
+    password: "",
+    rePassword: "",
+    name: ""
+  })
+
+  const onChangeSignInData = (e) => {
+    setSignInData({
+      ...signInData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const onChangeSignUpdata = (e) => {
+    setSignUpdata({
+      ...signUpData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+
+
+
+
+
   useEffect(() => {
   }, [loginState]);
 
   //login 여부에 따라 Main 렌더링
   return (
     <div className="App">
-      {loginState ?
-        (<Main loginState={loginState}
-          setLoginState={setLoginState}>
-        </Main>) :
-        <Login
-          loginState={loginState}
-          setLoginState={setLoginState}
-          memberInfo={memberInfo}
-          setMemberInfo={setMemberInfo}
-        />}
+      <Header loginState={loginState} />
+      <Routes>
+        <Route path='/' element={<Home loginState={loginState} setLoginState={setLoginState} />} />
+        <Route path="login" element={<Login signInData={signInData} onChangeSignInData={onChangeSignInData} />} />
+        <Route path="signup" element={<Signup signUpData={signUpData} onChangeSignUpdata={onChangeSignUpdata} />} />
+        <Route path='closet' element={<Closet />} />
+        <Route path='board' element={<Community />} />
+        <Route path='market' element={<Sales />} />
+        <Route path='mypage' element={<MyPage />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }

@@ -26,7 +26,9 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
         }
     }
 
-    const fileUploadHandler = async () => {
+    const fileUploadHandler = async (e) => {
+        e.preventDefault();
+
         if (selectedFile == null) {
             alert("이미지를 선택해주세요!");
             return;
@@ -40,19 +42,25 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
 
         //axios로 image파일 서버로 전송하기
         const formData = new FormData();
-        formData.append('files', selectedFile, selectedFile.name);
-        console.log("selectedFile:", selectedFile.name);
-        console.log(formData);
+        formData.append('img', selectedFile);
 
         //파일 data 서버로 post
-        await axios({
-            method: 'post',
-            url: 'http://localhost:8080/upload',
-            data: { "img": formData, "test": "abcd" },
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        })
+        await axios.post('http://localhost:8080/upload', formData)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        // await axios({
+        //     method: 'post',
+        //     url: 'http://localhost:8080/upload',
+        //     data: { "img": formData, "test": "abcd" },
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //     }
+        // })
 
         //옷장페이지로 돌아가기
         setUploadActive(false);
@@ -62,9 +70,12 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
     return (
         <div id="uploadBox">
             업로드화면
+            {/* row */}
             <img id="previewImage" src={imgSrc || require('./top1.jpg')} alt="preview"></img>
-            <input type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => fileSelectedHandler(e)} />
-            <button onClick={(e) => { fileUploadHandler(e); }} disabled={uploadButtonClicked}>Upload</button>
+            <form onSubmit={(e) => { fileUploadHandler(e); }} encType="multipart/form-data">
+                <input type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => fileSelectedHandler(e)} name="photo" />
+                <input type="submit" disabled={uploadButtonClicked} />
+            </form>
         </div>
     )
 }
