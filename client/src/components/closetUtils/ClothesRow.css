@@ -1,0 +1,7 @@
+.row-container {
+  display: flex;
+}
+
+img {
+  width: 100px;
+}
