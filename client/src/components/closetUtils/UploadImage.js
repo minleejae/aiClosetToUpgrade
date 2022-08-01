@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import FormData from 'form-data'
-import DressClassifier from './DressClassifier';
+import React, { useState, useEffect } from "react";
+import FormData from "form-data";
+import DressClassifier from "./DressClassifier";
 import port from "./../../data/port.json";
 
-import axios from 'axios';
+import axios from "axios";
 
 const UploadImage = ({ uploadActive, setUploadActive }) => {
     //현재 선택된 이미지 파일 state
@@ -13,8 +13,7 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
     //upload 버튼 여러번 클릭되는 것을 방지하기 위한 state
     const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
 
-    useEffect(() => {
-    }, [selectedFile, uploadButtonClicked]);
+    useEffect(() => { }, [selectedFile, uploadButtonClicked]);
 
     const fileSelectedHandler = (event) => {
         const file = event.target.files[0];
@@ -23,9 +22,9 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
 
         reader.onloadend = (e) => {
             setImgSrc(reader.result);
-            setSelectedFile(file)
-        }
-    }
+            setSelectedFile(file);
+        };
+    };
 
     const fileUploadHandler = async (e) => {
         e.preventDefault();
@@ -38,21 +37,23 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
         setUploadButtonClicked(true);
 
         //이미지 분류 typeExample: {dressType: 'TOP', styleType: 'CASUAL'}
-        const type = await DressClassifier(document.getElementById('previewImage'));
-
+        const type = await DressClassifier(document.getElementById("previewImage"));
+        console.log(type);
 
         //axios로 image파일 서버로 전송하기
         const formData = new FormData();
-        formData.append('img', selectedFile);
-
+        formData.append("img", selectedFile);
+        formData.append("type", JSON.stringify(type));
+        formData.append("userId", 123);
         //파일 data 서버로 post
-        await axios.post(port.url + '/upload', formData)
-            .then(res => {
+        await axios
+            .post(port.url + "/upload/", formData)
+            .then((res) => {
                 console.log(res);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.log(err);
-            })
+            });
 
         // await axios({
         //     method: 'post',
@@ -65,21 +66,34 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
 
         //옷장페이지로 돌아가기
         setUploadActive(false);
-    }
+    };
 
     //form tag 추가하기
     return (
         <div id="uploadBox">
             업로드화면
             {/* row */}
-            <img id="previewImage" src={imgSrc || require('./top1.jpg')} alt="preview"></img>
-            <form onSubmit={(e) => { fileUploadHandler(e); }} encType="multipart/form-data">
-                <input type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => fileSelectedHandler(e)} name="photo" />
+            <img
+                id="previewImage"
+                src={imgSrc || require("./top1.jpg")}
+                alt="preview"
+            ></img>
+            <form
+                onSubmit={(e) => {
+                    fileUploadHandler(e);
+                }}
+                encType="multipart/form-data"
+            >
+                <input
+                    type="file"
+                    accept="image/png, image/gif, image/jpeg"
+                    onChange={(e) => fileSelectedHandler(e)}
+                    name="photo"
+                />
                 <input type="submit" disabled={uploadButtonClicked} />
             </form>
         </div>
-    )
-}
-
+    );
+};
 
 export default UploadImage;
