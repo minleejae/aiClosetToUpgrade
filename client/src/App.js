@@ -33,6 +33,8 @@ function App() {
     name: ""
   })
 
+
+  //로그인 입력시 STATE 변화시키는 함수
   const onChangeSignInData = (e) => {
     setSignInData({
       ...signInData,
