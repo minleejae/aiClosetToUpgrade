@@ -37,5 +37,7 @@ app.get('/welcome', (req, res) => {
 // app.use('/api', router);
 
 // 에러 핸들러
-// app.use(errorHandler);
+app.use(function(err, req, res, next) {
+  res.json(err.message);
+});
 export default app;
