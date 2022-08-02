@@ -12,17 +12,22 @@ const ImagesList = () => {
     document.documentElement.clientWidth - imageBoxPadding
   );
   //스크롤 정보 구현 예정
-
+  console.log(
+    ((window.scrollY + window.innerHeight) / document.body.scrollHeight) * 100
+  );
   // -----
   const navigate = useNavigate();
 
   useEffect(() => {
     setCurWindowWidth(document.documentElement.clientWidth - 32);
     window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [imagesData]);
 
   //현재 브라우저의 너비에 따라 반응형으로 이미지 표시
   const handleResize = () => {
@@ -39,10 +44,20 @@ const ImagesList = () => {
     setCurWindowWidth(document.documentElement.clientWidth - imageBoxPadding);
   };
 
+  const handleScroll = () => {
+    const totalScroll = document.body.scrollHeight - window.innerHeight;
+    const curScroll = window.scrollY;
+    if (totalScroll - curScroll < 30) {
+      //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
+      //사진 20개씩 요청
+      setImagesData([...imagesData, ...imgs]);
+    }
+  };
+
   return (
     <>
       <div className="image-box" style={{ display: "flex", flexWrap: "wrap" }}>
-        {imgs.map((it, index) => {
+        {imagesData.map((it, index) => {
           return (
             <span
               key={index}
