@@ -8,12 +8,14 @@ module.exports = new Schema({
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
         type: Number,
-        max: 3,
         required: true
     },
     // url: 이미지 주소, category: [top, bottom, shoes]
     img: {
-        url: String,
+        url: {
+            type: String,
+            required: true
+        },
         category: String
     },
     author: {
