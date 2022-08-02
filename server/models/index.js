@@ -1,9 +1,8 @@
-module.exports = shortId;
+import mongoose from "mongoose"
+import PostSchema from "./schemas/post"
+import UserSchema from "./schemas/user"
 
+const Post = mongoose.model("Post", PostSchema)
+const User = mongoose.model("User", UserSchema)
 
-const mongoose = require("mongoose")
-const PostSchema = require("./schemas/post")
-const UserSchema = require("./schemas/user")
-
-exports.Post = mongoose.model("Post", PostSchema)
-exports.User = mongoose.model("User", UserSchema)
+export default {Post, User}

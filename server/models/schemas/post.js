@@ -1,7 +1,7 @@
-const {Schema} = require("mongoose")
-const shortId = require("./type/short-id")
+import {Schema} from "mongoose"
+import shortId from "./type/short-id"
 
-module.exports = new Schema({
+const PostSchema = new Schema({
     shortId,
     title: String,
     content: String,
@@ -27,3 +27,5 @@ module.exports = new Schema({
     timestamps: true
 }
 );
+
+export default PostSchema;

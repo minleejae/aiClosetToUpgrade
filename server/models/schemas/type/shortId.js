@@ -1,4 +1,4 @@
-const {nanoid} = require("nanoid");
+import {nanoid} from "nanoid";
 
 const shortId = {
     type:String,
@@ -9,4 +9,4 @@ const shortId = {
     index: true
 }
 
-module.exports = shortId;
+export default shortId;
