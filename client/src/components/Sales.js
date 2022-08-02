@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import WritingForm from "./WritingForm";
 const Sales = ({ loginState, setLoginState }) => {
-  return (
-    <div>
-      Sales
-      <WritingForm></WritingForm>
-    </div>
-  );
+  return <div>Sales</div>;
 };
 
 export default Sales;

@@ -10,6 +10,7 @@ import MyPage from "./components/MyPage.js";
 import Footer from "./components/Footer.js";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
+import WritingForm from "./components/communityComponents/WritingForm";
 
 function App() {
   //로그인 여부
@@ -79,6 +80,7 @@ function App() {
         />
         <Route path="closet" element={<Closet />} />
         <Route path="board" element={<Community />} />
+        <Route path="board/write" element={<WritingForm />} />
         <Route path="market" element={<Sales />} />
         <Route path="mypage" element={<MyPage />} />
       </Routes>
