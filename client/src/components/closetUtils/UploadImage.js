@@ -47,7 +47,7 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
     formData.append("userId", 123);
     //파일 data 서버로 post
     await axios
-      .post(port.url + "/upload/", formData)
+      .post(port.url + "/api/closet/create", formData)
       .then((res) => {
         console.log(res);
       })

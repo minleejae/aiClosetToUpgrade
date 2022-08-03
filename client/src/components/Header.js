@@ -73,7 +73,7 @@ const Header = ({ loginState }) => {
                 navigate("/");
               }}
             >
-              Log Out
+              <a href="/">Log Out</a>
             </li>
           </>
         ) : (
