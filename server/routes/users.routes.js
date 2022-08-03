@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import cryto from "crypto";
-import User from "../models/schemas/user.js";
+import {User} from "../models/index.js";
 import jwt from "jsonwebtoken";
 import jwtConfig from "./../config/jwtConfig.js";
 import nodeMailer from "nodemailer";
@@ -10,7 +10,7 @@ export const router = Router();
 
 router.post("/signup", async (req, res, next) => {
     try {
-
+        console.log("hi", req);
         const { email, password, name } = req.body;
     
         let hashPassword = passwordHash(password);
@@ -39,6 +39,7 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
     try {
+        console.log(req);
         const { email, password } = req.body;
     
         let hashPassword = passwordHash(password);

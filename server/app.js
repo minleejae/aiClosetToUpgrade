@@ -20,7 +20,7 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (err) => {
     console.log(err);
 });
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('images'));
