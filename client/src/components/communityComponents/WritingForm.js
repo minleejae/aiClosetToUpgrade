@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UploadImage from "./closetUtils/UploadImage";
+import UploadImage from "../closetUtils/UploadImage";
 
 const WritingForm = () => {
   return (
