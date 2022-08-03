@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import Post from '../models/index.js'
 
 export const path = '/closet';
 export const router = Router();
@@ -19,14 +20,14 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        // await Posts.create({
-        //     shortId,
-        //     type: req.body.boardType,
-        //     img: {
-        //            url: req.file.filename,
-        //            type: req.body.type,
-        //     }
-        // });
+        await Post.create({
+            shortId,
+            type: req.body.boardType,
+            img: {
+                   url: req.file.filename,
+                   type: req.body.type,
+            }
+        });
         res.json({ data: "이미지 업로드에 성공했습니다!"});
     } else {
         next(new Error("이미지 업로드에 실패하였습니다. 에러코드 추가필요"));
