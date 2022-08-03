@@ -8,7 +8,7 @@ const Community = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div style={{ paddingTop: 100 + "px" }}>
       <div
         style={{
           display: "flex",
