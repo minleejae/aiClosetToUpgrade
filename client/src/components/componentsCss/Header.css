@@ -11,7 +11,7 @@ li:hover {
   align-items: center;
   background-color: white;
   opacity: 100%;
-  padding: 16px 12px;
+  padding: 8px 6px;
 }
 
 .navbar-scrolled {
@@ -19,7 +19,7 @@ li:hover {
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding: 16px 12px;
+  padding: 8px 6px;
 }
 
 .navbar__logo {
