@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import cryto from "crypto";
-import { User } from "../models";
+import User from "../models/schemas/user.js";
 import jwt from "jsonwebtoken";
-import jwtConfig from "./../config/jwtConfig";
+import jwtConfig from "./../config/jwtConfig.js";
 import nodeMailer from "nodemailer";
 
 export const path = '/users';

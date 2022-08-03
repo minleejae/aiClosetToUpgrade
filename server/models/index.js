@@ -5,4 +5,4 @@ import UserSchema from "./schemas/user"
 const Post = mongoose.model("Post", PostSchema)
 const User = mongoose.model("User", UserSchema)
 
-export default {Post, User}
+export default {Post, User};
