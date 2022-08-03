@@ -1,7 +1,7 @@
-import {Schema} from "mongoose"
-import shortId from "./type/short-id"
+import mongoose from "mongoose"
+import shortId from "./type/shortId.js"
 
-const PostSchema = new Schema({
+const PostSchema = new mongoose.Schema({
     shortId,
     title: String,
     content: String,
@@ -19,7 +19,7 @@ const PostSchema = new Schema({
         category: String
     },
     author: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     }
