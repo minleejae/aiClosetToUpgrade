@@ -21,18 +21,16 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email} = req.body;
+        const {email, type, postType} = req.body;
         const authData = await User.findOne({email});
+        // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
-            shortId,
-            type: req.body.boardType,
+            postType: postType,
             img: {
-                   url: req.file.filename,
-                   type: req.body.type,
+                   url: req.file.path,
+                   category: type.dressType,
             },
             author: authData
-        }, {
-            timestamps: true
         });
         res.json({ data: "이미지 업로드에 성공했습니다!"});
     } else {
