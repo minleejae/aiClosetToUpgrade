@@ -1,7 +1,7 @@
-import { Schema } from "mongoose";
-import shortId from "./type/shortId";
+import mongoose from "mongoose";
+import shortId from "./type/shortId.js";
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
     shortId,
     email: String,
     password: String,
