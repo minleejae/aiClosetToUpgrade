@@ -9,14 +9,29 @@ const Community = () => {
 
   return (
     <div>
-      <h1>Community</h1>
-      <button
-        onClick={() => {
-          navigate("/board/write");
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        글쓰기
-      </button>
+        <h1>OOTD</h1>
+        <p>
+          Upload Your Today's Fashion!
+          <br />
+          Share Your Fashion with Freinds!
+        </p>
+        <h3></h3>
+        <button
+          onClick={() => {
+            navigate("/board/write");
+          }}
+        >
+          글쓰기
+        </button>
+      </div>
       <div className="image-list">
         <ImagesList></ImagesList>
       </div>

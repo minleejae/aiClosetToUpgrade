@@ -2,23 +2,21 @@
   padding: 100px;
 }
 
-.image-box {
-  width: 100%;
-  display: flex;
-  padding: 16px;
+.image-box img {
+  width: auto;
+  height: 100%;
 }
 
-.image-box img {
-  width: 100%;
-  border: 0 solid gray;
-  border-radius: 10%;
+.image-box span {
+  border: 0.001px solid white;
   -webkit-transition: 0.4s ease-in-out;
   -moz-transition: 0.4s ease-in-out;
   -o-transition: 0.4s ease-in-out;
   -ms-transition: 0.4s ease-in-out;
 }
 
-.image-box img:hover {
+.image-box span:hover {
+  border: none;
   -webkit-transform: scale(1.08);
   -moz-transform: scale(1.08);
   -o-transform: scale(1.08);
