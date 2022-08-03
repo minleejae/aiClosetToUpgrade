@@ -12,7 +12,7 @@ const ClothesRow = () => {
   }, []);
 
   const getImages = async () => {
-    await axios.get(port.url + "/users/5").then((res) => {
+    await axios.get(port.url + "/api/users/5").then((res) => {
       console.log(res.data);
       setItems(res.data);
     });

@@ -7,7 +7,7 @@ const loadClothes = async () => {
   formData.append("user", "mmj9808");
 
   //파일 data 서버로 post
-  return await axios.post(port.url + "/clothes", formData);
+  return await axios.post(port.url + "/api/clothes", formData);
 };
 
 export default loadClothes;

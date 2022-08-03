@@ -56,7 +56,7 @@ const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
   };
 
   const sendSignUpdata = async () => {
-    return await axios.post(port.url + "/users/signup", signUpData);
+    return await axios.post(port.url + "/api/users/signup", signUpData);
   };
 
   return (

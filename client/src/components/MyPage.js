@@ -37,7 +37,7 @@ const MyPage = () => {
     };
     console.log(userUpdateData);
 
-    axios.post(port.url + "/users/update", userUpdateData).then((res) => {
+    axios.post(port.url + "/api/users/update", userUpdateData).then((res) => {
       console.log(res);
       navigate("/");
     });
