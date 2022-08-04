@@ -56,26 +56,32 @@ const ImagesList = () => {
 
   return (
     <>
-      <div className="image-box" style={{ display: "flex", flexWrap: "wrap" }}>
+      <div
+        className="image-box"
+        style={{ display: "flex", flexWrap: "wrap", padding: 16 + "px" }}
+      >
         {imagesData.map((it, index) => {
           return (
             <span
               key={index}
               style={{
                 display: "inlineBlock",
+                height: `${Math.floor(curWindowWidth / columnNumber)}px`,
                 width: `${Math.floor(curWindowWidth / columnNumber)}px`,
-                padding: 0.35 + "%",
+                overflow: "hidden",
               }}
             >
               <img
                 onClick={() => {
                   navigate("/board/" + it.shortId);
                 }}
-                src={
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPd2_VbD-GW5hGBHecvO1eBsf0LwNbZdloVmtp-KEQ&s"
-                }
+                src={it.img.url}
                 alt="ootd"
-                style={{ border: "1px solid #D3D3D3" }}
+                style={{
+                  width: 100 + "%",
+                  height: 100 + "%",
+                  objectFit: "cover",
+                }}
               ></img>{" "}
             </span>
           );
