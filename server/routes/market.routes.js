@@ -56,7 +56,8 @@ router.get("/list", async (req, res, next) => {
     
         res.json({ posts, totalPage });
     } catch(err) {
+        err.message = `${err.message}, market list error.`;
         next(err);
     }
 
-})
+});
