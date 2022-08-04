@@ -11,7 +11,6 @@ const Header = ({ loginState }) => {
   //나중에 스크롤 이벤트 무한스크롤링과 함께 리팩토링 예정
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
-    console.log("sP", scrollPosition);
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
   useEffect(() => {
@@ -34,7 +33,7 @@ const Header = ({ loginState }) => {
   });
 
   return (
-    <nav
+    <nav id="nav-container"
       className={scrollPosition < 33 ? "navbar" : "navbar-scrolled"}
       style={{
         position: "fixed",
