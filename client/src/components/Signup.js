@@ -3,11 +3,13 @@ import $ from "jquery";
 import axios from "axios";
 import { useRef } from "react";
 import port from "./../data/port.json";
+import { useNavigate } from "react-router-dom";
 
 //signUpData, onChangeSignUpdata 만 들어야함
 const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
   const emailRef = useRef();
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const onClickSignUpButton = () => {
     if (signUpData.email === "") {
@@ -39,7 +41,6 @@ const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
       setSignUpdata({
         ...signUpData,
         password: "",
-        rePassword: "",
       });
 
       $("#password").focus();
@@ -48,7 +49,7 @@ const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
     sendSignUpdata()
       .then((res) => {
         alert(res.data.result);
-        window.location.reload();
+        navigate("/login");
       })
       .catch((e) => {
         setErrorMessage(e.response.data.error);
@@ -56,11 +57,12 @@ const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
   };
 
   const sendSignUpdata = async () => {
+    console.log(signUpData);
     return await axios.post(port.url + "/api/users/signup", signUpData);
   };
 
   return (
-    <div className="album">
+    <div className="album" style={{ paddingTop: 100 + "px" }}>
       <div className="container">
         <form>
           <div className="mb-3">

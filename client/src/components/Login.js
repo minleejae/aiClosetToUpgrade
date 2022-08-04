@@ -40,7 +40,7 @@ const Login = ({ signInData, onChangeSignInData }) => {
   };
 
   return (
-    <div>
+    <div style={{ paddingTop: 100 + "px" }}>
       <div className="album">
         <div className="container">
           <form>

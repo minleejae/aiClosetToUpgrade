@@ -2,10 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
+import "./componentsCss/Header.css";
 
 const Header = ({ loginState }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
+
+  //나중에 스크롤 이벤트 무한스크롤링과 함께 리팩토링 예정
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
+    return () => {
+      window.removeEventListener("scroll", updateScroll);
+    };
+  });
 
   //작은화면일 때 햄버거버튼 토글에 따라 메뉴창 보이게 하기
   const handleClickToggleBtn = (e) => {
@@ -20,10 +33,17 @@ const Header = ({ loginState }) => {
   });
 
   return (
-    <nav className="navbar">
+    <nav id="nav-container"
+      className={scrollPosition < 33 ? "navbar" : "navbar-scrolled"}
+      style={{
+        position: "fixed",
+        width: 100 + "%",
+        zIndex: 1000,
+      }}
+    >
       <div className="navbar__logo">
         <i className="fa-solid fa-shirt"></i>
-        <a href="/">O-CLOSET</a>
+        <a href="/">AI-CLOSET</a>
       </div>
       <ul className="navbar__menu">
         <li>
@@ -52,7 +72,7 @@ const Header = ({ loginState }) => {
                 navigate("/");
               }}
             >
-              Log Out
+              <a href="/">Log Out</a>
             </li>
           </>
         ) : (
