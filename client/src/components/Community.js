@@ -21,9 +21,8 @@ const Community = () => {
         <p>
           Upload Your Today's Fashion!
           <br />
-          Share Your Fashion with Freinds!
+          Share Your Fashion with Friends!
         </p>
-        <h3></h3>
         <button
           onClick={() => {
             navigate("/board/write");
