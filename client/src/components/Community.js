@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import WritingForm from "./community/WritingForm";
 import { useNavigate } from "react-router-dom";
-import ImagesList from "./community/ImagesList";
+import OotdImages from "./community/OotdImages";
 import "./componentsCss/Community.css";
 
 const Community = () => {
@@ -32,7 +32,7 @@ const Community = () => {
         </button>
       </div>
       <div className="image-list">
-        <ImagesList postType={2}></ImagesList>
+        <OotdImages />
       </div>
     </div>
   );

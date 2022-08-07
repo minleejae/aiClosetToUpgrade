@@ -12,6 +12,8 @@ import Signup from "./components/Signup";
 import WritingForm from "./components/community/WritingForm";
 import Market from "./components/Market";
 import ViewForm from "./components/community/ViewForm";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   //로그인 여부
@@ -56,43 +58,45 @@ function App() {
 
   //login 여부에 따라 Main 렌더링
   return (
-    <div className="App">
-      <Header loginState={loginState} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="login"
-          element={
-            <Login
-              signInData={signInData}
-              onChangeSignInData={onChangeSignInData}
-            />
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <Signup
-              signUpData={signUpData}
-              setSignUpdata={setSignUpdata}
-              onChangeSignUpdata={onChangeSignUpdata}
-            />
-          }
-        />
-        <Route path="closet" element={<Closet />} />
-        <Route path="board">
-          <Route path="" element={<Community />} />
-          <Route path="write" element={<WritingForm postType={2} />} />
-          <Route path=":id" element={<ViewForm postType={2} />} />
-        </Route>
-        <Route path="market">
-          <Route path="" element={<Market />} />
-          <Route path="write" element={<WritingForm postType={3} />} />
-          <Route path=":id" element={<ViewForm postType={3} />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Header loginState={loginState} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="login"
+            element={
+              <Login
+                signInData={signInData}
+                onChangeSignInData={onChangeSignInData}
+              />
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <Signup
+                signUpData={signUpData}
+                setSignUpdata={setSignUpdata}
+                onChangeSignUpdata={onChangeSignUpdata}
+              />
+            }
+          />
+          <Route path="closet" element={<Closet />} />
+          <Route path="board">
+            <Route path="" element={<Community />} />
+            <Route path="write" element={<WritingForm postType={2} />} />
+            <Route path=":id" element={<ViewForm postType={2} />} />
+          </Route>
+          <Route path="market">
+            <Route path="" element={<Market />} />
+            <Route path="write" element={<WritingForm postType={3} />} />
+            <Route path=":id" element={<ViewForm postType={3} />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </div>
+    </Provider>
   );
 }
 

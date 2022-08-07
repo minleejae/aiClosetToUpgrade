@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import imgs from "../../data/imgs.json";
+import { fetchImages } from "../../redux";
+import { connect } from "react-redux";
 
-const ImagesList = ({ postType }) => {
+const OotdImages = ({ fetchImages, loading, images }) => {
   //서버로부터 해당하는 imagesData 받아서 저장
   //현재 ImagesList에서 관리하고 있는 curWindowWidth를 추후에 App.js나 Header.js로 빼주어야할 것 같음
   const imageBoxPadding = 32;
@@ -15,6 +17,7 @@ const ImagesList = ({ postType }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchImages();
     setCurWindowWidth(document.documentElement.clientWidth - 32);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
@@ -52,6 +55,7 @@ const ImagesList = ({ postType }) => {
 
   return (
     <>
+      {/* <div>{imagesItems}</div> */}
       <div
         className="image-box"
         style={{ display: "flex", flexWrap: "wrap", padding: 16 + "px" }}
@@ -69,14 +73,10 @@ const ImagesList = ({ postType }) => {
             >
               <img
                 onClick={() => {
-                  if (postType === 2) {
-                    navigate("/board/" + it.shortId);
-                  } else {
-                    navigate("/market/" + it.shortId);
-                  }
+                  navigate("/board/" + it.shortId);
                 }}
                 src={it.img.url}
-                alt={postType === 2 ? "ootd" : "market"}
+                alt="ootd"
                 style={{
                   width: 100 + "%",
                   height: 100 + "%",
@@ -91,4 +91,15 @@ const ImagesList = ({ postType }) => {
   );
 };
 
-export default ImagesList;
+const mapStateToProps = ({ images }) => {
+  return {
+    images: images.items,
+    loading: images.loading,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchImages,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OotdImages);

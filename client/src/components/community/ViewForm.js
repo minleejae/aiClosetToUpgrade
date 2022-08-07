@@ -24,11 +24,12 @@ const ViewForm = ({ postType }) => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="title" className="form-label">
+            <label htmlFor="title" disabled className="form-label">
               제목
             </label>
 
             <input
+              disabled
               type="text"
               className="form-control"
               name="title"
@@ -41,6 +42,7 @@ const ViewForm = ({ postType }) => {
                   가격
                 </label>
                 <input
+                  disabled
                   type="text"
                   className="form-control"
                   name="price"
@@ -55,6 +57,7 @@ const ViewForm = ({ postType }) => {
               내용
             </label>
             <textarea
+              disabled
               className="form-control"
               name="content"
               id="content"
@@ -66,7 +69,7 @@ const ViewForm = ({ postType }) => {
             className="btn btn-outline-primary"
             style={{ marginRight: "2%" }}
           >
-            글쓰기
+            수정하기
           </button>
           <button
             type="button"
@@ -75,6 +78,28 @@ const ViewForm = ({ postType }) => {
           >
             뒤로가기
           </button>
+        </div>
+        <div className="album container">
+          ...
+          <h6>아이디 : 댓글댓글</h6>
+          <h6>아이디 : 댓글댓글</h6>
+          <h6>아이디 : 댓글댓글</h6>
+          <h6>아이디 : 댓글댓글</h6>
+        </div>
+        <div className="album container">
+          <label htmlFor="title" className="form-label">
+            댓글
+          </label>
+          <div style={{ display: "flex" }}>
+            <input
+              type="text"
+              className="form-control"
+              name="title"
+              id="title"
+              placeholder="댓글을 입력해주세요."
+            />
+            <button>입력</button>
+          </div>
         </div>
       </div>
     </div>

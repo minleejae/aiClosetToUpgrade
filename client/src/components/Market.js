@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ImagesList from "./community/ImagesList";
 import "./componentsCss/Community.css";
+import MarketImages from "./community/MarketImages";
 
 const Market = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const Market = () => {
         </button>
       </div>
       <div className="image-list">
-        <ImagesList postType={3}></ImagesList>
+        <MarketImages postType={3}></MarketImages>
       </div>
     </div>
   );
