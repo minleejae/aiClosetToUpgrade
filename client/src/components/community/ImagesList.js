@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import imgs from "./../../data/imgs.json";
+import imgs from "../../data/imgs.json";
 
-const ImagesList = () => {
+const ImagesList = ({ postType }) => {
   //서버로부터 해당하는 imagesData 받아서 저장
   //현재 ImagesList에서 관리하고 있는 curWindowWidth를 추후에 App.js나 Header.js로 빼주어야할 것 같음
   const imageBoxPadding = 32;
@@ -11,11 +11,7 @@ const ImagesList = () => {
   const [curWindowWidth, setCurWindowWidth] = useState(
     document.documentElement.clientWidth - imageBoxPadding
   );
-  //스크롤 정보 구현 예정
-  console.log(
-    ((window.scrollY + window.innerHeight) / document.body.scrollHeight) * 100
-  );
-  // -----
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,10 +69,14 @@ const ImagesList = () => {
             >
               <img
                 onClick={() => {
-                  navigate("/board/" + it.shortId);
+                  if (postType === 2) {
+                    navigate("/board/" + it.shortId);
+                  } else {
+                    navigate("/market/" + it.shortId);
+                  }
                 }}
                 src={it.img.url}
-                alt="ootd"
+                alt={postType === 2 ? "ootd" : "market"}
                 style={{
                   width: 100 + "%",
                   height: 100 + "%",
