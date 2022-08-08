@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./ClothesRow.css";
 import port from "./../../data/port.json";
+import { useCookies } from "react-cookie";
 
 const ClothesRow = () => {
   //userid에 따른 옷데이터
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -12,10 +14,12 @@ const ClothesRow = () => {
   }, []);
 
   const getImages = async () => {
-    await axios.get(port.url + "/api/users/5").then((res) => {
-      console.log(res.data);
-      setItems(res.data);
-    });
+    await axios
+      .get(port.url + "/api/closet/list/" + cookies.userData.email)
+      .then((res) => {
+        console.log(res.data);
+        setItems(res.data);
+      });
   };
 
   //server에 image delete 요청 보내야함

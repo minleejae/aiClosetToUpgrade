@@ -82,7 +82,10 @@ function App() {
               />
             }
           />
-          <Route path="closet" element={<Closet />} />
+          <Route path="closet">
+            <Route path="" element={<Closet />} />
+            <Route path="upload" element={<WritingForm postType={1} />} />
+          </Route>
           <Route path="board">
             <Route path="" element={<Community />} />
             <Route path="write" element={<WritingForm postType={2} />} />
