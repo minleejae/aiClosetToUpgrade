@@ -16,9 +16,6 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 function App() {
-  //로그인 여부
-  const [loginState, setLoginState] = useState(false);
-
   // 로그인 입력받을 데이터를 props로 넘겨줌
   const [signInData, setSignInData] = useState({
     email: "",
@@ -50,13 +47,13 @@ function App() {
     });
   };
 
-  useEffect(() => {}, [loginState]);
+  useEffect(() => {}, []);
 
   //login 여부에 따라 Main 렌더링
   return (
     <Provider store={store}>
       <div className="App">
-        <Header loginState={loginState} />
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

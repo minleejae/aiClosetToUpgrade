@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 import "./componentsCss/Header.css";
 
-const Header = ({ loginState }) => {
+const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
 
