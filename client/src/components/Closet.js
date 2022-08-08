@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import UploadImage from "./closetUtils/UploadImage.js";
+import { useNavigate } from "react-router-dom";
 import ClothesRow from "./closetUtils/ClothesRow.js";
+import WritingForm from "./community/WritingForm.js";
 
 const Closet = ({ loginState, setLoginState }) => {
   //upload창 관리하기 위한 state
   const [uploadActive, setUploadActive] = useState(false);
   const [downloadImg, setDownloadImg] = useState(null);
 
+  const navigate = useNavigate();
   useEffect(() => {}, [uploadActive]);
 
   console.log("downloadImg", downloadImg);
@@ -16,18 +18,11 @@ const Closet = ({ loginState, setLoginState }) => {
       <ClothesRow />
       <button
         onClick={() => {
-          setUploadActive(true);
+          navigate("upload");
         }}
       >
         upload
       </button>
-      {uploadActive && (
-        <UploadImage
-          uploadActive={uploadActive}
-          setUploadActive={setUploadActive}
-          postType={1}
-        />
-      )}
     </div>
   );
 };
