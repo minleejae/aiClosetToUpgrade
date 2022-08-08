@@ -14,6 +14,8 @@ const requestUrl = [
   "api/market/create",
 ];
 
+const afterSubmitUrl = ["/closet", "/board", "/market"];
+
 const WritingForm = ({
   uploadActive,
   setUploadActive,
@@ -88,7 +90,7 @@ const WritingForm = ({
         console.log(err);
       });
 
-    window.location.reload();
+    navigate(afterSubmitUrl[postType - 1]);
   };
 
   return (

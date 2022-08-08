@@ -14,7 +14,6 @@ const Closet = () => {
   return (
     <div style={{ paddingTop: 100 + "px" }}>
       Closet
-      <ClothesRow />
       <button
         onClick={() => {
           navigate("upload");
@@ -22,6 +21,7 @@ const Closet = () => {
       >
         upload
       </button>
+      <ClothesRow />
     </div>
   );
 };
