@@ -5,6 +5,8 @@ const PostSchema = new mongoose.Schema({
     shortId,
     title: String,
     content: String,
+    like_count: Number,
+    dislike_count: Number,
     price: Number, //당마용
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
@@ -23,7 +25,11 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Upment",
+    }],
 }, {
     timestamps: true
 }
