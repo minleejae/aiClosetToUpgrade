@@ -22,19 +22,21 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     console.log(req.file);
     if (req.file) {
         const {email, type} = req.body;
+        const price = Number(req.body.price);
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 3,
+            price: price,
             img: {
                    url: req.file.path,
                    category: type.dressType,
             },
             author: authData
         });
-        res.json({ data: "이미지 업로드에 성공했습니다!"});
+        res.json({ data: "게시글 업로드에 성공했습니다!"});
     } else {
-        next(new Error("이미지 업로드에 실패하였습니다. 에러코드 추가필요"));
+        next(new Error("게시글 업로드에 실패하였습니다. 에러코드 추가필요"));
     }
 
  });
