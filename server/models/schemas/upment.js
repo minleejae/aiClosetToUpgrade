@@ -21,6 +21,10 @@ const UpmentSchema = new mongoose.Schema({
         ref: "Post",
         required: true
     },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Downment",
+    }]
 }, {
     timestamps: true
 }
