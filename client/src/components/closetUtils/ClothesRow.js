@@ -17,7 +17,6 @@ const ClothesRow = () => {
     await axios
       .get(port.url + "/api/closet/list/" + cookies.userData.email)
       .then((res) => {
-        console.log("res", res.data.posts);
         setItems(res.data.posts);
       });
   };
