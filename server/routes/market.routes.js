@@ -51,12 +51,12 @@ router.get("/list", async (req, res, next) => {
         .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
         .skip(perPage * (page - 1)) //ex> 2페이지라면 5번부터
         .limit(perPage) // 6개씩 가져와줘.
-        .populate("User");
+        .populate("author");
         
         // const total = await Post.countDocuments({postType: 3});
         // const totalPage = Math.ceil(total / perPage); 무한스크롤이기때문에 필요없을듯.
     
-        res.json({ posts, totalPage });
+        res.json({ posts });
     } catch(err) {
         err.message = `${err.message}, market list error.`;
         next(err);
