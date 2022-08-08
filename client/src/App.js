@@ -5,12 +5,15 @@ import Login from "./components/Login.js";
 import Header from "./components/Header.js";
 import Closet from "./components/Closet.js";
 import Community from "./components/Community.js";
-import Sales from "./components/Sales.js";
 import MyPage from "./components/MyPage.js";
 import Footer from "./components/Footer.js";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
-import WritingForm from "./components/communityComponents/WritingForm";
+import WritingForm from "./components/community/WritingForm";
+import Market from "./components/Market";
+import ViewForm from "./components/community/ViewForm";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   //로그인 여부
@@ -55,37 +58,45 @@ function App() {
 
   //login 여부에 따라 Main 렌더링
   return (
-    <div className="App">
-      <Header loginState={loginState} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="login"
-          element={
-            <Login
-              signInData={signInData}
-              onChangeSignInData={onChangeSignInData}
-            />
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <Signup
-              signUpData={signUpData}
-              setSignUpdata={setSignUpdata}
-              onChangeSignUpdata={onChangeSignUpdata}
-            />
-          }
-        />
-        <Route path="closet" element={<Closet />} />
-        <Route path="board" element={<Community />} />
-        <Route path="board/write" element={<WritingForm />} />
-        <Route path="market" element={<Sales />} />
-        <Route path="mypage" element={<MyPage />} />
-      </Routes>
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Header loginState={loginState} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="login"
+            element={
+              <Login
+                signInData={signInData}
+                onChangeSignInData={onChangeSignInData}
+              />
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <Signup
+                signUpData={signUpData}
+                setSignUpdata={setSignUpdata}
+                onChangeSignUpdata={onChangeSignUpdata}
+              />
+            }
+          />
+          <Route path="closet" element={<Closet />} />
+          <Route path="board">
+            <Route path="" element={<Community />} />
+            <Route path="write" element={<WritingForm postType={2} />} />
+            <Route path=":id" element={<ViewForm postType={2} />} />
+          </Route>
+          <Route path="market">
+            <Route path="" element={<Market />} />
+            <Route path="write" element={<WritingForm postType={3} />} />
+            <Route path=":id" element={<ViewForm postType={3} />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </div>
+    </Provider>
   );
 }
 

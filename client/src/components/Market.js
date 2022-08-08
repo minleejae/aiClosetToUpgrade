@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import WritingForm from "./community/WritingForm";
 import { useNavigate } from "react-router-dom";
-import OotdImages from "./community/OotdImages";
 import "./componentsCss/Community.css";
+import MarketImages from "./community/MarketImages";
 
-const Community = () => {
+const Market = () => {
   const navigate = useNavigate();
-
+  console.log("Market!");
   return (
     <div style={{ paddingTop: 100 + "px" }}>
       <div
@@ -17,25 +16,25 @@ const Community = () => {
           alignItems: "center",
         }}
       >
-        <h1>OOTD</h1>
+        <h1>MARKET</h1>
         <p>
-          Upload Your Today's Fashion!
+          Upload Your Cloth to Sell!
           <br />
           Share Your Fashion with Friends!
         </p>
         <button
           onClick={() => {
-            navigate("/board/write");
+            navigate("/market/write");
           }}
         >
           글쓰기
         </button>
       </div>
       <div className="image-list">
-        <OotdImages />
+        <MarketImages postType={3}></MarketImages>
       </div>
     </div>
   );
 };
 
-export default Community;
+export default Market;
