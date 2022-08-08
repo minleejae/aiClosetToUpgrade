@@ -62,3 +62,91 @@ router.get("/list", async (req, res, next) => {
     }
 
 });
+
+router.get("/list/:shortId/find", async (req, res, next) => {
+    let { shortId } = req.params;
+
+    try {
+
+        //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
+        let data = await Post.findOne({ shortId });
+
+        //가져온 데이터를 json형태로 응답합니다.
+        res.json(data);
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+
+});
+
+router.put("/list/:shortId/update", async (req, res, next) => {
+    let { shortId } = req.params;
+    let { title, content } = req.body;
+
+    try {
+
+       // shortId가 같은 데이터를 title, content를 update시켜줍니다.
+       await Post.updateOne({ shortId }, {
+            title,
+            content
+        });
+
+
+        //만약 업데이트가 완료가 되면 json형태의 데이터를 응답해줍니다.
+        res.json({
+            result: "수정이 완료되었습니다."
+        })
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+
+});
+
+router.put("/list/:shortId/update", async (req, res, next) => {
+    let { shortId } = req.params;
+    let { title, content } = req.body;
+
+    try {
+
+       // shortId가 같은 데이터를 title, content를 update시켜줍니다.
+       await Post.updateOne({ shortId }, {
+            title,
+            content
+        });
+
+
+        //만약 업데이트가 완료가 되면 json형태의 데이터를 응답해줍니다.
+        res.json({
+            result: "수정이 완료되었습니다."
+        })
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+
+});
+
+router.get("/list/:shortId/delete", async (req, res, next) => {
+
+    //shortId를 파라미터를 통해 가져옵니다.
+    const { shortId } = req.params;
+
+    try {
+        //shortId에 해당하는 document를 삭제합니다.
+        await Post.deleteOne({ shortId });
+
+        //만약 오류가 나지 않고 삭제를 완료했다면, json형태를 응답해줍니다.
+        res.json({
+            result: '삭제가 완료 되었습니다.'
+        })
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+});
