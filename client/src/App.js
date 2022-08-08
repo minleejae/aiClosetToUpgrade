@@ -18,8 +18,6 @@ import store from "./redux/store";
 function App() {
   //로그인 여부
   const [loginState, setLoginState] = useState(false);
-  //로그인한 회원 정보:{회원 이름, 옷 정보, ..}
-  const [memberInfo, setMemberInfo] = useState(null);
 
   // 로그인 입력받을 데이터를 props로 넘겨줌
   const [signInData, setSignInData] = useState({
@@ -35,9 +33,7 @@ function App() {
     name: "",
   });
 
-  useEffect(() => {
-    console.log(signInData);
-  });
+  useEffect(() => {});
 
   //로그인 입력시 STATE 변화시키는 함수
   const onChangeSignInData = (e) => {
@@ -96,6 +92,7 @@ function App() {
             <Route path="write" element={<WritingForm postType={3} />} />
             <Route path=":id" element={<ViewForm postType={3} />} />
           </Route>
+          <Route path="mypage" element={<MyPage />}></Route>
         </Routes>
         <Footer />
       </div>

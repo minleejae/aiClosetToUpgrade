@@ -17,8 +17,7 @@ const ClothesRow = () => {
     await axios
       .get(port.url + "/api/closet/list/" + cookies.userData.email)
       .then((res) => {
-        console.log(res.data);
-        setItems(res.data);
+        setItems(res.data.posts);
       });
   };
 
@@ -32,15 +31,16 @@ const ClothesRow = () => {
 
   return (
     <>
-      <h1>Top</h1>
+      <h1>TOP</h1>
       <div className="row-container">
         {items.map((item, index) => {
-          if (item.type === "top") {
+          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
+          if (item.img.category === "TOP") {
             return (
-              <div>
+              <div key={item._id}>
                 <img
                   key={index}
-                  src={item.src}
+                  src={imgUrl}
                   alt={item.type}
                   className="rowImages"
                 />
@@ -58,34 +58,54 @@ const ClothesRow = () => {
           }
         })}
       </div>
-      <h1>Bottom</h1>
+      <h1>BOTTOM</h1>
       <div className="row-container">
         {items.map((item, index) => {
-          if (item.type === "bot") {
+          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
+          if (item.img.category === "BOTTOM") {
             return (
-              <img
-                key={index}
-                src={item.src}
-                alt={item.type}
-                className="rowImages"
-              />
+              <div key={item._id}>
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={item.type}
+                  className="rowImages"
+                />
+                <button
+                  onClick={() => {
+                    handleDeleteBtn(item.id);
+                  }}
+                >
+                  X
+                </button>
+              </div>
             );
           } else {
             return <></>;
           }
         })}
       </div>
-      <h1>Shoes</h1>
+      <h1>SHOES</h1>
       <div className="row-container">
         {items.map((item, index) => {
-          if (item.type === "shoe") {
+          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
+          if (item.img.category === "SHOE") {
             return (
-              <img
-                key={index}
-                src={item.src}
-                alt={item.type}
-                className="rowImages"
-              />
+              <div key={item._id}>
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={item.type}
+                  className="rowImages"
+                />
+                <button
+                  onClick={() => {
+                    handleDeleteBtn(item.id);
+                  }}
+                >
+                  X
+                </button>
+              </div>
             );
           } else {
             return <></>;
