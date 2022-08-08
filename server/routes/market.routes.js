@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { Post, User } from '../models/index.js'
 
-export const path = '/closet';
+export const path = '/market';
 export const router = Router();
 
 const storage = multer.diskStorage({
@@ -22,29 +22,32 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     console.log(req.file);
     if (req.file) {
         const {email, type} = req.body;
+        const price = Number(req.body.price);
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
-            postType: 1,
+            postType: 3,
+            price: price,
             img: {
                    url: req.file.path,
                    category: type.dressType,
             },
             author: authData
         });
-        res.json({ data: "이미지 업로드에 성공했습니다!"});
+        res.json({ data: "게시글 업로드에 성공했습니다!"});
     } else {
-        next(new Error("이미지 업로드에 실패하였습니다. 에러코드 추가필요"));
+        next(new Error("게시글 업로드에 실패하였습니다. 에러코드 추가필요"));
     }
 
  });
 
- router.get("/list", async (req, res, next) => {
+ 
+router.get("/list", async (req, res, next) => {
     try {
         const page = Number(req.query.page);
         const perPage = Number(req.query.perPage);
     
-        const posts = await Post.find({ postType: 1 })
+        const posts = await Post.find({ postType: 3 })
         .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
         .skip(perPage * (page - 1)) //ex> 2페이지라면 5번부터
         .limit(perPage) // 6개씩 가져와줘.
@@ -55,7 +58,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     
         res.json({ posts });
     } catch(err) {
-        err.message = `${err.message}, closet list error.`;
+        err.message = `${err.message}, market list error.`;
         next(err);
     }
 

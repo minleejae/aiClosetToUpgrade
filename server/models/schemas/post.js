@@ -5,6 +5,7 @@ const PostSchema = new mongoose.Schema({
     shortId,
     title: String,
     content: String,
+    price: Number, //당마용
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
         type: Number,
