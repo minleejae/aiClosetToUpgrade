@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import imgs from "../../data/imgs.json";
 import { fetchOotdImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
@@ -16,7 +15,7 @@ const OotdImages = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchOotdImages(0, 15);
+    fetchOotdImages(1, perPages);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -29,7 +28,8 @@ const OotdImages = ({
     if (totalScroll - curScroll < 30) {
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
       //서버 변동필요
-      fetchOotdImages(0, perPages);
+      // fetchOotdImages((누적숫자), perPages);
+      fetchOotdImages(1, perPages);
     }
   };
 

@@ -28,7 +28,6 @@ const Header = ({ width, columns, updateWidth }) => {
   }, [scrollPosition]);
 
   const handleResize = () => {
-    console.log("handleResize!");
     updateWidth(document.documentElement.clientWidth);
   };
 
