@@ -16,6 +16,7 @@ const Closet = () => {
       >
         upload
       </button>
+      <button>오늘의 옷</button>
       <ClothesRow />
     </div>
   );
