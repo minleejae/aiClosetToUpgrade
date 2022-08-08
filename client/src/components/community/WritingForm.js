@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import UploadImage from "../closetUtils/UploadImage";
 import { useNavigate } from "react-router-dom";
 const WritingForm = ({ postType }) => {
+  const [postForm, setPostForm] = useState({});
+
   const navigate = useNavigate();
-  console.log(postType);
+  const onChangeHandler = (event) => {
+    const newPostForm = { ...postForm };
+    newPostForm[event.target.name] = event.target.value;
+    setPostForm(newPostForm);
+  };
+
+  useEffect(() => {
+    console.log(postForm);
+  });
+
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
@@ -17,7 +28,7 @@ const WritingForm = ({ postType }) => {
               justifyContent: "center",
             }}
           >
-            <UploadImage></UploadImage>
+            <UploadImage postType={postType} postForm={postForm}></UploadImage>
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
@@ -30,6 +41,7 @@ const WritingForm = ({ postType }) => {
               name="title"
               id="title"
               placeholder="제목을 입력해주세요."
+              onChange={onChangeHandler}
             />
             {postType === 3 ? (
               <>
@@ -42,6 +54,7 @@ const WritingForm = ({ postType }) => {
                   name="price"
                   id="price"
                   placeholder="가격을 입력해주세요."
+                  onChange={onChangeHandler}
                 />
               </>
             ) : undefined}
@@ -55,12 +68,16 @@ const WritingForm = ({ postType }) => {
               name="content"
               id="content"
               rows="3"
+              onChange={onChangeHandler}
             ></textarea>
           </div>
           <button
             type="button"
             className="btn btn-outline-primary"
             style={{ marginRight: "2%" }}
+            onClick={() => {
+              console.log("button Click");
+            }}
           >
             글쓰기
           </button>

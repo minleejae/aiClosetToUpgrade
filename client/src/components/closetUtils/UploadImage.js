@@ -5,7 +5,13 @@ import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-const UploadImage = ({ uploadActive, setUploadActive }, postType = 1) => {
+const requestUrl = [
+  "/api/closet/create",
+  "api/posts/create",
+  "api/market/create",
+];
+
+const UploadImage = ({ uploadActive, setUploadActive, postType, postForm }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   //현재 선택된 이미지 파일 state
   const [selectedFile, setSelectedFile] = useState(null);
@@ -47,6 +53,16 @@ const UploadImage = ({ uploadActive, setUploadActive }, postType = 1) => {
     formData.append("type", JSON.stringify(type));
     formData.append("email", cookies.userData.email);
     formData.append("postType", postType);
+
+    if (postType === 2 || postType === 3) {
+      formData.append("title", postForm.title);
+      formData.append("content", postForm.content);
+
+      if (postType === 3) {
+        formData.append("price", postForm.price);
+      }
+    }
+
     //파일 data 서버로 post
     await axios
       .post(port.url + "/api/closet/create", formData)
@@ -73,7 +89,7 @@ const UploadImage = ({ uploadActive, setUploadActive }, postType = 1) => {
   //form tag 추가하기
   return (
     <div id="uploadBox">
-      업로드화면
+      업로드화면 {postType}
       {/* row */}
       <img
         id="previewImage"

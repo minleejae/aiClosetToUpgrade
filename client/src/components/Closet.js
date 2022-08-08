@@ -25,6 +25,7 @@ const Closet = ({ loginState, setLoginState }) => {
         <UploadImage
           uploadActive={uploadActive}
           setUploadActive={setUploadActive}
+          postType={1}
         />
       )}
     </div>
