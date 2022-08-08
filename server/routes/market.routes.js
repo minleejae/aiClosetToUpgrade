@@ -21,7 +21,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email, type} = req.body;
+        const {email} = req.body;
         const price = Number(req.body.price);
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
@@ -29,8 +29,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
             postType: 3,
             price: price,
             img: {
-                   url: req.file.path,
-                   category: type.dressType,
+                   url: req.file.path
             },
             author: authData
         });
