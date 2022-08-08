@@ -5,17 +5,22 @@ import {
   FETCH_IMAGES_FAILURE,
 } from "./types";
 
-export const fetchImages = () => {
+export const fetchOotdImages = (page, perPage) => {
   return (dispatch) => {
     dispatch(fetchImagesRequest());
-    fetch("https://jsonplaceholder.typicode.com/photos")
+    fetch(
+      `http://localhost:8070/api/posts/list?page=${page}&perPage=${perPage}`
+    )
       .then((response) => response.json())
       .then((images) => {
         dispatch(fetchImagesSuccess(images));
       })
       .catch((error) => {
+        console.log(error);
         dispatch(fetchImagesFailure(error));
       });
+
+    console.log("abcd");
   };
 };
 

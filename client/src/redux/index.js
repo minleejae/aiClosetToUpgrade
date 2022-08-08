@@ -1,1 +1,1 @@
-export { fetchImages } from "./images/actions";
+export { fetchOotdImages } from "./images/actions";

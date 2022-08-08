@@ -68,6 +68,7 @@ const WritingForm = ({
     formData.append("email", cookies.userData.email);
     formData.append("postType", postType);
 
+    //옷장에서만 tensorflow 이용하여 이미지 분류해서 type을 넘겨줌
     if (postType === 1) {
       const type = await DressClassifier(
         document.getElementById("previewImage")
