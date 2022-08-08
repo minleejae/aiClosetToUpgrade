@@ -27,13 +27,9 @@ const Header = ({ loginState }) => {
     $(".navbar__log").toggleClass("active");
   };
 
-  //로그인 상태비교
-  useEffect(() => {
-    console.log(cookies.userData);
-  });
-
   return (
-    <nav id="nav-container"
+    <nav
+      id="nav-container"
       className={scrollPosition < 33 ? "navbar" : "navbar-scrolled"}
       style={{
         position: "fixed",

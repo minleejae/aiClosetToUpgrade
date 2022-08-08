@@ -44,7 +44,7 @@ const MyPage = () => {
   };
 
   return (
-    <div className="album">
+    <div className="album" style={{ paddingTop: 100 + "px" }}>
       <div className="container">
         <form>
           <div className="mb-3">

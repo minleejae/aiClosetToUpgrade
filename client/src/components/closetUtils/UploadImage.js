@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import FormData from "form-data";
 import DressClassifier from "./DressClassifier";
 import port from "./../../data/port.json";
-
+import { useCookies } from "react-cookie";
 import axios from "axios";
 
-const UploadImage = ({ uploadActive, setUploadActive }) => {
+const UploadImage = ({ uploadActive, setUploadActive }, postType = 1) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   //현재 선택된 이미지 파일 state
   const [selectedFile, setSelectedFile] = useState(null);
   //현재 선택된 이미지의 source state
@@ -44,7 +45,8 @@ const UploadImage = ({ uploadActive, setUploadActive }) => {
     const formData = new FormData();
     formData.append("img", selectedFile);
     formData.append("type", JSON.stringify(type));
-    formData.append("userId", 123);
+    formData.append("email", cookies.userData.email);
+    formData.append("postType", postType);
     //파일 data 서버로 post
     await axios
       .post(port.url + "/api/closet/create", formData)
