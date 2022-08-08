@@ -92,6 +92,7 @@ function App() {
             <Route path="write" element={<WritingForm postType={3} />} />
             <Route path=":id" element={<ViewForm postType={3} />} />
           </Route>
+          <Route path="mypage" element={<MyPage />}></Route>
         </Routes>
         <Footer />
       </div>
