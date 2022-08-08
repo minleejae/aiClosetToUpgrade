@@ -28,9 +28,7 @@ const WritingForm = ({
   //upload 버튼 여러번 클릭되는 것을 방지하기 위한 state
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
 
-  useEffect(() => {
-    console.log(postForm);
-  }, [selectedFile, uploadButtonClicked]);
+  useEffect(() => {}, [selectedFile, uploadButtonClicked]);
 
   const navigate = useNavigate();
   const onChangeHandler = (event) => {
@@ -89,6 +87,8 @@ const WritingForm = ({
       .catch((err) => {
         console.log(err);
       });
+
+    window.location.reload();
   };
 
   return (

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ClothesRow from "./closetUtils/ClothesRow.js";
-import WritingForm from "./community/WritingForm.js";
 
-const Closet = ({ loginState, setLoginState }) => {
+const Closet = () => {
   //upload창 관리하기 위한 state
   const [uploadActive, setUploadActive] = useState(false);
   const [downloadImg, setDownloadImg] = useState(null);
