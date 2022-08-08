@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { Post, User } from '../models/index.js'
+import { Downment, Post, Upment, User } from '../models/index.js'
 
 export const path = '/market';
 export const router = Router();
@@ -69,7 +69,8 @@ router.get("/list/:shortId/find", async (req, res, next) => {
     try {
 
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
-        let data = await Post.findOne({ shortId });
+        let data = await Post.findOne({ shortId })
+            .populate("comments");
 
         //가져온 데이터를 json형태로 응답합니다.
         res.json(data);
@@ -106,30 +107,6 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 
 });
 
-router.put("/list/:shortId/update", async (req, res, next) => {
-    let { shortId } = req.params;
-    let { title, content } = req.body;
-
-    try {
-
-       // shortId가 같은 데이터를 title, content를 update시켜줍니다.
-       await Post.updateOne({ shortId }, {
-            title,
-            content
-        });
-
-
-        //만약 업데이트가 완료가 되면 json형태의 데이터를 응답해줍니다.
-        res.json({
-            result: "수정이 완료되었습니다."
-        })
-
-    } catch (err) {
-        err.message = `${err.message}, market post find error.`;
-        next(err);
-    }
-
-});
 
 router.get("/list/:shortId/delete", async (req, res, next) => {
 
@@ -149,4 +126,50 @@ router.get("/list/:shortId/delete", async (req, res, next) => {
         err.message = `${err.message}, market post find error.`;
         next(err);
     }
+});
+
+router.post("/list/:shortId/comment", async (req, res, next) => {
+    const { shortId } = req.params;
+    let { comment, email } = req.body;
+
+    try {
+        const authData = await User.findOne({email});
+        const postData = await Post.findOne({shortId});
+
+        await Upment.create({
+            postType: 3,
+            author: authData,
+            post_id: postData,
+            comments: comment
+        });
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+
+});
+
+router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
+    const { shortId, p_shortId } = req.params;
+    let { comment, email } = req.body;
+
+    try {
+        const authData = await User.findOne({email});
+        const postData = await Post.findOne({shortId});
+        const parentData = await Upment.findOne({p_shortId});
+
+        await Downment.create({
+            postType: 3,
+            author: authData,
+            post_id: postData,
+            parentment_id: parentData,
+            comments: comment
+        });
+
+    } catch (err) {
+        err.message = `${err.message}, market post find error.`;
+        next(err);
+    }
+
 });
