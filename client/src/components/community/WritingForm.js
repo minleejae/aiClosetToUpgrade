@@ -10,8 +10,8 @@ const pageTitle = ["CLOSET", "OOTD", "MARKET"];
 
 const requestUrl = [
   "/api/closet/create",
-  "api/posts/create",
-  "api/market/create",
+  "/api/posts/create",
+  "/api/market/create",
 ];
 
 const afterSubmitUrl = ["/closet", "/board", "/market"];
@@ -61,17 +61,20 @@ const WritingForm = ({
     setUploadButtonClicked(true);
 
     //이미지 분류 typeExample: {dressType: 'TOP', styleType: 'CASUAL'}
-    const type = await DressClassifier(document.getElementById("previewImage"));
-    console.log(type);
 
     //axios로 image파일 서버로 전송하기
     const formData = new FormData();
     formData.append("img", selectedFile);
-    formData.append("type", JSON.stringify(type));
     formData.append("email", cookies.userData.email);
     formData.append("postType", postType);
 
-    if (postType === 2 || postType === 3) {
+    if (postType === 1) {
+      const type = await DressClassifier(
+        document.getElementById("previewImage")
+      );
+      formData.append("type", JSON.stringify(type));
+      console.log(type);
+    } else if (postType === 2 || postType === 3) {
       formData.append("title", postForm.title);
       formData.append("content", postForm.content);
 
@@ -79,6 +82,8 @@ const WritingForm = ({
         formData.append("price", postForm.price);
       }
     }
+
+    console.log(port.url + requestUrl[postType - 1]);
 
     //파일 data 서버로 post
     await axios
