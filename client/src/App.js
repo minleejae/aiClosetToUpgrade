@@ -81,8 +81,8 @@ function App() {
           <Route path="" element={<Community />} />
           <Route path="write" element={<WritingForm postType={2} />} />
           <Route path=":id">
-            <Route path="" element={<OotdViewForm postType={3} />} />
-            <Route path="update" element={<OotdUpdateForm postType={3} />} />
+            <Route path="" element={<OotdViewForm postType={2} />} />
+            <Route path="update" element={<OotdUpdateForm postType={2} />} />
           </Route>
         </Route>
         <Route path="market">

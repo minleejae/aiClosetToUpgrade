@@ -5,12 +5,13 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-const OotdViewForm = ({ postType, images }) => {
+const OotdUpdateForm = ({ postType, images }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
   const paramsId = useParams().id;
   const [curPost, setCurPost] = useState(null);
   const [myPost, setMyPost] = useState(false);
+  const [postForm, setPostForm] = useState({ title: "", content: "" });
 
   useEffect(() => {
     const searchPost = images.find((image) => {
@@ -18,15 +19,8 @@ const OotdViewForm = ({ postType, images }) => {
     });
     //나의 게시물인 경우에만 수정
     setMyPost(searchPost.author.email === cookies.userData.email);
-
-    //브라우저에서 현재 게시물 정보 저장해서 새로고침해도 볼 수 있도록 저장
-    localStorage.setItem("ootd-post", JSON.stringify(searchPost));
-    const saved = localStorage.getItem("ootd-post");
-    if (saved !== null) {
-      setCurPost(JSON.parse(saved));
-    } else {
-      setCurPost(searchPost);
-    }
+    setCurPost(searchPost);
+    setPostForm({ title: searchPost.title, content: searchPost.content });
   }, []);
 
   const imageTag = curPost ? (
@@ -39,13 +33,35 @@ const OotdViewForm = ({ postType, images }) => {
     <></>
   );
 
-  const handleUpdateButton = () => {};
-  const handleRemoveButton = async () => {
+  const handleUpdateSubmitButton = async () => {
     try {
-      await axios.get(port.url + `/list/${paramsId}/delete`);
-    } catch {}
+      await axios.put(port.url + `/market/list/${paramsId}/update`, {
+        title: postForm.title,
+        content: postForm.content,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
     navigate("/board");
   };
+
+  const handleRemoveButton = async () => {
+    try {
+      await axios.get(port.url + `/market/list/${paramsId}/delete`);
+    } catch (e) {
+      console.log(e);
+    }
+    navigate("/board");
+  };
+
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
+    const newPostForm = { ...postForm };
+    newPostForm[e.target.name] = e.target.value;
+    setPostForm({ ...newPostForm });
+  };
+
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
@@ -62,44 +78,32 @@ const OotdViewForm = ({ postType, images }) => {
             {imageTag}
           </div>
           <div className="mb-3">
-            <label htmlFor="title" disabled className="form-label">
+            <label htmlFor="title" className="form-label">
               제목
             </label>
-
             <input
-              disabled
               type="text"
+              value={postForm.title}
               className="form-control"
               name="title"
               id="title"
-              placeholder="제목을 입력해주세요."
+              onChange={(e) => {
+                handleChange(e);
+              }}
             />
-            {postType === 3 ? (
-              <>
-                <label htmlFor="price" className="form-label">
-                  가격
-                </label>
-                <input
-                  disabled
-                  type="text"
-                  className="form-control"
-                  name="price"
-                  id="price"
-                  placeholder="가격을 입력해주세요."
-                />
-              </>
-            ) : undefined}
           </div>
           <div className="mb-3">
             <label htmlFor="content" className="form-label">
               내용
             </label>
             <textarea
-              disabled
               className="form-control"
               name="content"
               id="content"
               rows="3"
+              onChange={(e) => {
+                handleChange(e);
+              }}
             ></textarea>
           </div>
           {myPost ? (
@@ -109,10 +113,10 @@ const OotdViewForm = ({ postType, images }) => {
                 className="btn btn-outline-primary"
                 style={{ marginRight: "2%" }}
                 onClick={() => {
-                  handleUpdateButton();
+                  handleUpdateSubmitButton();
                 }}
               >
-                수정하기
+                수정완료
               </button>
               <button
                 type="button"
@@ -136,28 +140,6 @@ const OotdViewForm = ({ postType, images }) => {
             뒤로가기
           </button>
         </div>
-        <div className="album container">
-          ...
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-        </div>
-        <div className="album container">
-          <label htmlFor="title" className="form-label">
-            댓글
-          </label>
-          <div style={{ display: "flex" }}>
-            <input
-              type="text"
-              className="form-control"
-              name="title"
-              id="title"
-              placeholder="댓글을 입력해주세요."
-            />
-            <button>입력</button>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -169,4 +151,4 @@ const mapStateToProps = ({ images }) => {
   };
 };
 
-export default connect(mapStateToProps)(OotdViewForm);
+export default connect(mapStateToProps)(OotdUpdateForm);

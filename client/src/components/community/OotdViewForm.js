@@ -39,7 +39,9 @@ const OotdViewForm = ({ postType, images }) => {
     <></>
   );
 
-  const handleUpdateButton = () => {};
+  const handleUpdateButton = () => {
+    navigate("update");
+  };
   const handleRemoveButton = async () => {
     try {
       await axios.get(port.url + `/list/${paramsId}/delete`);
