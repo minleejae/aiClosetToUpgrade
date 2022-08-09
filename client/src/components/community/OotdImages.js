@@ -8,6 +8,7 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchOotdImages(1, perPages);
     window.addEventListener("scroll", handleScroll);
     return () => {

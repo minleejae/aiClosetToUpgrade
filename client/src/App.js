@@ -13,6 +13,8 @@ import WritingForm from "./components/community/WritingForm";
 import Market from "./components/Market";
 import OotdViewForm from "./components/community/OotdViewForm";
 import MarketViewForm from "./components/community/MarketViewForm";
+import MarketUpdateForm from "./components/community/MarketUpdateForm";
+import OotdUpdateForm from "./components/community/OotdUpdateForm";
 
 function App() {
   // 로그인 입력받을 데이터를 props로 넘겨줌
@@ -78,12 +80,18 @@ function App() {
         <Route path="board">
           <Route path="" element={<Community />} />
           <Route path="write" element={<WritingForm postType={2} />} />
-          <Route path=":id" element={<OotdViewForm postType={2} />} />
+          <Route path=":id">
+            <Route path="" element={<OotdViewForm postType={3} />} />
+            <Route path="update" element={<OotdUpdateForm postType={3} />} />
+          </Route>
         </Route>
         <Route path="market">
           <Route path="" element={<Market />} />
           <Route path="write" element={<WritingForm postType={3} />} />
-          <Route path=":id" element={<MarketViewForm postType={3} />} />
+          <Route path=":id">
+            <Route path="" element={<MarketViewForm postType={3} />} />
+            <Route path="update" element={<MarketUpdateForm postType={3} />} />
+          </Route>
         </Route>
         <Route path="mypage" element={<MyPage />}></Route>
       </Routes>
