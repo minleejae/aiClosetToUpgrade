@@ -21,7 +21,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email} = req.body;
+        const email = req.tokenInfo.email;
         const price = Number(req.body.price);
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
@@ -156,7 +156,8 @@ router.delete("/list/:shortId/delete", async (req, res, next) => {
 //특정 게시글에 댓글달기
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
-    let { comment, email } = req.body;
+    const { comment } = req.body;
+    const email = req.tokenInfo.email;
     
     try {
         const authData = await User.findOne({email});
@@ -187,7 +188,8 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 //특정 게시글 댓글에 대댓글 달기
 router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
     const { shortId, p_shortId } = req.params;
-    let { comment, email } = req.body;
+    const { comment } = req.body;
+    const email = req.tokenInfo.email;
 
     try {
         const authData = await User.findOne({email});

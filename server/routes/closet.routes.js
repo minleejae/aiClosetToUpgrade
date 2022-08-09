@@ -21,7 +21,8 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email, type} = req.body;
+        const { type } = req.body;
+        const email = req.tokenInfo.email;
         const category = JSON.parse(type).dressType;
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
@@ -40,9 +41,9 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 
  });
 
- router.get("/list/:email", async (req, res, next) => {
+ router.get("/list", async (req, res, next) => {
     try {
-        const email = req.params.email;
+        const email = req.tokenInfo.email;
         const posts = await Post.find({ postType: 1, email })
             .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
