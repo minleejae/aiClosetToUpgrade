@@ -22,12 +22,12 @@ const OotdViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
-    console.log(post.data);
   };
 
   const handleUpdateButton = () => {
     navigate("update");
   };
+
   const handleRemoveButton = async () => {
     try {
       await axios.post(port.url + `/api/posts/list/${paramsId}/delete`, {
@@ -36,6 +36,7 @@ const OotdViewForm = ({ postType }) => {
     } catch {}
     navigate("/board");
   };
+
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
