@@ -17,6 +17,7 @@ const OotdUpdateForm = ({ postType, images }) => {
     const searchPost = images.find((image) => {
       return paramsId === image.shortId;
     });
+    console.log(searchPost);
     //나의 게시물인 경우에만 수정
     setMyPost(searchPost.author.email === cookies.userData.email);
     setCurPost(searchPost);
@@ -48,7 +49,7 @@ const OotdUpdateForm = ({ postType, images }) => {
 
   const handleRemoveButton = async () => {
     try {
-      await axios.get(port.url + `/market/list/${paramsId}/delete`);
+      await axios.get(port.url + `/api/posts/list/${paramsId}/delete`);
     } catch (e) {
       console.log(e);
     }
@@ -145,9 +146,9 @@ const OotdUpdateForm = ({ postType, images }) => {
   );
 };
 
-const mapStateToProps = ({ images }) => {
+const mapStateToProps = ({ ootdImages }) => {
   return {
-    images: images.items,
+    images: ootdImages.items,
   };
 };
 

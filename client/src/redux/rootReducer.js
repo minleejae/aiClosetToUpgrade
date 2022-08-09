@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import images from "./images/reducer";
+import OotdImages from "./OotdImages/reducer";
+import MarketImages from "./MarketImages/reducer";
 import width from "./width/reducer";
 
 const rootReducer = combineReducers({
-  images,
+  marketImages: MarketImages,
+  ootdImages: OotdImages,
   width,
 });
 

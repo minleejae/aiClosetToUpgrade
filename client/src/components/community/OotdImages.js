@@ -9,7 +9,9 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchOotdImages(1, perPages);
+    console.log("images", images);
+    fetchOotdImages(images.length, perPages);
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -23,7 +25,8 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
       //서버 변동필요
       // fetchOotdImages((누적숫자), perPages);
-      fetchOotdImages(1, perPages);
+      console.log("images", images);
+      fetchOotdImages(images.length, perPages);
     }
   };
 
@@ -65,10 +68,11 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
   );
 };
 
-const mapStateToProps = ({ images, width }) => {
+const mapStateToProps = ({ ootdImages, width }) => {
+  console.log("ootdImages", ootdImages);
   return {
-    images: images.items,
-    loading: images.loading,
+    images: ootdImages.items,
+    loading: ootdImages.loading,
     width: width.width,
     columns: width.columns,
     perPages: width.perPages,

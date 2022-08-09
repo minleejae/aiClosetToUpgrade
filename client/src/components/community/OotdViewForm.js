@@ -44,7 +44,7 @@ const OotdViewForm = ({ postType, images }) => {
   };
   const handleRemoveButton = async () => {
     try {
-      await axios.get(port.url + `/list/${paramsId}/delete`);
+      await axios.get(port.url + `/api/posts/list/${paramsId}/delete`);
     } catch {}
     navigate("/board");
   };
@@ -165,9 +165,9 @@ const OotdViewForm = ({ postType, images }) => {
   );
 };
 
-const mapStateToProps = ({ images }) => {
+const mapStateToProps = ({ ootdImages }) => {
   return {
-    images: images.items,
+    images: ootdImages.items,
   };
 };
 

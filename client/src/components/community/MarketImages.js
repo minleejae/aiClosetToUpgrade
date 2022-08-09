@@ -1,52 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import imgs from "../../data/imgs.json";
+import { fetchMarketImages } from "../../redux";
+import { connect } from "react-redux";
+import port from "../../data/port.json";
 
-const MarketImages = () => {
-  //서버로부터 해당하는 imagesData 받아서 저장
-  //현재 ImagesList에서 관리하고 있는 curWindowWidth를 추후에 App.js나 Header.js로 빼주어야할 것 같음
-  const imageBoxPadding = 32;
-  const [imagesData, setImagesData] = useState(imgs);
-  const [columnNumber, setColumNumber] = useState(5);
-  const [curWindowWidth, setCurWindowWidth] = useState(
-    document.documentElement.clientWidth - imageBoxPadding
-  );
-
+const MarketImages = ({
+  fetchMarketImages,
+  images,
+  width,
+  columns,
+  perPages,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurWindowWidth(document.documentElement.clientWidth - 32);
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleScroll);
+    window.scrollTo(0, 0);
+    console.log("images", images);
+    fetchMarketImages(images.length, perPages);
 
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [imagesData]);
-
-  //현재 브라우저의 너비에 따라 반응형으로 이미지 표시
-  const handleResize = () => {
-    if (
-      document.documentElement.clientWidth < 1400 &&
-      document.documentElement.clientWidth > 900
-    ) {
-      setColumNumber(4);
-    } else if (document.documentElement.clientWidth > 1400) {
-      setColumNumber(5);
-    } else if (document.documentElement.clientWidth < 900) {
-      setColumNumber(3);
-    }
-    setCurWindowWidth(document.documentElement.clientWidth - imageBoxPadding);
-  };
+  }, []);
 
   const handleScroll = () => {
     const totalScroll = document.body.scrollHeight - window.innerHeight;
     const curScroll = window.scrollY;
     if (totalScroll - curScroll < 30) {
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
-      //사진 20개씩 요청
-      setImagesData([...imagesData, ...imgs]);
+      //image 값이 동기화 되지 않고 있음 이를 수정 필요
+      console.log("images", images?.length);
+      fetchMarketImages(images.length, perPages);
     }
   };
 
@@ -56,14 +41,15 @@ const MarketImages = () => {
         className="image-box"
         style={{ display: "flex", flexWrap: "wrap", padding: 16 + "px" }}
       >
-        {imagesData.map((it, index) => {
+        {images.map((it, index) => {
+          const srcUrl = port.url + "/" + it.img.url.split("/")[1];
           return (
             <span
               key={index}
               style={{
                 display: "inlineBlock",
-                height: `${Math.floor(curWindowWidth / columnNumber)}px`,
-                width: `${Math.floor(curWindowWidth / columnNumber)}px`,
+                height: `${Math.floor(width / columns)}px`,
+                width: `${Math.floor(width / columns)}px`,
                 overflow: "hidden",
               }}
             >
@@ -71,7 +57,7 @@ const MarketImages = () => {
                 onClick={() => {
                   navigate("/market/" + it.shortId);
                 }}
-                src={it.img.url}
+                src={srcUrl}
                 alt="market"
                 style={{
                   width: 100 + "%",
@@ -87,4 +73,19 @@ const MarketImages = () => {
   );
 };
 
-export default MarketImages;
+const mapStateToProps = ({ marketImages, width }) => {
+  console.log("marketImages", marketImages);
+  return {
+    images: marketImages.items,
+    loading: marketImages.loading,
+    width: width.width,
+    columns: width.columns,
+    perPages: width.perPages,
+  };
+};
+
+const mapDispatchToProps = {
+  fetchMarketImages,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MarketImages);

@@ -1,10 +1,53 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import port from "../../data/port.json";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 const MarketViewForm = ({ postType, images }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
-  console.log("MarketViewForm!", postType);
+  const paramsId = useParams().id;
+  const [curPost, setCurPost] = useState(null);
+  const [myPost, setMyPost] = useState(false);
+
+  useEffect(() => {
+    const searchPost = images.find((image) => {
+      return paramsId === image.shortId;
+    });
+    //나의 게시물인 경우에만 수정
+    setMyPost(searchPost.author.email === cookies.userData.email);
+
+    //브라우저에서 현재 게시물 정보 저장해서 새로고침해도 볼 수 있도록 저장
+    localStorage.setItem("market-post", JSON.stringify(searchPost));
+    const saved = localStorage.getItem("market-post");
+    if (saved !== null) {
+      setCurPost(JSON.parse(saved));
+    } else {
+      setCurPost(searchPost);
+    }
+  }, []);
+
+  const imageTag = curPost ? (
+    <img
+      src={port.url + "/" + curPost?.img.url.split("/")[1]}
+      alt="temp"
+      style={{ width: 80 + "%" }}
+    />
+  ) : (
+    <></>
+  );
+
+  const handleUpdateButton = () => {
+    navigate("update");
+  };
+  const handleRemoveButton = async () => {
+    try {
+      await axios.get(port.url + `/api/market/list/${paramsId}/delete`);
+    } catch {}
+    navigate("/market");
+  };
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
@@ -18,11 +61,7 @@ const MarketViewForm = ({ postType, images }) => {
               justifyContent: "center",
             }}
           >
-            <img
-              src="https://t1.daumcdn.net/cfile/tistory/996333405A8280FC23"
-              alt="temp"
-              style={{ width: 80 + "%" }}
-            />
+            {imageTag}
           </div>
           <div className="mb-3">
             <label htmlFor="title" disabled className="form-label">
@@ -65,16 +104,35 @@ const MarketViewForm = ({ postType, images }) => {
               rows="3"
             ></textarea>
           </div>
+          {myPost ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                style={{ marginRight: "2%" }}
+                onClick={() => {
+                  handleUpdateButton();
+                }}
+              >
+                수정하기
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                style={{ marginRight: "2%" }}
+                onClick={() => {
+                  handleRemoveButton();
+                }}
+              >
+                삭제하기
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
           <button
             type="button"
-            className="btn btn-outline-primary"
-            style={{ marginRight: "2%" }}
-          >
-            수정하기
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
+            className="btn btn-outline-secondary"
             onClick={() => navigate(-1)}
           >
             뒤로가기
@@ -107,9 +165,9 @@ const MarketViewForm = ({ postType, images }) => {
   );
 };
 
-const mapStateToProps = ({ images }) => {
+const mapStateToProps = ({ marketImages }) => {
   return {
-    images: images.items,
+    images: marketImages.items,
   };
 };
 
