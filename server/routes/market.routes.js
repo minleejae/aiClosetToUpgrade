@@ -57,7 +57,7 @@ router.get("/list", async (req, res, next) => {
     
         res.json({ posts });
     } catch(err) {
-        err.message = `${err.message}, market list error.`;
+        err.message = `${err.message}, market listing error.`;
         next(err);
     }
 
@@ -109,7 +109,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
         })
 
     } catch (err) {
-        err.message = `${err.message}, market post find error.`;
+        err.message = `${err.message}, market post update error.`;
         next(err);
     }
 
@@ -132,7 +132,7 @@ router.get("/list/:shortId/delete", async (req, res, next) => {
         })
 
     } catch (err) {
-        err.message = `${err.message}, market post find error.`;
+        err.message = `${err.message}, market post delete error.`;
         next(err);
     }
 });
@@ -141,20 +141,28 @@ router.get("/list/:shortId/delete", async (req, res, next) => {
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
     let { comment, email } = req.body;
-
+    
     try {
         const authData = await User.findOne({email});
         const postData = await Post.findOne({shortId});
-
-        await Upment.create({
+        
+        const newcomment = await Upment.create({
             postType: 3,
             author: authData,
             post_id: postData,
-            comments: comment
+            comment: comment
         });
+        
+        // console.log(commentData);
+
+        await Post.updateOne({shortId}, {"$push": {"comments": newcomment}});
+        
+        res.json({
+            result: '댓글이 작성 되었습니다.'
+        })
 
     } catch (err) {
-        err.message = `${err.message}, market post find error.`;
+        err.message = `${err.message}, market post comment error.`;
         next(err);
     }
 
@@ -170,16 +178,24 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
         const postData = await Post.findOne({shortId});
         const parentData = await Upment.findOne({p_shortId});
 
-        await Downment.create({
+        const newcomment = await Downment.create({
             postType: 3,
             author: authData,
             post_id: postData,
             parentment_id: parentData,
-            comments: comment
+            comment: comment
         });
+        console.log(newcomment);
+
+
+        await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
+        
+        res.json({
+            result: '댓글이 작성 되었습니다.'
+        })
 
     } catch (err) {
-        err.message = `${err.message}, market post find error.`;
+        err.message = `${err.message}, market post recomment error.`;
         next(err);
     }
 
