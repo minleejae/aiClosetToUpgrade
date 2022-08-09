@@ -4,14 +4,7 @@ import { fetchOotdImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
 
-const OotdImages = ({
-  fetchOotdImages,
-  loading,
-  images,
-  width,
-  columns,
-  perPages,
-}) => {
+const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
   const navigate = useNavigate();
 
   useEffect(() => {

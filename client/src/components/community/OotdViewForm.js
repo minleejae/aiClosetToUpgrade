@@ -2,33 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
+import { useCookies } from "react-cookie";
 
 const OotdViewForm = ({ postType, images }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
   const paramsId = useParams().id;
   const [curPost, setCurPost] = useState(null);
+  const [myPost, setMyPost] = useState(false);
 
   useEffect(() => {
-    console.log("paramsId", paramsId);
-    console.log("images", images);
-    console.log("localstorage", localStorage);
     const searchPost = images.find((image) => {
       return paramsId === image.shortId;
     });
 
-    console.log("searchpost:", searchPost);
+    //나의 게시물인 경우에만 수정
+    setMyPost(searchPost.author.email === cookies.userData.email);
+
+    //브라우저에서 현재 게시물 정보 저장해서 새로고침해도 볼 수 있도록 저장
     localStorage.setItem("ootd-post", JSON.stringify(searchPost));
     const saved = localStorage.getItem("ootd-post");
     if (saved !== null) {
-      console.log("saved!!");
-      console.log(saved);
-      console.log(JSON.parse(saved));
       setCurPost(JSON.parse(saved));
     } else {
-      console.log("not saved!!");
       setCurPost(searchPost);
     }
-    console.log(saved);
   }, []);
 
   const imageTag = curPost ? (
@@ -97,16 +95,29 @@ const OotdViewForm = ({ postType, images }) => {
               rows="3"
             ></textarea>
           </div>
+          {myPost ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                style={{ marginRight: "2%" }}
+              >
+                수정하기
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                style={{ marginRight: "2%" }}
+              >
+                삭제하기
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
           <button
             type="button"
-            className="btn btn-outline-primary"
-            style={{ marginRight: "2%" }}
-          >
-            수정하기
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
+            className="btn btn-outline-secondary"
             onClick={() => navigate(-1)}
           >
             뒤로가기
