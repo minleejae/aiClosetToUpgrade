@@ -5,7 +5,7 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-const OotdViewForm = ({ postType, images }) => {
+const OotdViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
   const paramsId = useParams().id;
@@ -13,38 +13,26 @@ const OotdViewForm = ({ postType, images }) => {
   const [myPost, setMyPost] = useState(false);
 
   useEffect(() => {
-    const searchPost = images.find((image) => {
-      return paramsId === image.shortId;
-    });
-    //나의 게시물인 경우에만 수정
-    setMyPost(searchPost.author.email === cookies.userData.email);
-
-    //브라우저에서 현재 게시물 정보 저장해서 새로고침해도 볼 수 있도록 저장
-    localStorage.setItem("ootd-post", JSON.stringify(searchPost));
-    const saved = localStorage.getItem("ootd-post");
-    if (saved !== null) {
-      setCurPost(JSON.parse(saved));
-    } else {
-      setCurPost(searchPost);
-    }
+    getPost();
   }, []);
 
-  const imageTag = curPost ? (
-    <img
-      src={port.url + "/" + curPost?.img.url.split("/")[1]}
-      alt="temp"
-      style={{ width: 80 + "%" }}
-    />
-  ) : (
-    <></>
-  );
+  const getPost = async () => {
+    const post = await axios.get(port.url + `/api/posts/list/${paramsId}`, {
+      headers: { accessToken: cookies.userData.accessToken },
+    });
+    setCurPost(post.data);
+    setMyPost(post.data.author.email === cookies.userData.email);
+    console.log(post.data);
+  };
 
   const handleUpdateButton = () => {
     navigate("update");
   };
   const handleRemoveButton = async () => {
     try {
-      await axios.get(port.url + `/api/posts/list/${paramsId}/delete`);
+      await axios.post(port.url + `/api/posts/list/${paramsId}/delete`, {
+        headers: { accessToken: cookies.userData.accessToken },
+      });
     } catch {}
     navigate("/board");
   };
@@ -61,48 +49,21 @@ const OotdViewForm = ({ postType, images }) => {
               justifyContent: "center",
             }}
           >
-            {imageTag}
+            {curPost && (
+              <img
+                src={port.url + "/" + curPost?.img.url.split("/")[1]}
+                alt="temp"
+                style={{ width: 80 + "%" }}
+              />
+            )}
           </div>
           <div className="mb-3">
-            <label htmlFor="title" disabled className="form-label">
-              제목
-            </label>
-
-            <input
-              disabled
-              type="text"
-              className="form-control"
-              name="title"
-              id="title"
-              placeholder="제목을 입력해주세요."
-            />
-            {postType === 3 ? (
-              <>
-                <label htmlFor="price" className="form-label">
-                  가격
-                </label>
-                <input
-                  disabled
-                  type="text"
-                  className="form-control"
-                  name="price"
-                  id="price"
-                  placeholder="가격을 입력해주세요."
-                />
-              </>
-            ) : undefined}
+            <h1>{curPost && curPost.title}</h1>
           </div>
           <div className="mb-3">
-            <label htmlFor="content" className="form-label">
-              내용
-            </label>
-            <textarea
-              disabled
-              className="form-control"
-              name="content"
-              id="content"
-              rows="3"
-            ></textarea>
+            <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
+              <p>{curPost && curPost.content}</p>
+            </div>
           </div>
           {myPost ? (
             <>
