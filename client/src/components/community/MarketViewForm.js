@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import Comments from "./Comments";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -102,28 +103,7 @@ const MarketViewForm = ({ postType }) => {
             뒤로가기
           </button>
         </div>
-        <div className="album container">
-          ...
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-          <h6>아이디 : 댓글댓글</h6>
-        </div>
-        <div className="album container">
-          <label htmlFor="title" className="form-label">
-            댓글
-          </label>
-          <div style={{ display: "flex" }}>
-            <input
-              type="text"
-              className="form-control"
-              name="title"
-              id="title"
-              placeholder="댓글을 입력해주세요."
-            />
-            <button>입력</button>
-          </div>
-        </div>
+        <Comments postId={paramsId}></Comments>
       </div>
     </div>
   );
