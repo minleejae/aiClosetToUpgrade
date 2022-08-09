@@ -116,7 +116,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 });
 
 //특정 게시글 삭제
-router.get("/list/:shortId/delete", async (req, res, next) => {
+router.delete("/list/:shortId/delete", async (req, res, next) => {
 
     //shortId를 파라미터를 통해 가져옵니다.
     const { shortId } = req.params;
