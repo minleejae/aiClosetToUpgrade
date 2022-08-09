@@ -5,12 +5,12 @@ import {
   FETCH_IMAGES_FAILURE,
 } from "./types";
 
+import port from "../../data/port.json";
+
 export const fetchOotdImages = (page, perPage) => {
   return (dispatch) => {
     dispatch(fetchImagesRequest());
-    fetch(
-      `http://localhost:8070/api/posts/list?page=${page}&perPage=${perPage}`
-    )
+    fetch(`${port.url}/api/posts/list?page=${page}&perPage=${perPage}`)
       .then((response) => response.json())
       .then((images) => {
         dispatch(fetchImagesSuccess(images));

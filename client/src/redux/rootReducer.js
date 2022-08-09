@@ -1,10 +1,23 @@
 import { combineReducers } from "redux";
-import imagesReducer from "./images/reducer";
-import widthReducer from "./width/reducer";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import OotdImages from "./OotdImages/reducer";
+import MarketImages from "./MarketImages/reducer";
+import width from "./width/reducer";
 
 const rootReducer = combineReducers({
-  images: imagesReducer,
-  width: widthReducer,
+  marketImages: MarketImages,
+  ootdImages: OotdImages,
+  width,
 });
 
-export default rootReducer;
+const persistConfig = {
+  key: "root",
+  // localStorage에 저장합니다.
+  storage,
+  //whitelist에 있는 reducer만 localstorage에 저장합니다.
+  whitelist: ["images"],
+  // blacklist -> 그것만 제외합니다
+};
+
+export default persistReducer(persistConfig, rootReducer);

@@ -4,18 +4,14 @@ import { fetchOotdImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
 
-const OotdImages = ({
-  fetchOotdImages,
-  loading,
-  images,
-  width,
-  columns,
-  perPages,
-}) => {
+const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchOotdImages(1, perPages);
+    window.scrollTo(0, 0);
+    console.log("images", images);
+    fetchOotdImages(images.length, perPages);
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -29,7 +25,8 @@ const OotdImages = ({
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
       //서버 변동필요
       // fetchOotdImages((누적숫자), perPages);
-      fetchOotdImages(1, perPages);
+      console.log("images", images);
+      fetchOotdImages(images.length, perPages);
     }
   };
 
@@ -53,7 +50,7 @@ const OotdImages = ({
             >
               <img
                 onClick={() => {
-                  navigate("/board/" + index);
+                  navigate("/board/" + it.shortId);
                 }}
                 src={srcUrl}
                 alt="ootd"
@@ -71,10 +68,11 @@ const OotdImages = ({
   );
 };
 
-const mapStateToProps = ({ images, width }) => {
+const mapStateToProps = ({ ootdImages, width }) => {
+  console.log("ootdImages", ootdImages);
   return {
-    images: images.items,
-    loading: images.loading,
+    images: ootdImages.items,
+    loading: ootdImages.loading,
     width: width.width,
     columns: width.columns,
     perPages: width.perPages,
