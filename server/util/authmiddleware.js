@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import jwtConfig from "./../config/jwtConfig";
+import jwtConfig from "./../config/jwtConfig.js";
 
-export const authmiddleware = async (req, res, next) => {
+const authmiddleware = async (req, res, next) => {
     //token값을 header에서 가져옴.
+    // console.log(req.header);
     const accessToken = req.header("accessToken");
-
     //토큰 값이 비워져 있는지 체크합니다.
     if (accessToken === null || accessToken === undefined) {
         //만약 비워져 있다면 오류를 발생시킵니다.
@@ -34,3 +34,5 @@ export const authmiddleware = async (req, res, next) => {
     }
 
 }
+
+export default authmiddleware;
