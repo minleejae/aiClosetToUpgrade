@@ -15,7 +15,9 @@ const ClothesRow = () => {
 
   const getImages = async () => {
     await axios
-      .get(port.url + "/api/closet/list/" + cookies.userData.email)
+      .get(port.url + "/api/closet/list", {
+        headers: { accessToken: cookies.userData.accessToken },
+      })
       .then((res) => {
         setItems(res.data.posts);
       });
@@ -29,15 +31,8 @@ const ClothesRow = () => {
     setItems(newItems);
   };
 
-  const test = (
-    <header className="App-header">
-      <div className></div>
-    </header>
-  );
-
   return (
     <>
-      <></>
       <h1>TOP</h1>
       <div className="row-container">
         {items.map((item, index) => {
