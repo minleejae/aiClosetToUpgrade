@@ -7,11 +7,15 @@ import {
 
 import port from "../../data/port.json";
 
-export const fetchMarketImages = (page, perPage) => {
+export const fetchMarketImages = (page, perPage, accessToken) => {
   return (dispatch) => {
     console.log(page, perPage);
     dispatch(fetchImagesRequest());
-    fetch(`${port.url}/api/market/list?page=${page}&perPage=${perPage}`)
+    fetch(`${port.url}/api/market/list?page=${page}&perPage=${perPage}`, {
+      headers: {
+        accessToken,
+      },
+    })
       .then((response) => response.json())
       .then((images) => {
         dispatch(fetchImagesSuccess(images));

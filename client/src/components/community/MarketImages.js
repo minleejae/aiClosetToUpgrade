@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchMarketImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
+import { useCookies } from "react-cookie";
 
 const MarketImages = ({
   fetchMarketImages,
@@ -12,11 +13,12 @@ const MarketImages = ({
   perPages,
 }) => {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log("images", images);
-    fetchMarketImages(images.length, perPages);
+    fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
 
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -31,7 +33,7 @@ const MarketImages = ({
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
       //image 값이 동기화 되지 않고 있음 이를 수정 필요
       console.log("images", images?.length);
-      fetchMarketImages(images.length, perPages);
+      fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
     }
   };
 

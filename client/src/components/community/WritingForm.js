@@ -88,7 +88,9 @@ const WritingForm = ({
 
     //파일 data 서버로 post
     await axios
-      .post(port.url + requestUrl[postType - 1], formData)
+      .post(port.url + requestUrl[postType - 1], formData, {
+        headers: { accessToken: cookies.userData.accessToken },
+      })
       .then((res) => {
         console.log(res);
       })
