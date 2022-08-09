@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import jwtConfig from "./../config/jwtConfig";
 
-module.exports = async (req, res, next) => {
+export const authmiddleware = async (req, res, next) => {
     //token값을 header에서 가져옴.
     const accessToken = req.header("accessToken");
 
