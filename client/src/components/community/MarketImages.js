@@ -17,7 +17,6 @@ const MarketImages = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log("images", images);
     fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
 
     window.addEventListener("scroll", handleScroll);
@@ -32,7 +31,6 @@ const MarketImages = ({
     if (totalScroll - curScroll < 30) {
       //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
       //image 값이 동기화 되지 않고 있음 이를 수정 필요
-      console.log("images", images?.length);
       fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
     }
   };
@@ -76,7 +74,6 @@ const MarketImages = ({
 };
 
 const mapStateToProps = ({ marketImages, width }) => {
-  console.log("marketImages", marketImages);
   return {
     images: marketImages.items,
     loading: marketImages.loading,

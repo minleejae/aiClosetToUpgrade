@@ -3,30 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { fetchOotdImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
+import { useCookies } from "react-cookie";
+import { useSelector } from "react-redux";
 
 const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
+  const curImages = useSelector((state) => state.ootdImages.items);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    console.log("images", images);
-    fetchOotdImages(images.length, perPages);
-
+    if (count === 0) window.scrollTo(0, 0);
+    fetchOotdImages(count, perPages, cookies.userData.accessToken);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [count]);
 
   const handleScroll = () => {
     const totalScroll = document.body.scrollHeight - window.innerHeight;
     const curScroll = window.scrollY;
-    if (totalScroll - curScroll < 30) {
-      //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
-      //서버 변동필요
-      // fetchOotdImages((누적숫자), perPages);
-      console.log("images", images);
-      fetchOotdImages(images.length, perPages);
+    if (totalScroll - curScroll < 15) {
+      setCount(count + perPages);
     }
   };
 
@@ -69,7 +68,6 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
 };
 
 const mapStateToProps = ({ ootdImages, width }) => {
-  console.log("ootdImages", ootdImages);
   return {
     images: ootdImages.items,
     loading: ootdImages.loading,

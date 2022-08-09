@@ -20,14 +20,18 @@ const MarketViewForm = ({ postType, images }) => {
     setMyPost(searchPost.author.email === cookies.userData.email);
 
     //브라우저에서 현재 게시물 정보 저장해서 새로고침해도 볼 수 있도록 저장
-    localStorage.setItem("market-post", JSON.stringify(searchPost));
-    const saved = localStorage.getItem("market-post");
-    if (saved !== null) {
-      setCurPost(JSON.parse(saved));
-    } else {
-      setCurPost(searchPost);
-    }
+    setCurPost(searchPost);
   }, []);
+
+  const handleUpdateButton = () => {
+    navigate("update");
+  };
+  const handleRemoveButton = async () => {
+    try {
+      await axios.get(port.url + `/api/market/list/${paramsId}/delete`);
+    } catch {}
+    navigate("/market");
+  };
 
   const imageTag = curPost ? (
     <img
@@ -39,15 +43,6 @@ const MarketViewForm = ({ postType, images }) => {
     <></>
   );
 
-  const handleUpdateButton = () => {
-    navigate("update");
-  };
-  const handleRemoveButton = async () => {
-    try {
-      await axios.get(port.url + `/api/market/list/${paramsId}/delete`);
-    } catch {}
-    navigate("/market");
-  };
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>

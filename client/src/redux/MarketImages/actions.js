@@ -9,7 +9,6 @@ import port from "../../data/port.json";
 
 export const fetchMarketImages = (page, perPage, accessToken) => {
   return (dispatch) => {
-    console.log(page, perPage);
     dispatch(fetchImagesRequest());
     fetch(`${port.url}/api/market/list?page=${page}&perPage=${perPage}`, {
       headers: {
@@ -24,8 +23,6 @@ export const fetchMarketImages = (page, perPage, accessToken) => {
         console.log(error);
         dispatch(fetchImagesFailure(error));
       });
-
-    console.log("abcd");
   };
 };
 
