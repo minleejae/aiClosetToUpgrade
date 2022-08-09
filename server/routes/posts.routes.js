@@ -64,3 +64,49 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     }
 
  });
+
+ router.post("/list/:shortId/delete", async (req, res, next) => {
+    const {shortId} = req.params; // 객체이름과 params이름이 같아야 할당이 된다.
+    console.log(shortId);
+    try {
+        await Post.deleteOne({shortId});
+        res.json({
+            result: '삭제가 완료 되었습니다.'
+        })
+    }catch(err) {
+        err.message = `${err.message} post delete error`
+        next(err);
+    }
+})
+
+router.get("/list/:shortId/find", async (req, res, next) => {
+    let {shortId} = req.params;
+    try {
+        let data = await Post.findOne({shortId});
+        console.log(data);
+        res.json(data);
+
+    } catch(err){
+        err.message = `${err.message} post find error`
+        next(err);
+    }
+});
+
+router.post("/list/:shortId/update", async (req, res, next) => {
+    let {shortId} = req.params;
+    let {title, content} = req.body;
+
+    try {
+        await Post.updateOne({shortId}, {
+            title,
+            content
+        })
+        res.json({
+            result: '수정이 완료되었습니다.'
+        })
+    } catch (err) {
+        err.message = `${err.message} post update error`
+        next(err)
+    }
+
+});
