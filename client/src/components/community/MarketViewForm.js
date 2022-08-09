@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-const ViewForm = ({ postType }) => {
+const MarketViewForm = ({ postType, images }) => {
   const navigate = useNavigate();
-  console.log("ViewForm!", postType);
+  console.log("MarketViewForm!", postType);
   return (
     <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
@@ -106,4 +107,10 @@ const ViewForm = ({ postType }) => {
   );
 };
 
-export default ViewForm;
+const mapStateToProps = ({ images }) => {
+  return {
+    images: images.items,
+  };
+};
+
+export default connect(mapStateToProps)(MarketViewForm);

@@ -53,7 +53,7 @@ const OotdImages = ({
             >
               <img
                 onClick={() => {
-                  navigate("/board/" + index);
+                  navigate("/board/" + it.shortId);
                 }}
                 src={srcUrl}
                 alt="ootd"
