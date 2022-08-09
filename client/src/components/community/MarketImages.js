@@ -12,26 +12,25 @@ const MarketImages = ({
   columns,
   perPages,
 }) => {
-  const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const navigate = useNavigate();
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (count === 0) window.scrollTo(0, 0);
     fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [count]);
 
+  //무한스크롤 기능 수정 더 효율적으로 필요 현재 게시물이 적은 경우 요청을 많이함
   const handleScroll = () => {
     const totalScroll = document.body.scrollHeight - window.innerHeight;
     const curScroll = window.scrollY;
-    if (totalScroll - curScroll < 30) {
-      //여기서 서버에 이미지 데이터 받아서 재렌더링 시켜주기
-      //image 값이 동기화 되지 않고 있음 이를 수정 필요
-      fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
+    if (totalScroll - curScroll < 15) {
+      setCount(count + perPages);
     }
   };
 

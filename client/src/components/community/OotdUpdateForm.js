@@ -42,7 +42,6 @@ const OotdUpdateForm = ({ postType, images }) => {
     } catch (e) {
       console.log(e);
     }
-
     navigate("/board");
   };
 
