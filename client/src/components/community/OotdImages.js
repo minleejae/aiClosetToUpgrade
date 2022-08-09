@@ -4,12 +4,10 @@ import { fetchOotdImages } from "../../redux";
 import { connect } from "react-redux";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
 
 const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
-  const curImages = useSelector((state) => state.ootdImages.items);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -21,6 +19,7 @@ const OotdImages = ({ fetchOotdImages, images, width, columns, perPages }) => {
     };
   }, [count]);
 
+  //무한스크롤 기능 수정 더 효율적으로 필요 현재 게시물이 적은 경우 요청을 많이함
   const handleScroll = () => {
     const totalScroll = document.body.scrollHeight - window.innerHeight;
     const curScroll = window.scrollY;
