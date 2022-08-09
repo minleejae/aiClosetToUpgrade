@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     });
 const upload = multer({ storage: storage });
 
-
+// 게시글 생성하기
 router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
@@ -40,7 +40,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 
  });
 
- 
+//게시글 목록 불러오기
 router.get("/list", async (req, res, next) => {
     try {
         const page = Number(req.query.page);
@@ -48,7 +48,7 @@ router.get("/list", async (req, res, next) => {
     
         const posts = await Post.find({ postType: 3 })
         .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
-        .skip(perPage * (page - 1)) //ex> 2페이지라면 5번부터
+        .skip(page) //ex> 2페이지라면 5번부터
         .limit(perPage) // 6개씩 가져와줘.
         .populate("author");
         
@@ -63,14 +63,21 @@ router.get("/list", async (req, res, next) => {
 
 });
 
-router.get("/list/:shortId/find", async (req, res, next) => {
+//특정 게시글 불러오기
+router.get("/list/:shortId", async (req, res, next) => {
     let { shortId } = req.params;
 
     try {
 
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
         let data = await Post.findOne({ shortId })
-            .populate("comments");
+            .populate("author")
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "comments"
+                }
+            });
 
         //가져온 데이터를 json형태로 응답합니다.
         res.json(data);
@@ -82,12 +89,13 @@ router.get("/list/:shortId/find", async (req, res, next) => {
 
 });
 
+//특정 게시글 수정
 router.put("/list/:shortId/update", async (req, res, next) => {
     let { shortId } = req.params;
     let { title, content } = req.body;
 
     try {
-
+        //작성자 검증필요
        // shortId가 같은 데이터를 title, content를 update시켜줍니다.
        await Post.updateOne({ shortId }, {
             title,
@@ -107,13 +115,14 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 
 });
 
-
+//특정 게시글 삭제
 router.get("/list/:shortId/delete", async (req, res, next) => {
 
     //shortId를 파라미터를 통해 가져옵니다.
     const { shortId } = req.params;
 
     try {
+        //작성자 검증 필요
         //shortId에 해당하는 document를 삭제합니다.
         await Post.deleteOne({ shortId });
 
@@ -128,6 +137,7 @@ router.get("/list/:shortId/delete", async (req, res, next) => {
     }
 });
 
+//특정 게시글에 댓글달기
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
     let { comment, email } = req.body;
@@ -150,6 +160,7 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 
 });
 
+//특정 게시글 댓글에 대댓글 달기
 router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
     const { shortId, p_shortId } = req.params;
     let { comment, email } = req.body;
