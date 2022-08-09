@@ -93,9 +93,17 @@ router.get("/list/:shortId", async (req, res, next) => {
 router.put("/list/:shortId/update", async (req, res, next) => {
     let { shortId } = req.params;
     let { title, content } = req.body;
-
+    const tokenInfo = req.tokenInfo;
+    
     try {
-        //작성자 검증필요
+        //작성자 검증 
+        if (!accessToken) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
        // shortId가 같은 데이터를 title, content를 update시켜줍니다.
        await Post.updateOne({ shortId }, {
             title,
@@ -116,13 +124,21 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 });
 
 //특정 게시글 삭제
-router.get("/list/:shortId/delete", async (req, res, next) => {
+router.delete("/list/:shortId/delete", async (req, res, next) => {
 
     //shortId를 파라미터를 통해 가져옵니다.
     const { shortId } = req.params;
-
+    const tokenInfo = req.tokenInfo;
+    
     try {
-        //작성자 검증 필요
+        //작성자 검증 
+        if (!accessToken) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
         //shortId에 해당하는 document를 삭제합니다.
         await Post.deleteOne({ shortId });
 
