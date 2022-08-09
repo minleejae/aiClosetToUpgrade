@@ -27,7 +27,7 @@ router.get("/list", async (req, res, next) => {
 
         const posts = await Post.find({ postType: 2 })
         .sort({ createdAt: -1 }) 
-        .skip(perPage * (page - 1)) 
+        .skip(page) 
         .limit(perPage)
         .populate("author");
 
