@@ -3,8 +3,10 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 import "./componentsCss/Header.css";
+import { connect } from "react-redux";
+import { updateWidth } from "../redux";
 
-const Header = ({ loginState }) => {
+const Header = ({ width, columns, updateWidth }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
 
@@ -13,12 +15,21 @@ const Header = ({ loginState }) => {
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
+
+  //width 관리
   useEffect(() => {
+    updateWidth(document.documentElement.clientWidth);
+    window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
     return () => {
       window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("resize", handleResize);
     };
-  });
+  }, [scrollPosition]);
+
+  const handleResize = () => {
+    updateWidth(document.documentElement.clientWidth);
+  };
 
   //작은화면일 때 햄버거버튼 토글에 따라 메뉴창 보이게 하기
   const handleClickToggleBtn = (e) => {
@@ -95,4 +106,12 @@ const Header = ({ loginState }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = ({ width }) => {
+  return { width: width.width, columns: width.columns };
+};
+
+const mapDispatchToProps = {
+  updateWidth,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

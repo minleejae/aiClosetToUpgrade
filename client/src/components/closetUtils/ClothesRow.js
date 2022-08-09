@@ -29,8 +29,15 @@ const ClothesRow = () => {
     setItems(newItems);
   };
 
+  const test = (
+    <header className="App-header">
+      <div className></div>
+    </header>
+  );
+
   return (
     <>
+      <></>
       <h1>TOP</h1>
       <div className="row-container">
         {items.map((item, index) => {
@@ -112,17 +119,27 @@ const ClothesRow = () => {
           }
         })}
       </div>
-      <h1>Sorry</h1>
+      <h1>ETC</h1>
       <div className="row-container">
         {items.map((item, index) => {
-          if (item.type === "what") {
+          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
+          if (item.img.category === "WHAT") {
             return (
-              <img
-                key={index}
-                src={item.src}
-                alt={item.type}
-                className="rowImages"
-              />
+              <div key={item._id}>
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={item.type}
+                  className="rowImages"
+                />
+                <button
+                  onClick={() => {
+                    handleDeleteBtn(item.id);
+                  }}
+                >
+                  X
+                </button>
+              </div>
             );
           } else {
             return <></>;
