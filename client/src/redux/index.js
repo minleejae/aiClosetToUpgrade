@@ -1,1 +1,2 @@
-export { fetchImages } from "./images/actions";
+export { fetchOotdImages } from "./images/actions";
+export { updateWidth } from "./width/actions";

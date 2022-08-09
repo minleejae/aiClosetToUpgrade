@@ -16,8 +16,20 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 function App() {
-  //로그인 여부
-  const [loginState, setLoginState] = useState(false);
+  //현재 브라우저의 너비에 따라 반응형으로 이미지 표시
+  // const handleResize = () => {
+  //   if (
+  //     document.documentElement.clientWidth < 1400 &&
+  //     document.documentElement.clientWidth > 900
+  //   ) {
+  //     setColumNumber(4);
+  //   } else if (document.documentElement.clientWidth > 1400) {
+  //     setColumNumber(5);
+  //   } else if (document.documentElement.clientWidth < 900) {
+  //     setColumNumber(3);
+  //   }
+  //   setCurWindowWidth(document.documentElement.clientWidth - imageBoxPadding);
+  // };
 
   // 로그인 입력받을 데이터를 props로 넘겨줌
   const [signInData, setSignInData] = useState({
@@ -50,13 +62,11 @@ function App() {
     });
   };
 
-  useEffect(() => {}, [loginState]);
-
   //login 여부에 따라 Main 렌더링
   return (
     <Provider store={store}>
       <div className="App">
-        <Header loginState={loginState} />
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
