@@ -50,7 +50,7 @@ const MarketUpdateForm = ({ postType, images }) => {
     } catch (e) {
       console.log(e);
     }
-    navigate("/board");
+    navigate("/market");
   };
 
   //글 삭제하기 버튼 클릭시 이벤트
@@ -62,7 +62,7 @@ const MarketUpdateForm = ({ postType, images }) => {
     } catch (e) {
       console.log(e);
     }
-    navigate("/board");
+    navigate("/market");
   };
 
   const handleChange = (e) => {

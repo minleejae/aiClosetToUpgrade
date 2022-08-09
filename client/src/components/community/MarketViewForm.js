@@ -35,7 +35,7 @@ const MarketViewForm = ({ postType }) => {
         headers: { accessToken: cookies.userData.accessToken },
       });
     } catch {}
-    navigate("/board");
+    navigate("/market");
   };
 
   return (
