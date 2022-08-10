@@ -57,7 +57,7 @@ const Header = ({ width, columns, updateWidth }) => {
           }}
         >
           <i className="fa-solid fa-shirt"></i>
-          AI-CLOSET
+          AI CLOSET
         </li>
       </div>
       <ul className="navbar__menu">
