@@ -15,7 +15,7 @@ router.use(users.path, users.router);
 router.use(closet.path, authmiddleware, closet.router);
 router.use(posts.path, posts.router);
 router.use(market.path, authmiddleware, market.router);
-router.use(like.path, authmiddleware, market.router);
+router.use(like.path, authmiddleware, like.router);
 
 
 

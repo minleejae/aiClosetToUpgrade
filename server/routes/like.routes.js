@@ -8,7 +8,6 @@ export const router = Router();
 router.get("/getlikes", async (req, res, next) => {
 
     try {
-
         let postData = null;
         let upmentData = null;
         let downmentData = null;
@@ -88,7 +87,6 @@ router.post("/uplike", async (req, res, next) => {
             const downmentId = req.body.downmentId
             downmentData = await Downment.findOne({downmentId});
         }
-        console.log(postData);
         
         const liked = await Like.findOne({
             userId: userData,
@@ -142,16 +140,59 @@ router.post("/updislike", async (req, res, next) => {
 
     try {
 
-        let variable = {};
-    
+        const userData = await User.findOne({email});
+        let postData = null;
+        let upmentData = null;
+        let downmentData = null;
         if (req.body.postId) {
-            variable = { postId: req.body.postId };
+            const postId = req.body.postId;
+            postData = await Post.findOne({postId});
         } else if (req.body.upmentId) { 
-            variable = { upmentId: req.body.upmentId };
+            const upmentId = req.body.upmentId
+            upmentData = await Upment.findOne({upmentId});
         } else { 
-            variable = { downmentId: req.body.downmentId };
+            const downmentId = req.body.downmentId
+            downmentData = await Downment.findOne({downmentId});
         }
-    
+        
+        const liked = await Like.findOne({
+            userId: userData,
+            postId: postData,
+            upmentId: upmentData,
+            downmentId: downmentData 
+        });
+        const disliked = await Dislike.findOne({
+            userId: userData,
+            postId: postData,
+            upmentId: upmentData,
+            downmentId: downmentData 
+        });
+
+        if (disliked) {
+            await Dislike.findOneAndDelete(
+                disliked._id
+            );
+            return res.status(200).json({ disliked: false });
+        } else if (liked) {
+            await Like.findOneAndDelete(
+                liked._id
+            );
+            await Dislike.create({
+                userId: userData,
+                postId: postData,
+                upmentId: upmentData,
+                downmentId: downmentData
+            });
+            return res.status(200).json({ liked: false, disliked: true });
+        } else {
+            await Dislike.create({
+                userId: userData,
+                postId: postData,
+                upmentId: upmentData,
+                downmentId: downmentData
+            });
+            return res.status(200).json({ disliked: true });
+        }
        
     } catch (err) {
         err.message = `${err.message}, market post dislike error.`;
