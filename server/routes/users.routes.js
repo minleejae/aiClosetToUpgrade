@@ -10,7 +10,6 @@ export const router = Router();
 
 router.post("/signup", async (req, res, next) => {
     try {
-        console.log("hi", req);
         const { email, password, name } = req.body;
     
         let hashPassword = passwordHash(password);
