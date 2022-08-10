@@ -64,7 +64,7 @@ const Header = ({ width, columns, updateWidth }) => {
         <li
           onClick={() => {
             if (cookies.userData === undefined) {
-              alert("로그인 후 게시판을 이용할 수 있습니다.");
+              alert("로그인 후 게시판을 이용하실 수 있습니다.");
               navigate("/login");
             } else {
               navigate("/board");
@@ -76,7 +76,7 @@ const Header = ({ width, columns, updateWidth }) => {
         <li
           onClick={() => {
             if (cookies.userData === undefined) {
-              alert("로그인 후 게시판을 이용할 수 있습니다.");
+              alert("로그인 후 게시판을 이용하실 수 있습니다.");
               navigate("/login");
             } else {
               navigate("/market");
