@@ -105,7 +105,7 @@ router.post("/uplike", async (req, res, next) => {
             await Like.findOneAndDelete(
                 liked._id
             );
-            return res.status(200).json({ liked: false });
+            return res.status(200).json({ liked: false, disliked: false});
         } else if (disliked) {
             await Dislike.findOneAndDelete(
                 disliked._id
@@ -116,7 +116,7 @@ router.post("/uplike", async (req, res, next) => {
                 upmentId: upmentData,
                 downmentId: downmentData
             });
-            return res.status(200).json({ disliked: false });
+            return res.status(200).json({ liked: true, disliked: false });
         } else {
             await Like.create({
                 userId: userData,
@@ -124,7 +124,7 @@ router.post("/uplike", async (req, res, next) => {
                 upmentId: upmentData,
                 downmentId: downmentData
             });
-            return res.status(200).json({liked: true});
+            return res.status(200).json({liked: true, disliked: false});
         }
 
         
@@ -172,7 +172,7 @@ router.post("/updislike", async (req, res, next) => {
             await Dislike.findOneAndDelete(
                 disliked._id
             );
-            return res.status(200).json({ disliked: false });
+            return res.status(200).json({ liked:false ,disliked: false });
         } else if (liked) {
             await Like.findOneAndDelete(
                 liked._id
@@ -191,7 +191,7 @@ router.post("/updislike", async (req, res, next) => {
                 upmentId: upmentData,
                 downmentId: downmentData
             });
-            return res.status(200).json({ disliked: true });
+            return res.status(200).json({ liked: false, disliked: true });
         }
        
     } catch (err) {
