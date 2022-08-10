@@ -5,6 +5,7 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
+import LikeDislikes from "./LikeDislikes";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -67,6 +68,9 @@ const MarketViewForm = ({ postType }) => {
           <div className="mb-3">
             <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
               <p>{curPost && curPost.content}</p>
+            </div>
+            <div>
+              <LikeDislikes userId={123} postId={123} />
             </div>
           </div>
           {myPost ? (

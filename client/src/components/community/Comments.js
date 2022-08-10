@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import port from "../../data/port.json";
+import LikeDislikes from "./LikeDislikes";
 
 const Comments = ({ postId }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -55,6 +56,7 @@ const Comments = ({ postId }) => {
               >
                 <h4>{it.body}</h4>
                 <div>
+                  <LikeDislikes comment userId={123} commentId={123} />
                   <button>좋아요</button>
                   <button>싫어요</button>
                   <button>대댓글</button>
