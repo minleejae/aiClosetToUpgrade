@@ -31,7 +31,7 @@ router.get("/getlikes", async (req, res, next) => {
 
         res.status(200).json(likes);
     } catch (err) {
-        err.message = `${err.message}, market get like error.`;
+        err.message = `${err.message}, get like error.`;
         next(err);
     }
 });
@@ -63,7 +63,7 @@ router.get("/getdislikes", async (req, res, next) => {
 
         res.status(200).json(dislikes);
     } catch (err) {
-        err.message = `${err.message}, market get dislike error.`;
+        err.message = `${err.message}, get dislike error.`;
         next(err);
     }
 });
@@ -129,7 +129,7 @@ router.post("/uplike", async (req, res, next) => {
 
         
     } catch (err) {
-        err.message = `${err.message}, market post like error.`;
+        err.message = `${err.message}, post like error.`;
         next(err);
     }
 });
@@ -195,7 +195,7 @@ router.post("/updislike", async (req, res, next) => {
         }
        
     } catch (err) {
-        err.message = `${err.message}, market post dislike error.`;
+        err.message = `${err.message}, post dislike error.`;
         next(err);
     }
 });
