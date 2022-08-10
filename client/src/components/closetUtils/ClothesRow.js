@@ -3,6 +3,36 @@ import React, { useEffect, useState } from "react";
 import "./ClothesRow.css";
 import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #333;
+  padding: 1rem;
+  margin-top: 1rem;
+`;
+
+const DraggableDiv = styled.div`
+  display: flex;
+  padding: 1rem;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: 1px solid black;
+  cursor: grab;
+`;
+
+const DeleteButton = styled.input.attrs({
+  type: "submit",
+  value: "X",
+})`
+  margin: -10px;
+  height: 30px;
+  border-radius: 15%;
+  background-color: white;
+`;
 
 const ClothesRow = () => {
   //userid에 따른 옷데이터
@@ -20,6 +50,7 @@ const ClothesRow = () => {
       })
       .then((res) => {
         setItems(res.data.posts);
+        console.log(res.data.posts);
       });
   };
 
@@ -31,116 +62,49 @@ const ClothesRow = () => {
     setItems(newItems);
   };
 
+  //로우 컴포넌트
+  const RowComponent = ({ itemCategroy }) => (
+    <>
+      <h1 style={{ textAlign: "center" }}>{itemCategroy}</h1>
+      <Container>
+        {items.map((item, index) => {
+          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
+          if (item.img.category === itemCategroy) {
+            console.log(item._id);
+            return (
+              <div key={item._id} draggable>
+                <DraggableDiv>
+                  <img
+                    src={imgUrl}
+                    alt={item.type}
+                    style={{
+                      userDrag: "none",
+                      WebkitUserDrag: "none",
+                      width: 100 + "%",
+                    }}
+                  />
+                  <DeleteButton
+                    onClick={() => {
+                      handleDeleteBtn(item.id);
+                    }}
+                  />
+                </DraggableDiv>
+              </div>
+            );
+          } else {
+            return <></>;
+          }
+        })}
+      </Container>
+    </>
+  );
+
   return (
     <>
-      <h1>TOP</h1>
-      <div className="row-container">
-        {items.map((item, index) => {
-          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
-          if (item.img.category === "TOP") {
-            return (
-              <div key={item._id}>
-                <img
-                  key={index}
-                  src={imgUrl}
-                  alt={item.type}
-                  className="rowImages"
-                />
-                <button
-                  onClick={() => {
-                    handleDeleteBtn(item.id);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            );
-          } else {
-            return <></>;
-          }
-        })}
-      </div>
-      <h1>BOTTOM</h1>
-      <div className="row-container">
-        {items.map((item, index) => {
-          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
-          if (item.img.category === "BOTTOM") {
-            return (
-              <div key={item._id}>
-                <img
-                  key={index}
-                  src={imgUrl}
-                  alt={item.type}
-                  className="rowImages"
-                />
-                <button
-                  onClick={() => {
-                    handleDeleteBtn(item.id);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            );
-          } else {
-            return <></>;
-          }
-        })}
-      </div>
-      <h1>SHOES</h1>
-      <div className="row-container">
-        {items.map((item, index) => {
-          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
-          if (item.img.category === "SHOE") {
-            return (
-              <div key={item._id}>
-                <img
-                  key={index}
-                  src={imgUrl}
-                  alt={item.type}
-                  className="rowImages"
-                />
-                <button
-                  onClick={() => {
-                    handleDeleteBtn(item.id);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            );
-          } else {
-            return <></>;
-          }
-        })}
-      </div>
-      <h1>ETC</h1>
-      <div className="row-container">
-        {items.map((item, index) => {
-          const imgUrl = port.url + "/" + item.img.url.split("/")[1];
-          if (item.img.category === "WHAT") {
-            return (
-              <div key={item._id}>
-                <img
-                  key={index}
-                  src={imgUrl}
-                  alt={item.type}
-                  className="rowImages"
-                />
-                <button
-                  onClick={() => {
-                    handleDeleteBtn(item.id);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            );
-          } else {
-            return <></>;
-          }
-        })}
-      </div>
+      <RowComponent key={"TOP"} itemCategroy={"TOP"} />
+      <RowComponent key={"BOTTOM"} itemCategroy={"BOTTOM"} />
+      <RowComponent key={"SHOE"} itemCategroy={"SHOE"} />
+      <RowComponent key={"ETC"} itemCategroy={"ETC"} />
     </>
   );
 };
