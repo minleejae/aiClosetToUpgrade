@@ -19,6 +19,7 @@ const Header = ({ width, columns, updateWidth }) => {
 
   //width 관리
   useEffect(() => {
+    console.log(cookies.userData);
     updateWidth(document.documentElement.clientWidth);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
@@ -60,11 +61,29 @@ const Header = ({ width, columns, updateWidth }) => {
         <li>
           <a href="/closet">CLOSET</a>
         </li>
-        <li>
-          <a href="/board">OOTD</a>
+        <li
+          onClick={() => {
+            if (cookies.userData === undefined) {
+              alert("로그인 후 게시판을 이용할 수 있습니다.");
+              navigate("/login");
+            } else {
+              navigate("/board");
+            }
+          }}
+        >
+          <a>OOTD</a>
         </li>
-        <li>
-          <a href="/market">MARKET</a>
+        <li
+          onClick={() => {
+            if (cookies.userData === undefined) {
+              alert("로그인 후 게시판을 이용할 수 있습니다.");
+              navigate("/login");
+            } else {
+              navigate("/market");
+            }
+          }}
+        >
+          <a>MARKET</a>
         </li>
       </ul>
       <ul className="navbar__log">

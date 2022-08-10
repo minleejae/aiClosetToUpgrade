@@ -94,6 +94,16 @@ const Login = ({ signInData, onChangeSignInData }) => {
             >
               로그인
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/signup");
+              }}
+              className="btn btn-success"
+              style={{ marginLeft: 3 + "px" }}
+            >
+              회원가입
+            </button>
           </form>
         </div>
       </div>
