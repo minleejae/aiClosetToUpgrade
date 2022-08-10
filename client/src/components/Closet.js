@@ -13,7 +13,6 @@ const Closet = () => {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          paddingBottom: 1.5 + "rem",
         }}
       >
         <h1>CLOSET</h1>
@@ -35,6 +34,7 @@ const Closet = () => {
           <button>오늘의 옷</button>
         </div>
       </div>
+      <hr></hr>
       <ClothesRow />
     </div>
   );
