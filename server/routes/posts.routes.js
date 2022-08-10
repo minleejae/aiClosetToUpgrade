@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { Post, User } from '../models/index.js';
+import { Post, User, Upment, Downment } from '../models/index.js';
 
 export const path = '/posts';
 export const router = Router();
