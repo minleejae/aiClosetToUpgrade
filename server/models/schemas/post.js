@@ -9,8 +9,6 @@ const PostSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    like_count: Number,
-    dislike_count: Number,
     price: Number, //당마용
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
