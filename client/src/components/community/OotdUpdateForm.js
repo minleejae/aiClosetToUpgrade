@@ -14,42 +14,43 @@ const OotdUpdateForm = ({ postType, images }) => {
   const [postForm, setPostForm] = useState({ title: "", content: "" });
 
   useEffect(() => {
-    const searchPost = images.find((image) => {
-      return paramsId === image.shortId;
-    });
-    console.log(searchPost);
-    //나의 게시물인 경우에만 수정
-    setMyPost(searchPost.author.email === cookies.userData.email);
-    setCurPost(searchPost);
-    setPostForm({ title: searchPost.title, content: searchPost.content });
+    getPost();
   }, []);
 
-  const imageTag = curPost ? (
-    <img
-      src={port.url + "/" + curPost?.img.url.split("/")[1]}
-      alt="temp"
-      style={{ width: 80 + "%" }}
-    />
-  ) : (
-    <></>
-  );
+  const getPost = async () => {
+    const post = await axios.get(port.url + `/api/posts/list/${paramsId}`, {
+      headers: { accessToken: cookies.userData.accessToken },
+    });
+    setCurPost(post.data);
+    setMyPost(post.data.author.email === cookies.userData.email);
+    setPostForm({ title: post.data.title, content: post.data.content });
+  };
 
+  //수정하기 클릭시 이벤트
   const handleUpdateSubmitButton = async () => {
     try {
-      await axios.put(port.url + `/market/list/${paramsId}/update`, {
-        title: postForm.title,
-        content: postForm.content,
-      });
+      await axios.put(
+        port.url + `/api/posts/list/${paramsId}/update`,
+        {
+          title: postForm.title,
+          content: postForm.content,
+        },
+        {
+          headers: { accessToken: cookies.userData.accessToken },
+        }
+      );
     } catch (e) {
       console.log(e);
     }
-
     navigate("/board");
   };
 
+  //글 삭제하기 버튼 클릭시 이벤트
   const handleRemoveButton = async () => {
     try {
-      await axios.get(port.url + `/api/posts/list/${paramsId}/delete`);
+      await axios.delete(port.url + `/api/posts/list/${paramsId}/delete`, {
+        headers: { accessToken: cookies.userData.accessToken },
+      });
     } catch (e) {
       console.log(e);
     }
@@ -57,7 +58,6 @@ const OotdUpdateForm = ({ postType, images }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     const newPostForm = { ...postForm };
     newPostForm[e.target.name] = e.target.value;
     setPostForm({ ...newPostForm });
@@ -76,7 +76,13 @@ const OotdUpdateForm = ({ postType, images }) => {
               justifyContent: "center",
             }}
           >
-            {imageTag}
+            {curPost && (
+              <img
+                src={port.url + "/" + curPost?.img.url.split("/")[1]}
+                alt="temp"
+                style={{ width: 80 + "%" }}
+              />
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
@@ -99,6 +105,7 @@ const OotdUpdateForm = ({ postType, images }) => {
             </label>
             <textarea
               className="form-control"
+              value={postForm.content}
               name="content"
               id="content"
               rows="3"

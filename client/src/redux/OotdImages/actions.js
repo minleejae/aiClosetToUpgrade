@@ -7,10 +7,14 @@ import {
 
 import port from "../../data/port.json";
 
-export const fetchOotdImages = (page, perPage) => {
+export const fetchOotdImages = (page, perPage, accessToken) => {
   return (dispatch) => {
     dispatch(fetchImagesRequest());
-    fetch(`${port.url}/api/posts/list?page=${page}&perPage=${perPage}`)
+    fetch(`${port.url}/api/posts/list?page=${page}&perPage=${perPage}`, {
+      headers: {
+        accessToken,
+      },
+    })
       .then((response) => response.json())
       .then((images) => {
         dispatch(fetchImagesSuccess(images));
@@ -19,8 +23,6 @@ export const fetchOotdImages = (page, perPage) => {
         console.log(error);
         dispatch(fetchImagesFailure(error));
       });
-
-    console.log("abcd");
   };
 };
 
