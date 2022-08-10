@@ -36,7 +36,7 @@ router.get("/list", async (req, res, next) => {
 
         res.json({ posts });
     } catch(err) {
-        err.message = `${err.message}, posts list error.`;
+        err.message = `${err.message}, ootd posts list error.`;
         next(err);
     }
 })
@@ -49,7 +49,7 @@ router.get("/list/:shortId/", async (req, res, next) => {
         res.json(data);
 
     } catch(err){
-        err.message = `${err.message} post find error`
+        err.message = `${err.message} ootd post find error`
         next(err);
     }
 });
@@ -78,7 +78,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 
  });
 
- router.post("/list/:shortId/delete", async (req, res, next) => {
+ router.delete("/list/:shortId/delete", async (req, res, next) => {
     const {shortId} = req.params; // 객체이름과 params이름이 같아야 할당이 된다.
     console.log(shortId);
     try {
@@ -87,12 +87,12 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
             result: '삭제가 완료 되었습니다.'
         })
     }catch(err) {
-        err.message = `${err.message} post delete error`
+        err.message = `${err.message} ootd post delete error`
         next(err);
     }
 })
 
-router.post("/list/:shortId/update", async (req, res, next) => {
+router.put("/list/:shortId/update", async (req, res, next) => {
     let {shortId} = req.params;
     let {title, content} = req.body;
 
@@ -105,8 +105,69 @@ router.post("/list/:shortId/update", async (req, res, next) => {
             result: '수정이 완료되었습니다.'
         })
     } catch (err) {
-        err.message = `${err.message} post update error`
+        err.message = `${err.message} ootd post update error`
         next(err)
+    }
+
+});
+
+router.post("/list/:shortId/comment", async (req, res, next) => {
+    const { shortId } = req.params;
+    let { comment, email } = req.body;
+    
+    try {
+        const authData = await User.findOne({email});
+        const postData = await Post.findOne({shortId}).populate('author');
+        
+        const newcomment = await Upment.create({
+            postType: 2,
+            author: authData,
+            post_id: postData,
+            comment: comment
+        });
+
+        await Post.updateOne({shortId}, {"$push": {"comments": newcomment}});
+        
+        res.json({
+            result: '댓글이 작성 되었습니다.'
+        })
+
+    } catch (err) {
+        err.message = `${err.message}, ootd post comment error.`;
+        next(err);
+    }
+
+});
+
+//특정 게시글 댓글에 대댓글 달기
+router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
+    const { shortId, p_shortId } = req.params;
+    let { comment, email } = req.body;
+
+    try {
+        const authData = await User.findOne({email});
+        const postData = await Post.findOne({shortId});
+        const parentData = await Upment.findOne({p_shortId});
+
+        const newcomment = await Downment.create({
+            postType: 2,
+            author: authData,
+            post_id: postData,
+            parentment_id: parentData,
+            comment: comment
+        });
+        console.log(newcomment);
+
+
+        await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
+        
+        res.json({
+            result: '댓글이 작성 되었습니다.'
+        })
+
+    } catch (err) {
+        err.message = `${err.message}, ootd post recomment error.`;
+        next(err);
     }
 
 });
