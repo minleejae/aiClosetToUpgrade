@@ -55,10 +55,8 @@ const Comments = ({ postId }) => {
                 style={{ border: "1px solid gray", margin: 10 + "px" }}
               >
                 <h4>{it.body}</h4>
-                <div>
+                <div style={{ display: "flex" }}>
                   <LikeDislikes comment userId={123} commentId={123} />
-                  <button>좋아요</button>
-                  <button>싫어요</button>
                   <button>대댓글</button>
                 </div>
               </div>
