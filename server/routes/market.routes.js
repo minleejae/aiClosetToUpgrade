@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { Downment, Post, Upment, User } from '../models/index.js'
+import { Dislike, Downment, Like, Post, Upment, User } from '../models/index.js'
 
 export const path = '/market';
 export const router = Router();
@@ -37,7 +37,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
             },
             author: authData
         });
-        res.json({ data: "게시글 업로드에 성공했습니다!"});
+        res.status(200).json({ data: "게시글 업로드에 성공했습니다!"});
     } else {
         next(new Error("게시글 업로드에 실패하였습니다. 에러코드 추가필요"));
     }
@@ -59,7 +59,7 @@ router.get("/list", async (req, res, next) => {
         // const total = await Post.countDocuments({postType: 3});
         // const totalPage = Math.ceil(total / perPage); 무한스크롤이기때문에 필요없을듯.
     
-        res.json({ posts });
+        res.status(200).json({ posts });
     } catch(err) {
         err.message = `${err.message}, market listing error.`;
         next(err);
@@ -72,7 +72,7 @@ router.get("/list/:shortId", async (req, res, next) => {
     let { shortId } = req.params;
 
     try {
-
+        
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
         let data = await Post.findOne({ shortId })
             .populate("author")
@@ -82,9 +82,21 @@ router.get("/list/:shortId", async (req, res, next) => {
                     path: "comments"
                 }
             });
-
+            // 사용자와 게시글 작성자 비교
+        if (req.tokenInfo.email !== data.author.email) {
+            await Post.updateOne({ shortId }, { $inc: { views: 1}});
+            data = await Post.findOne({ shortId })
+            .populate("author")
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "comments"
+                }
+            });
+            return res.status(200).json(data);
+        }    
         //가져온 데이터를 json형태로 응답합니다.
-        res.json(data);
+        res.status(200).json(data);
 
     } catch (err) {
         err.message = `${err.message}, market post find error.`;
@@ -117,7 +129,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 
 
         //만약 업데이트가 완료가 되면 json형태의 데이터를 응답해줍니다.
-        res.json({
+        res.status(200).json({
             result: "수정이 완료되었습니다."
         })
 
@@ -148,7 +160,7 @@ router.delete("/list/:shortId/delete", async (req, res, next) => {
         await Post.deleteOne({ shortId });
 
         //만약 오류가 나지 않고 삭제를 완료했다면, json형태를 응답해줍니다.
-        res.json({
+        res.status(200).json({
             result: '삭제가 완료 되었습니다.'
         })
 
@@ -179,7 +191,7 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 
         await Post.updateOne({shortId}, {"$push": {"comments": newcomment}});
         
-        res.json({
+        res.status(200).json({
             result: '댓글이 작성 되었습니다.'
         })
 
@@ -213,7 +225,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
 
         await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
         
-        res.json({
+        res.status(200).json({
             result: '댓글이 작성 되었습니다.'
         })
 

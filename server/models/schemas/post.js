@@ -5,6 +5,10 @@ const PostSchema = new mongoose.Schema({
     shortId,
     title: String,
     content: String,
+    views: {
+        type: Number,
+        default: 0
+    },
     like_count: Number,
     dislike_count: Number,
     price: Number, //당마용
