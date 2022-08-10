@@ -253,12 +253,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             comment: comment
         });
 
-        await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment._id}, done });
-        // console.log(parentData);
-        const parent = await Upment.findOne({p_shortId});
-        console.log(parent);
-        // console.log(newcomment);
-
+        await Upment.update({p_shortId}, {"$push": {"comments": newcomment._id}});
 
         res.status(200).json({
             result: '댓글이 작성 되었습니다.'
