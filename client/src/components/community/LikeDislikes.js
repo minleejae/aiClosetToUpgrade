@@ -67,10 +67,58 @@ const LikeDislikes = (props) => {
 
   const clickLikeBtn = () => {
     console.log("like!");
+    if (LikeAction === null) {
+      axios.post(port.url + "/api/like/upLike", variable).then((res) => {
+        if (res.data.success) {
+          setLikes(Likes + 1);
+          setLikeAction("liked");
+
+          if (DisLikeAction !== null) {
+            setDisLikeAction(null);
+            setDislikes(Dislikes - 1);
+          }
+        } else {
+          alert("Like를 올리지 못했습니다.");
+        }
+      });
+    } else {
+      axios.post(port.url + "/api/like/unLike", variable).then((res) => {
+        if (res.data.success) {
+          setLikes(Likes - 1);
+          setLikeAction(null);
+        } else {
+          alert("Like를 내리지 못했습니다.");
+        }
+      });
+    }
   };
 
   const clickDisLikeBtn = () => {
     console.log("dislike!");
+    if (DisLikeAction === null) {
+      axios.post(port.url + "/api/like/upDisLike", variable).then((res) => {
+        if (res.data.success) {
+          setDisLikeAction(Dislikes + 1);
+          setDislikes("disliked");
+
+          if (LikeAction !== null) {
+            setLikes(Likes - 1);
+            setLikeAction(null);
+          }
+        } else {
+          alert("DisLike를 올리지 못했습니다.");
+        }
+      });
+    } else {
+      axios.post(port.url + "/api/like/unDisLike", variable).then((res) => {
+        if (res.data.success) {
+          setDisLikeAction(Dislikes - 1);
+          setDislikes("null");
+        } else {
+          alert("unDisLike를 내리지 못했습니다.");
+        }
+      });
+    }
   };
 
   return (
