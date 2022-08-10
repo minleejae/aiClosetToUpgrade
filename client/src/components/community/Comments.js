@@ -54,6 +54,7 @@ const Comments = ({ postId }) => {
                 key={it.id}
                 style={{ border: "1px solid gray", margin: 10 + "px" }}
               >
+                <h6>{it.name}</h6>
                 <h4>{it.body}</h4>
                 <div style={{ display: "flex" }}>
                   <LikeDislikes comment userId={123} commentId={123} />
