@@ -47,7 +47,7 @@ const Comments = ({ postId, curPost }) => {
                 <h6>{it.comment}</h6>
                 <h5>{it.author.name}</h5>
                 <div style={{ display: "flex" }}>
-                  {/* <LikeDislikes comment userId={123} commentId={123} /> */}
+                  <LikeDislikes comment userId={123} commentId={123} />
                   <button>대댓글</button>
                 </div>
               </div>
