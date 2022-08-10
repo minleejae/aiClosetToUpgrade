@@ -22,12 +22,16 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     console.log(req.file);
     if (req.file) {
         const email = req.tokenInfo.email;
+        const title = req.body.title;
+        const content = req.body.content;
         const price = Number(req.body.price);
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 3,
             price: price,
+            title: title,
+            content: content,
             img: {
                    url: req.file.path
             },
@@ -92,12 +96,12 @@ router.get("/list/:shortId", async (req, res, next) => {
 //특정 게시글 수정
 router.put("/list/:shortId/update", async (req, res, next) => {
     let { shortId } = req.params;
-    let { title, content } = req.body;
+    let { title, content, price } = req.body;
     const tokenInfo = req.tokenInfo;
     
     try {
         //작성자 검증 
-        if (!accessToken) {
+        if (!tokenInfo) {
             return next(new Error("로그인을 해주세요."));
         }
         const postUserId = await Post.findOne({ shortId }).populate('author');
@@ -107,7 +111,8 @@ router.put("/list/:shortId/update", async (req, res, next) => {
        // shortId가 같은 데이터를 title, content를 update시켜줍니다.
        await Post.updateOne({ shortId }, {
             title,
-            content
+            content,
+            price
         });
 
 
@@ -132,7 +137,7 @@ router.delete("/list/:shortId/delete", async (req, res, next) => {
     
     try {
         //작성자 검증 
-        if (!accessToken) {
+        if (!tokenInfo) {
             return next(new Error("로그인을 해주세요."));
         }
         const postUserId = await Post.findOne({ shortId }).populate('author');
