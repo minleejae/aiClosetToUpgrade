@@ -41,6 +41,19 @@ router.get("/list", async (req, res, next) => {
     }
 })
 
+router.get("/list/:shortId/", async (req, res, next) => {
+    let {shortId} = req.params;
+    try {
+        let data = await Post.findOne({shortId}).populate("author");
+        console.log(data);
+        res.json(data);
+
+    } catch(err){
+        err.message = `${err.message} post find error`
+        next(err);
+    }
+});
+
 router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
@@ -78,19 +91,6 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         next(err);
     }
 })
-
-router.get("/list/:shortId/", async (req, res, next) => {
-    let {shortId} = req.params;
-    try {
-        let data = await Post.findOne({shortId}).populate("author");
-        console.log(data);
-        res.json(data);
-
-    } catch(err){
-        err.message = `${err.message} post find error`
-        next(err);
-    }
-});
 
 router.post("/list/:shortId/update", async (req, res, next) => {
     let {shortId} = req.params;
