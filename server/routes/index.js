@@ -4,6 +4,8 @@ import * as users from './users.routes.js';
 import * as closet from './closet.routes.js';
 import * as posts from './posts.routes.js';
 import * as market from './market.routes.js';
+import * as like from './like.routes.js';
+
 import authmiddleware from '../util/authmiddleware.js';
 
 const router = Router();
@@ -13,6 +15,8 @@ router.use(users.path, users.router);
 router.use(closet.path, authmiddleware, closet.router);
 router.use(posts.path, posts.router);
 router.use(market.path, authmiddleware, market.router);
+router.use(like.path, authmiddleware, like.router);
+
 
 
 export default router;
