@@ -79,8 +79,14 @@ router.get("/list/:shortId", async (req, res, next) => {
             .populate({
                 path: "comments",
                 populate: {
-                    path: "comments"
-                }
+                    path: "author"
+                },
+                populate: {
+                    path: "comments",
+                    populate: {
+                        path: "author"
+                    }
+                },
             });
             // 사용자와 게시글 작성자 비교
         if (req.tokenInfo.email !== data.author.email) {
