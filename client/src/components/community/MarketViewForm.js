@@ -62,7 +62,8 @@ const MarketViewForm = ({ postType }) => {
             )}
           </div>
           <div className="mb-3">
-            <h1>{curPost && curPost.title}</h1>
+            <h1>제목: {curPost && curPost.title}</h1>
+            <h5>작성자 : {curPost && curPost.author.name}</h5>
           </div>
           <h4>가격 : {curPost && curPost.price} 원</h4>
           <h6>조회수 : {curPost && curPost.views}</h6>
@@ -108,7 +109,7 @@ const MarketViewForm = ({ postType }) => {
             뒤로가기
           </button>
         </div>
-        <Comments postId={paramsId}></Comments>
+        {curPost && <Comments postId={paramsId} curPost={curPost}></Comments>}
       </div>
     </div>
   );

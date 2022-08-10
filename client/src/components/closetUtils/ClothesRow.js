@@ -34,6 +34,12 @@ const DeleteButton = styled.input.attrs({
   background-color: white;
 `;
 
+// const ClothImage = styled.img`
+//   user-drag:none,
+//   webkit-user-drag:none,
+//   width: 100%,
+// `;
+
 const ClothesRow = () => {
   //userid에 따른 옷데이터
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -83,6 +89,7 @@ const ClothesRow = () => {
                       width: 100 + "%",
                     }}
                   />
+
                   <DeleteButton
                     onClick={() => {
                       handleDeleteBtn(item.id);
