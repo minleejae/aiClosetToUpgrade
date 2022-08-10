@@ -40,9 +40,25 @@ const Login = ({ signInData, onChangeSignInData }) => {
   };
 
   return (
-    <div style={{ paddingTop: 100 + "px" }}>
-      <div className="album">
-        <div className="container">
+    <div>
+      <div
+        className="album"
+        style={{
+          paddingTop: 100 + "px",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        {" "}
+        <div>
+          <h1 style={{ textAlign: "center" }}>LOGIN</h1>
+          <p>Login and use AI CLOSET!</p>
+        </div>
+        <div
+          className="container"
+          style={{ width: 30 + "%", minWidth: 300 + "px" }}
+        >
           <form>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">

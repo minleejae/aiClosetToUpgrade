@@ -20,7 +20,9 @@ const Closet = () => {
         <p>
           When you upload your clothes,
           <br />
-          AI will classfy your clothes!
+          AI will classfy your clothes.
+          <br />
+          And You can Drag and Drop clothes!
         </p>
         <div>
           <button

@@ -5,6 +5,7 @@ import $ from "jquery";
 import "./componentsCss/Header.css";
 import { connect } from "react-redux";
 import { updateWidth } from "../redux";
+import { LinearProgress } from "@mui/material";
 
 const Header = ({ width, columns, updateWidth }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
