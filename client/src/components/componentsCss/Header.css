@@ -12,7 +12,7 @@ li:hover {
   background-color: white;
   opacity: 100%;
   padding: 8px 6px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
 }
 
 #nav-container {
@@ -28,9 +28,9 @@ li:hover {
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
   padding: 8px 6px;
-  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .navbar__logo {
@@ -89,7 +89,7 @@ li:hover > a,
   color: orange;
 }
 
-@media screen and (max-width: 843px) {
+@media screen and (max-width: 860px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
