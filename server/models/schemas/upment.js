@@ -4,8 +4,6 @@ import shortId from "./type/shortId.js"
 const UpmentSchema = new mongoose.Schema({
     shortId,
     comment: String,
-    like_count: Number,
-    dislike_count: Number,
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
         type: Number,
