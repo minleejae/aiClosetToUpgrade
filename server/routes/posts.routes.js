@@ -79,10 +79,10 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     }
 })
 
-router.get("/list/:shortId/find", async (req, res, next) => {
+router.get("/list/:shortId/", async (req, res, next) => {
     let {shortId} = req.params;
     try {
-        let data = await Post.findOne({shortId});
+        let data = await Post.findOne({shortId}).populate("author");
         console.log(data);
         res.json(data);
 
