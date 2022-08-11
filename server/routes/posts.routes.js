@@ -17,9 +17,6 @@ const upload = multer({ storage: storage });
 
 
 router.get("/list", async (req, res, next) => {
-    // postType에 해당하는 데이터를 배열로 모두 가져온다.
-    // const posts = await Post.find({postType : 2}).populate("author");
-    // res.json(posts);
 
     try {
         const page = Number(req.query.page);
@@ -34,34 +31,86 @@ router.get("/list", async (req, res, next) => {
         // const total = await Post.countDocuments({postType: 3});
         // const totalPage = Math.ceil(total / perPage); 
 
-        res.json({ posts });
+        res.status(200).json({ posts });
     } catch(err) {
         err.message = `${err.message}, ootd posts list error.`;
         next(err);
     }
 })
 
+// 특정 게시글 불러오기
 router.get("/list/:shortId", async (req, res, next) => {
     let {shortId} = req.params;
     try {
-        let data = await Post.findOne({shortId}).populate("author");
-        console.log(data);
-        res.json(data);
+        let data = await Post.findOne({shortId})
+            .populate("author")
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
+        // 사용자와 게시글 작성자 비교
+    if (req.tokenInfo.email !== data.author.email) {
+        await Post.updateOne({ shortId }, { $inc: { views: 1}});
+        data = await Post.findOne({ shortId })
+            .populate("author")
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
+        }
+        res.status(200).json(data);
 
     } catch(err){
         err.message = `${err.message} ootd post find error`
         next(err);
     }
 });
-
+//게시글 생성
 router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email, content, title} = req.body;
+        const email = req.tokenInfo.email
+;       const {content, title} = req.body;
         const authData = await User.findOne({email});
-        console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
+        // console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
         await Post.create({
             title: title,
             content: content,
@@ -71,19 +120,27 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
             },
             author: authData
         });
-        res.json({ data: "게시물 업로드에 성공했습니다!"});
+        res.status(200).json({ data: "게시물 업로드에 성공했습니다!"});
     } else {
         next(new Error("게시물 업로드에 실패하였습니다."));
     }
 
  });
-
+// 특정 게시글 삭제
  router.delete("/list/:shortId/delete", async (req, res, next) => {
     const {shortId} = req.params; // 객체이름과 params이름이 같아야 할당이 된다.
-    console.log(shortId);
+    const tokenInfo = req.tokenInfo;
     try {
+        //작성자 검증
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
         await Post.deleteOne({shortId});
-        res.json({
+        res.status(200).json({
             result: '삭제가 완료 되었습니다.'
         })
     }catch(err) {
@@ -91,17 +148,26 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         next(err);
     }
 })
-
+//특정 게시글 수정
 router.put("/list/:shortId/update", async (req, res, next) => {
     let {shortId} = req.params;
     let {title, content} = req.body;
-
+    const tokenInfo = req.tokenInfo;
     try {
+        //작성자 검증
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
+
         await Post.updateOne({shortId}, {
             title,
             content
         })
-        res.json({
+        res.status(200).json({
             result: '수정이 완료되었습니다.'
         })
     } catch (err) {
@@ -110,7 +176,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
     }
 
 });
-
+// 특정 게시글에 댓글 달기
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
     let { comment, email } = req.body;
@@ -128,7 +194,7 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 
         await Post.updateOne({shortId}, {"$push": {"comments": newcomment}});
         
-        res.json({
+        res.status(200).json({
             result: '댓글이 작성 되었습니다.'
         })
 
@@ -156,12 +222,10 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             parentment_id: parentData,
             comment: comment
         });
-        console.log(newcomment);
-
 
         await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
         
-        res.json({
+        res.status(200).json({
             result: '댓글이 작성 되었습니다.'
         })
 
