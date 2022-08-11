@@ -34,7 +34,7 @@ router.get("/getlikes", async (req, res, next) => {
         }, []);
         console.log(likesData);
 
-        res.status(200).json(likes);
+        res.status(200).json(likesData);
     } catch (err) {
         err.message = `${err.message}, get like error.`;
         next(err);
@@ -71,7 +71,7 @@ router.get("/getdislikes", async (req, res, next) => {
         }, []);
         console.log(dislikesData);
 
-        res.status(200).json(likes);
+        res.status(200).json(dislikesData);
     } catch (err) {
         err.message = `${err.message}, get dislike error.`;
         next(err);
