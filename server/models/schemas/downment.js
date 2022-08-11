@@ -4,7 +4,10 @@ import shortId from "./type/shortId.js"
 const DownmentSchema = new mongoose.Schema({
     shortId,
     comment: String,
-    show: Boolean,
+    show: {
+        type: Boolean,
+        default: true
+    },
     // 옷장:1, OOTD:2, 당근마켓:3 
     postType: {
         type: Number,

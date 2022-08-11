@@ -45,7 +45,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
  router.get("/list", async (req, res, next) => {
     try {
         const email = req.tokenInfo.email;
-        const posts = await Post.find({ postType: 1, email })
+        const posts = await Post.find({ postType: 1, email, show: true })
             .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
     
