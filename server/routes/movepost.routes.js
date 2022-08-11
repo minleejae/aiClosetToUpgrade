@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Dislike, Downment, Like, Post, Upment, User } from '../models/index.js'
+import { Post } from '../models/index.js'
 
 export const path = '/movepost';
 export const router = Router();

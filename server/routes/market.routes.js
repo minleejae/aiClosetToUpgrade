@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { Dislike, Downment, Like, Post, Upment, User } from '../models/index.js'
+import { Downment, Post, Upment, User } from '../models/index.js'
 
 export const path = '/market';
 export const router = Router();
