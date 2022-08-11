@@ -61,6 +61,7 @@ const OotdViewForm = ({ postType }) => {
           </div>
           <div className="mb-3">
             <h1>{curPost && curPost.title}</h1>
+            <h6>조회수 : {curPost && curPost.views}</h6>
           </div>
           <div className="mb-3">
             <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>

@@ -19,7 +19,7 @@ const getDressType = (predictions) => {
       return "SHOE";
     }
   }
-  return "WHAT";
+  return "ETC";
 };
 
 //옷의 타입 SUIT / CASUAL 리턴

@@ -30,6 +30,7 @@ const Market = () => {
           글쓰기
         </button>
       </div>
+      <hr></hr>
       <div className="image-list">
         <MarketImages postType={3}></MarketImages>
       </div>

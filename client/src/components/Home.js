@@ -16,7 +16,7 @@ const Home = () => {
           style={{
             width: 100 + "%",
             marginTop: -300 + "px",
-            minWidth: 400 + "px",
+            minHeight: 600 + "px",
           }}
         />
         <div style={{ position: "absolute", top: 30 + "%", left: 5 + "%" }}>

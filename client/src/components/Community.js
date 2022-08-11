@@ -31,6 +31,7 @@ const Community = () => {
           글쓰기
         </button>
       </div>
+      <hr></hr>
       <div className="image-list">
         <OotdImages />
       </div>

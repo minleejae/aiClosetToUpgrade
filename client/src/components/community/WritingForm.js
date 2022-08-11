@@ -5,6 +5,7 @@ import DressClassifier from "../closetUtils/DressClassifier";
 import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const pageTitle = ["CLOSET", "OOTD", "MARKET"];
 
@@ -121,7 +122,10 @@ const WritingForm = ({
                 id="previewImage"
                 src={imgSrc || require("./top1.jpg")}
                 alt="preview"
-              ></img>
+              />
+              {uploadButtonClicked && (
+                <CircularProgress style={{}}></CircularProgress>
+              )}
               <form
                 onSubmit={(e) => {
                   fileUploadHandler(e);
