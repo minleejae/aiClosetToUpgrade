@@ -40,7 +40,7 @@ router.get("/list", async (req, res, next) => {
         next(err);
     }
 })
-
+// 특정 게시글 불러오기
 router.get("/list/:shortId", async (req, res, next) => {
     let {shortId} = req.params;
     try {
@@ -53,15 +53,16 @@ router.get("/list/:shortId", async (req, res, next) => {
         next(err);
     }
 });
-
+//게시글 생성
 router.post('/create', upload.single('img'), async function (req, res, next) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
     if (req.file) {
-        const {email, content, title} = req.body;
+        const email = req.tokenInfo.email
+;       const {content, title} = req.body;
         const authData = await User.findOne({email});
-        console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
+        // console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
         await Post.create({
             title: title,
             content: content,
@@ -77,11 +78,19 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     }
 
  });
-
+// 특정 게시글 삭제
  router.delete("/list/:shortId/delete", async (req, res, next) => {
     const {shortId} = req.params; // 객체이름과 params이름이 같아야 할당이 된다.
-    console.log(shortId);
+    const tokenInfo = req.tokenInfo;
     try {
+        //작성자 검증
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
         await Post.deleteOne({shortId});
         res.json({
             result: '삭제가 완료 되었습니다.'
@@ -91,12 +100,21 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         next(err);
     }
 })
-
+//특정 게시글 수정
 router.put("/list/:shortId/update", async (req, res, next) => {
     let {shortId} = req.params;
     let {title, content} = req.body;
-
+    const tokenInfo = req.tokenInfo;
     try {
+        //작성자 검증
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
+
         await Post.updateOne({shortId}, {
             title,
             content
@@ -110,7 +128,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
     }
 
 });
-
+// 특정 게시글에 댓글 달기
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
     let { comment, email } = req.body;
@@ -156,6 +174,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             parentment_id: parentData,
             comment: comment
         });
+        
         console.log(newcomment);
 
 
