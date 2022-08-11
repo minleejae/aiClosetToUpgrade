@@ -70,15 +70,7 @@ router.delete("/delete/:shortId", async (req, res, next) => {
             return next(new Error("작성자가 아닙니다!"));
         }
         
-        const fileurl = await Post.findOne({ shortId });
-        fs.unlink(fileurl.img.url, (err) => {
-            if (err) {
-                console.log("error occured!");
-                return next(err);
-            }
-            console.log(`${fileurl.img.url} is deleted.`);
-        });
-        await Post.findOneAndDelete({ shortId });
+        await Post.updateOne({ shortId, show: false });
         
         res.json({ message: "삭제하였습니다." });
     } catch(err) {
