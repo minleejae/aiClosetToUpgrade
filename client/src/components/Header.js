@@ -145,7 +145,13 @@ const Header = ({ width, columns, updateWidth }) => {
             >
               Login
             </li>
-            <li>Sign Up</li>
+            <li
+              onClick={(e) => {
+                navigate("/signup");
+              }}
+            >
+              Sign Up
+            </li>
           </>
         )}
       </ul>
