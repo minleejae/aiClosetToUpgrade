@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import port from "../../data/port.json";
 import LikeDislikes from "./LikeDislikes";
+import SingleComment from "./SingleComment";
 
+//comments 구조 수정 필요
 const Comments = ({ postId, curPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
@@ -38,20 +40,8 @@ const Comments = ({ postId, curPost }) => {
           댓글
         </label>
         <div className="comments">
-          {curPost?.comments.map((it) => {
-            return (
-              <div
-                key={it._id}
-                style={{ border: "1px solid gray", margin: 10 + "px" }}
-              >
-                <h6>{it.comment}</h6>
-                <h5>{it.author.name}</h5>
-                <div style={{ display: "flex" }}>
-                  <LikeDislikes comment userId={123} commentId={123} />
-                  <button>대댓글</button>
-                </div>
-              </div>
-            );
+          {curPost?.comments.map((it, index) => {
+            return <SingleComment key={index} it={it} postId={postId} />;
           })}
         </div>
         <div style={{ display: "flex" }}>
