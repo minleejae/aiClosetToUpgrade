@@ -24,7 +24,6 @@ const MarketViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
-    console.log(post.data);
   };
 
   const handleUpdateButton = () => {
@@ -71,9 +70,7 @@ const MarketViewForm = ({ postType }) => {
             <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
               <p>{curPost && curPost.content}</p>
             </div>
-            <div>
-              <LikeDislikes userId={123} postId={123} />
-            </div>
+            <div>{/* <LikeDislikes userId={123} postId={123} /> */}</div>
           </div>
           {myPost ? (
             <>
@@ -109,7 +106,13 @@ const MarketViewForm = ({ postType }) => {
             뒤로가기
           </button>
         </div>
-        {curPost && <Comments postId={paramsId} curPost={curPost}></Comments>}
+        {curPost && (
+          <Comments
+            postId={paramsId}
+            curPost={curPost}
+            getPost={getPost}
+          ></Comments>
+        )}
       </div>
     </div>
   );

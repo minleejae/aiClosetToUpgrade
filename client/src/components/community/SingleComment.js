@@ -49,11 +49,11 @@ const SingleComment = ({ it, postId }) => {
             <button onClick={onClickReplyOpen}>대댓글</button>
           </div>
         </div>
-        <ReplyComment
+        {/* <ReplyComment
           comments={it.comments}
           postId={postId}
           parentCommentId={it.shortId}
-        />
+        /> */}
       </div>
       {openReply && (
         <div style={{ display: "flex" }}>
