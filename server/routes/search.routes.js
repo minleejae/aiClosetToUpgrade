@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
             throw err;
           }
 
-        const result = await Post.find({postType})
+        const result = await Post.find({postType, show: true})
             .populate("author")
             .find({ $or: options });
         
