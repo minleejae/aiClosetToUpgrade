@@ -22,7 +22,7 @@ router.get("/list", async (req, res, next) => {
         const page = Number(req.query.page);
         const perPage = Number(req.query.perPage);
 
-        const posts = await Post.find({ postType: 2 })
+        const posts = await Post.find({ postType: 2, show: true })
         .sort({ createdAt: -1 }) 
         .skip(page) 
         .limit(perPage)
@@ -48,20 +48,25 @@ router.get("/list/:shortId", async (req, res, next) => {
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments author",
+                        match: { show: true },
                         
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
+                        match: { show: true },
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
@@ -74,21 +79,25 @@ router.get("/list/:shortId", async (req, res, next) => {
             .populate([
                 {
                     path: "comments",
+                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments author",
-                        
+                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
+                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments",
+                        match: { show: true },
                         model: "Downment",
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
