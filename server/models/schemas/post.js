@@ -5,6 +5,10 @@ const PostSchema = new mongoose.Schema({
     shortId,
     title: String,
     content: String,
+    show: {
+        type: Boolean,
+        default: true
+    },
     views: {
         type: Number,
         default: 0

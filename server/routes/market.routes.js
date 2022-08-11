@@ -50,7 +50,7 @@ router.get("/list", async (req, res, next) => {
         const page = Number(req.query.page);
         const perPage = Number(req.query.perPage);
     
-        const posts = await Post.find({ postType: 3 })
+        const posts = await Post.find({ postType: 3, show: true })
         .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
         .skip(page) //ex> 2페이지라면 5번부터
         .limit(perPage) // 6개씩 가져와줘.
@@ -80,20 +80,24 @@ router.get("/list/:shortId", async (req, res, next) => {
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true }, 
                     populate: {
                         path: "comments author",
-                        
+                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
+                        match: { show: true },
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
@@ -107,20 +111,24 @@ router.get("/list/:shortId", async (req, res, next) => {
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true }, 
                     populate: {
                         path: "comments author",
-                        
+                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
+                        match: { show: true },
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
@@ -189,7 +197,7 @@ router.delete("/list/:shortId/delete", async (req, res, next) => {
             return next(new Error("작성자가 아닙니다!"));
         }
         //shortId에 해당하는 document를 삭제합니다.
-        await Post.deleteOne({ shortId });
+        await Post.updateOne({ shortId }, {show: false});
 
         //만약 오류가 나지 않고 삭제를 완료했다면, json형태를 응답해줍니다.
         res.status(200).json({
