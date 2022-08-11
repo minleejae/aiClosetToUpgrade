@@ -10,13 +10,9 @@ const SingleComment = ({ comment, postId, getPost }) => {
   const [commentValue, setCommentValue] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
 
-  useEffect(() => {
-    console.log(comment);
-    console.log(commentValue);
-  }, [commentValue]);
+  useEffect(() => {}, [commentValue]);
 
   const onClickReplyOpen = () => {
-    console.log("replySubmit:", postId, comment.shortId);
     setOpenReply(!openReply);
   };
 
@@ -26,7 +22,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("replySubmit:", postId, comment.shortId);
+    console.log("replySubmit api에 보내주는 값:", postId, comment.shortId);
     const result = await axios.post(
       //게시물 , 원래 댓글
       port.url + `/api/market/list/${postId}/recomment/${comment.shortId}`,
@@ -64,7 +60,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
         />
       </div>
       {openReply && (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", marginLeft: 100 + "px" }}>
           <form style={{ display: "flex" }}>
             <input
               type="text"

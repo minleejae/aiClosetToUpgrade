@@ -1,14 +1,12 @@
 import React from "react";
 
 const ReplyComment = ({ comments, postId, parentCommentId }) => {
-  console.log("REPLY", comments, postId, parentCommentId);
-
   return (
     <div>
       {comments.map((it) => {
-        console.log("it:", it);
-        console.log("test", parentCommentId, it.parentment_id, it.comment);
-        return parentCommentId === it.parentment_id ? (
+        // console.log("it:", it);
+        // console.log("test", parentCommentId, it.parentment_id, it.comment);
+        return (
           <div
             key={it._id}
             style={{
@@ -23,8 +21,6 @@ const ReplyComment = ({ comments, postId, parentCommentId }) => {
               {/* <LikeDislikes comment userId={123} commentId={123} /> */}
             </div>
           </div>
-        ) : (
-          <></>
         );
       })}
     </div>

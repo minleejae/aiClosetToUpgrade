@@ -6,6 +6,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
 import LikeDislikes from "./LikeDislikes";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -24,6 +26,7 @@ const MarketViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
+    console.log(post);
   };
 
   const handleUpdateButton = () => {
@@ -44,21 +47,33 @@ const MarketViewForm = ({ postType }) => {
       <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
       <div className="album">
         <div className="container">
-          <div
-            className="card mb-3"
-            style={{
-              width: 100 + "%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {curPost && (
-              <img
-                src={port.url + "/" + curPost?.img.url.split("/")[1]}
-                alt="temp"
-                style={{ width: 80 + "%" }}
-              />
-            )}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <i
+              class="fa-solid fa-angle-left"
+              style={{ fontSize: 150 + "px", color: "gray" }}
+            ></i>
+            <div
+              className="card mb-3"
+              style={{
+                width: 100 + "%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                {curPost && (
+                  <img
+                    src={port.url + "/" + curPost?.img.url.split("/")[1]}
+                    alt="temp"
+                    style={{ width: 60 + "%" }}
+                  />
+                )}
+              </div>
+            </div>
+            <i
+              class="fa-solid fa-angle-right"
+              style={{ fontSize: 150 + "px", color: "gray" }}
+            ></i>
           </div>
           <div className="mb-3">
             <h1>제목: {curPost && curPost.title}</h1>
@@ -70,7 +85,9 @@ const MarketViewForm = ({ postType }) => {
             <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
               <p>{curPost && curPost.content}</p>
             </div>
-            <div>{/* <LikeDislikes userId={123} postId={123} /> */}</div>
+            <div>
+              <LikeDislikes userId={123} postId={paramsId} />
+            </div>
           </div>
           {myPost ? (
             <>
