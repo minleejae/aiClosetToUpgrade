@@ -243,8 +243,8 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
     try {
         const authData = await User.findOne({email});
         const postData = await Post.findOne({shortId});
-        const parentData = await Upment.findOne({p_shortId});
-
+        const parentData = await Upment.findOne({shortId: p_shortId});
+        
         const newcomment = await Downment.create({
             postType: 3,
             author: authData,
@@ -253,7 +253,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             comment: comment
         });
 
-        await Upment.update({p_shortId}, {"$push": {"comments": newcomment._id}});
+        await Upment.updateOne({shortId: p_shortId}, {"$push": {"comments": newcomment._id}});
 
         res.status(200).json({
             result: '댓글이 작성 되었습니다.'
