@@ -44,7 +44,58 @@ router.get("/list", async (req, res, next) => {
 router.get("/list/:shortId", async (req, res, next) => {
     let {shortId} = req.params;
     try {
-        let data = await Post.findOne({shortId}).populate("author");
+        let data = await Post.findOne({shortId})
+            .populate("author")
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
+        // 사용자와 게시글 작성자 비교
+    if (req.tokenInfo.email !== data.author.email) {
+        await Post.updateOne({ shortId }, { $inc: { views: 1}});
+        data = await Post.findOne({ shortId })
+            .populate("author")
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
+        }
         console.log(data);
         res.json(data);
 
@@ -174,7 +225,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             parentment_id: parentData,
             comment: comment
         });
-        
+
         console.log(newcomment);
 
 
