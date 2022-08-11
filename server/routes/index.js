@@ -13,7 +13,7 @@ const router = Router();
 // router.use(example.path, example.router);
 router.use(users.path, users.router);
 router.use(closet.path, authmiddleware, closet.router);
-router.use(posts.path, posts.router);
+router.use(posts.path,authmiddleware, posts.router);
 router.use(market.path, authmiddleware, market.router);
 router.use(like.path, authmiddleware, like.router);
 
