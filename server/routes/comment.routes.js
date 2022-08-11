@@ -60,7 +60,7 @@ router.delete("/delete/:shortId", async (req, res, next) => {
             }
 
             await Upment.updateOne({shortId}, {show: false});
-            res.status(200).json({ result: "수정이 완료되었습니다."});
+            res.status(200).json({ result: "삭제가 완료되었습니다."});
 
         } else {
             if (!tokenInfo) {
@@ -72,7 +72,7 @@ router.delete("/delete/:shortId", async (req, res, next) => {
             }
             
             await Downment.updateOne({shortId}, {show: false});
-            res.status(200).json({ result: "수정이 완료되었습니다."});
+            res.status(200).json({ result: "삭제가 완료되었습니다."});
 
         }
         
