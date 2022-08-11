@@ -5,6 +5,7 @@ import * as closet from './closet.routes.js';
 import * as posts from './posts.routes.js';
 import * as market from './market.routes.js';
 import * as like from './like.routes.js';
+import * as movepost from './movepost.routes.js';
 
 import authmiddleware from '../util/authmiddleware.js';
 
@@ -16,6 +17,7 @@ router.use(closet.path, authmiddleware, closet.router);
 router.use(posts.path, posts.router);
 router.use(market.path, authmiddleware, market.router);
 router.use(like.path, authmiddleware, like.router);
+router.use(movepost.path, movepost.router);
 
 
 
