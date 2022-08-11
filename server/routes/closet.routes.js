@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { Post, User } from '../models/index.js'
-import fs from 'fs';
 
 export const path = '/closet';
 export const router = Router();
@@ -42,6 +41,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 
  });
 
+ // 옷 정보 불러오기
  router.get("/list", async (req, res, next) => {
     try {
         const email = req.tokenInfo.email;
@@ -70,7 +70,7 @@ router.delete("/delete/:shortId", async (req, res, next) => {
             return next(new Error("작성자가 아닙니다!"));
         }
         
-        await Post.updateOne({ shortId, show: false });
+        await Post.updateOne({ shortId }, { show: false });
         
         res.json({ message: "삭제하였습니다." });
     } catch(err) {
