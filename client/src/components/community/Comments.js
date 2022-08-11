@@ -44,8 +44,15 @@ const Comments = ({ postId, curPost, getPost }) => {
           댓글
         </label>
         <div className="comments">
-          {comments.map((it, index) => {
-            return <SingleComment key={index} it={it} postId={postId} />;
+          {comments.map((comment, index) => {
+            return (
+              <SingleComment
+                key={index}
+                comment={comment}
+                postId={postId}
+                getPost={getPost}
+              />
+            );
           })}
         </div>
         <div style={{ display: "flex" }}>
