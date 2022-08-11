@@ -19,7 +19,6 @@ const Header = ({ width, columns, updateWidth }) => {
 
   //width 관리
   useEffect(() => {
-    console.log(cookies.userData);
     updateWidth(document.documentElement.clientWidth);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
@@ -145,7 +144,13 @@ const Header = ({ width, columns, updateWidth }) => {
             >
               Login
             </li>
-            <li>Sign Up</li>
+            <li
+              onClick={(e) => {
+                navigate("/signup");
+              }}
+            >
+              Sign Up
+            </li>
           </>
         )}
       </ul>
