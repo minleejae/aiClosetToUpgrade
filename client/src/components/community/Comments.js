@@ -2,24 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import port from "../../data/port.json";
+import LikeDislikes from "./LikeDislikes";
+import SingleComment from "./SingleComment";
 
-const Comments = ({ postId }) => {
+//comments 구조 수정 필요
+const Comments = ({ postId, curPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
-  const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
-    loadComments();
+    console.log("curPost", curPost);
   }, []);
-
-  //dummy
-  const loadComments = async () => {
-    const result = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts/1/comments"
-    );
-    console.log(result.data);
-    setCommentList(result.data);
-  };
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -47,20 +40,8 @@ const Comments = ({ postId }) => {
           댓글
         </label>
         <div className="comments">
-          {commentList.map((it) => {
-            return (
-              <div
-                key={it.id}
-                style={{ border: "1px solid gray", margin: 10 + "px" }}
-              >
-                <h4>{it.body}</h4>
-                <div>
-                  <button>좋아요</button>
-                  <button>싫어요</button>
-                  <button>대댓글</button>
-                </div>
-              </div>
-            );
+          {curPost?.comments.map((it, index) => {
+            return <SingleComment key={index} it={it} postId={postId} />;
           })}
         </div>
         <div style={{ display: "flex" }}>

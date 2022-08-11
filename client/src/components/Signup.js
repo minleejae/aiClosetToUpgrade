@@ -62,76 +62,98 @@ const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
   };
 
   return (
-    <div className="album" style={{ paddingTop: 100 + "px" }}>
-      <div className="container">
-        <form>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              ref={emailRef}
-              value={signUpData.email}
-              className="form-control"
-              id="email"
-              name="email"
-              aria-describedby="emailHelp"
-              onChange={onChangeSignUpdata}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              value={signUpData.password}
-              className="form-control"
-              id="password"
-              name="password"
-              onChange={onChangeSignUpdata}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="rePassword" className="form-label">
-              rePassword
-            </label>
-            <input
-              type="password"
-              value={signUpData.rePassword}
-              className="form-control"
-              id="rePassword"
-              name="rePassword"
-              onChange={onChangeSignUpdata}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              name
-            </label>
-            <input
-              type="text"
-              value={signUpData.name}
-              className="form-control"
-              id="name"
-              name="name"
-              onChange={onChangeSignUpdata}
-            />
-          </div>
-          <div className="mb-3">
-            <p className="text-danger">{errorMessage}</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              onClickSignUpButton();
-            }}
-            className="btn btn-primary"
-          >
-            Submit
-          </button>
-        </form>
+    <div>
+      <div></div>
+      <div
+        className="album"
+        style={{
+          paddingTop: 100 + "px",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <div>
+          <h1 style={{ textAlign: "center" }}>Sign Up</h1>
+          <p>
+            Hello,
+            <br />
+            Sign up and use AI CLOSET!
+          </p>
+        </div>
+        <div
+          className="container"
+          style={{ width: 30 + "%", minWidth: 300 + "px" }}
+        >
+          <form>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email address
+              </label>
+              <input
+                type="email"
+                ref={emailRef}
+                value={signUpData.email}
+                className="form-control"
+                id="email"
+                name="email"
+                aria-describedby="emailHelp"
+                onChange={onChangeSignUpdata}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                value={signUpData.password}
+                className="form-control"
+                id="password"
+                name="password"
+                onChange={onChangeSignUpdata}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="rePassword" className="form-label">
+                Re Password
+              </label>
+              <input
+                type="password"
+                value={signUpData.rePassword}
+                className="form-control"
+                id="rePassword"
+                name="rePassword"
+                onChange={onChangeSignUpdata}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Your name
+              </label>
+              <input
+                type="text"
+                value={signUpData.name}
+                className="form-control"
+                id="name"
+                name="name"
+                onChange={onChangeSignUpdata}
+              />
+            </div>
+            <div className="mb-3">
+              <p className="text-danger">{errorMessage}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                onClickSignUpButton();
+              }}
+              className="btn btn-primary"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { Post, User } from '../models/index.js'
+import fs from 'fs';
 
 export const path = '/closet';
 export const router = Router();
@@ -47,12 +48,41 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const posts = await Post.find({ postType: 1, email })
             .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
-        
-        
     
         res.json({ posts });
     } catch(err) {
         err.message = `${err.message}, closet list error.`;
+        next(err);
+    }
+
+});
+
+//옷정보 삭제
+router.delete("/delete/:shortId", async (req, res, next) => {
+    const tokenInfo = req.tokenInfo;
+    const shortId = req.params.shortId;
+    try {
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        const postUserId = await Post.findOne({ shortId }).populate('author');
+        if (tokenInfo.email !== postUserId.author.email) {
+            return next(new Error("작성자가 아닙니다!"));
+        }
+        
+        const fileurl = await Post.findOne({ shortId });
+        fs.unlink(fileurl.img.url, (err) => {
+            if (err) {
+                console.log("error occured!");
+                return next(err);
+            }
+            console.log(`${fileurl.img.url} is deleted.`);
+        });
+        await Post.findOneAndDelete({ shortId });
+        
+        res.json({ message: "삭제하였습니다." });
+    } catch(err) {
+        err.message = `${err.message}, closet delete error.`;
         next(err);
     }
 

@@ -76,23 +76,55 @@ router.get("/list/:shortId", async (req, res, next) => {
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
         let data = await Post.findOne({ shortId })
             .populate("author")
-            .populate({
-                path: "comments",
-                populate: {
-                    path: "comments"
-                }
-            });
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
             // 사용자와 게시글 작성자 비교
         if (req.tokenInfo.email !== data.author.email) {
             await Post.updateOne({ shortId }, { $inc: { views: 1}});
             data = await Post.findOne({ shortId })
             .populate("author")
-            .populate({
-                path: "comments",
-                populate: {
-                    path: "comments"
-                }
-            });
+            .populate([
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments author",
+                        
+                    },
+                },
+                {
+                    path: "comments",
+                    model: "Upment",
+                    populate: {
+                        path: "comments",
+                        model: "Downment",
+                        populate: {
+                            path: "author",
+                            model: "User"
+                        }
+                    },
+                },
+            ]);
             return res.status(200).json(data);
         }    
         //가져온 데이터를 json형태로 응답합니다.
@@ -189,7 +221,7 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
         
         // console.log(commentData);
 
-        await Post.updateOne({shortId}, {"$push": {"comments": newcomment}});
+        await Post.updateOne({shortId}, {"$push": {"comments": newcomment._id}});
         
         res.status(200).json({
             result: '댓글이 작성 되었습니다.'
@@ -220,11 +252,9 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             parentment_id: parentData,
             comment: comment
         });
-        console.log(newcomment);
 
+        await Upment.update({p_shortId}, {"$push": {"comments": newcomment._id}});
 
-        await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
-        
         res.status(200).json({
             result: '댓글이 작성 되었습니다.'
         })

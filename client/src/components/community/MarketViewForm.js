@@ -5,6 +5,7 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
+import LikeDislikes from "./LikeDislikes";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -61,12 +62,17 @@ const MarketViewForm = ({ postType }) => {
             )}
           </div>
           <div className="mb-3">
-            <h1>{curPost && curPost.title}</h1>
+            <h1>제목: {curPost && curPost.title}</h1>
+            <h5>작성자 : {curPost && curPost.author.name}</h5>
           </div>
           <h4>가격 : {curPost && curPost.price} 원</h4>
+          <h6>조회수 : {curPost && curPost.views}</h6>
           <div className="mb-3">
             <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
               <p>{curPost && curPost.content}</p>
+            </div>
+            <div>
+              <LikeDislikes userId={123} postId={123} />
             </div>
           </div>
           {myPost ? (
@@ -103,7 +109,7 @@ const MarketViewForm = ({ postType }) => {
             뒤로가기
           </button>
         </div>
-        <Comments postId={paramsId}></Comments>
+        {curPost && <Comments postId={paramsId} curPost={curPost}></Comments>}
       </div>
     </div>
   );

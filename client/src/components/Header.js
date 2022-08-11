@@ -5,6 +5,7 @@ import $ from "jquery";
 import "./componentsCss/Header.css";
 import { connect } from "react-redux";
 import { updateWidth } from "../redux";
+import { LinearProgress } from "@mui/material";
 
 const Header = ({ width, columns, updateWidth }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -18,6 +19,7 @@ const Header = ({ width, columns, updateWidth }) => {
 
   //width 관리
   useEffect(() => {
+    console.log(cookies.userData);
     updateWidth(document.documentElement.clientWidth);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
@@ -49,52 +51,106 @@ const Header = ({ width, columns, updateWidth }) => {
       }}
     >
       <div className="navbar__logo">
-        <i className="fa-solid fa-shirt"></i>
-        <a href="/">AI-CLOSET</a>
+        <li
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <i className="fa-solid fa-shirt"></i>
+          AI CLOSET
+        </li>
       </div>
       <ul className="navbar__menu">
-        <li>
-          <a href="/">HOME</a>
-        </li>
-        <li>
-          <a href="/closet">CLOSET</a>
-        </li>
-        <li>
-          <a href="/board">OOTD</a>
-        </li>
-        <li>
-          <a href="/market">MARKET</a>
-        </li>
+        <div
+          className="single-nav"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <li
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            HOME
+          </li>
+        </div>
+        <div
+          className="single-nav"
+          onClick={() => {
+            if (cookies.userData === undefined) {
+              alert("로그인 후 옷장을 이용하실 수 있습니다.");
+              navigate("/login");
+            } else {
+              navigate("/closet");
+            }
+          }}
+        >
+          <li>CLOSET</li>
+        </div>
+        <div
+          className="single-nav"
+          onClick={() => {
+            if (cookies.userData === undefined) {
+              alert("로그인 후 게시판을 이용하실 수 있습니다.");
+              navigate("/login");
+            } else {
+              navigate("/board");
+            }
+          }}
+        >
+          <li>OOTD</li>
+        </div>
+        <div
+          className="single-nav"
+          onClick={() => {
+            if (cookies.userData === undefined) {
+              alert("로그인 후 게시판을 이용하실 수 있습니다.");
+              navigate("/login");
+            } else {
+              navigate("/market");
+            }
+          }}
+        >
+          <li>MARKET</li>
+        </div>
       </ul>
       <ul className="navbar__log">
         {cookies.userData !== undefined ? (
           <>
-            <li>
-              <a href="/mypage">My Page</a>
+            <li
+              onClick={() => {
+                navigate("/mypage");
+              }}
+            >
+              My Page
             </li>
             <li
               onClick={(e) => {
                 e.stopPropagation();
                 removeCookie("userData");
                 navigate("/");
+                alert("로그아웃 되었습니다.");
               }}
             >
-              <a href="/">Log Out</a>
+              Log Out
             </li>
           </>
         ) : (
           <>
-            <li>
-              <a href="/login">Login</a>
+            <li
+              onClick={(e) => {
+                navigate("/login");
+              }}
+            >
+              Login
             </li>
-            <li>
-              <a href="/signup">Sign Up</a>
-            </li>
+            <li>Sign Up</li>
           </>
         )}
       </ul>
       <a
-        href=""
+        href="#none"
         className="navbar__toggleBtn"
         onClick={(e) => {
           handleClickToggleBtn(e);

@@ -8,15 +8,33 @@ const Closet = () => {
 
   return (
     <div style={{ paddingTop: 100 + "px" }}>
-      Closet
-      <button
-        onClick={() => {
-          navigate("upload");
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
-        upload
-      </button>
-      <button>오늘의 옷</button>
+        <h1>CLOSET</h1>
+        <p>
+          When you upload your clothes,
+          <br />
+          AI will classfy your clothes.
+          <br />
+          And You can Drag and Drop clothes!
+        </p>
+        <div>
+          <button
+            onClick={() => {
+              navigate("upload");
+            }}
+          >
+            upload
+          </button>
+          <button>오늘의 옷</button>
+        </div>
+      </div>
+      <hr></hr>
       <ClothesRow />
     </div>
   );
