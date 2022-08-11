@@ -74,30 +74,25 @@ router.get("/list/:shortId", async (req, res, next) => {
     try {
         
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
-        let data = await Post.findOne({ shortId })
+        let data = await Post.findOne({ shortId, show: true })
             .populate("author")
             .populate([
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true }, 
                     populate: {
                         path: "comments author",
-                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
-                        match: { show: true },
                         populate: {
                             path: "author",
                             model: "User",
-                            match: { show: true },
                         }
                     },
                 },
@@ -105,7 +100,7 @@ router.get("/list/:shortId", async (req, res, next) => {
             // 사용자와 게시글 작성자 비교
         if (req.tokenInfo.email !== data.author.email) {
             await Post.updateOne({ shortId }, { $inc: { views: 1}});
-            data = await Post.findOne({ shortId })
+            data = await Post.findOne({ shortId, show: true })
             .populate("author")
             .populate([
                 {
@@ -252,7 +247,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
         const authData = await User.findOne({email});
         const postData = await Post.findOne({shortId});
         const parentData = await Upment.findOne({shortId: p_shortId});
-        
+
         const newcomment = await Downment.create({
             postType: 3,
             author: authData,

@@ -38,7 +38,6 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
     try {
-        console.log(req);
         const { email, password } = req.body;
     
         let hashPassword = passwordHash(password);
