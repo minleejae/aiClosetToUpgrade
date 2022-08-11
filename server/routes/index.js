@@ -7,6 +7,7 @@ import * as market from './market.routes.js';
 import * as like from './like.routes.js';
 import * as movepost from './movepost.routes.js';
 import * as search from './search.routes.js'
+import * as comment from './comment.routes.js'
 
 import authmiddleware from '../util/authmiddleware.js';
 
@@ -20,6 +21,7 @@ router.use(market.path, authmiddleware, market.router);
 router.use(like.path, authmiddleware, like.router);
 router.use(movepost.path, movepost.router);
 router.use(search.path, search.router);
+router.use(comment.path, authmiddleware, comment.router);
 
 
 
