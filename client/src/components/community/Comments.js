@@ -6,15 +6,16 @@ import LikeDislikes from "./LikeDislikes";
 import SingleComment from "./SingleComment";
 
 //comments 구조 수정 필요
-const Comments = ({ postId, curPost }) => {
+const Comments = ({ postId, curPost, getPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(curPost.comments);
 
   useEffect(() => {
-    console.log("curPost", curPost);
-  }, []);
+    setComments(curPost.comments);
+  }, [curPost]);
 
-  const handleClick = async (e) => {
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
     const result = await axios.post(
       port.url + `/api/market/list/${postId}/comment`,
@@ -25,9 +26,12 @@ const Comments = ({ postId, curPost }) => {
         headers: { accessToken: cookies.userData.accessToken },
       }
     );
-    setComment("");
-    console.log(result);
+    await getPost().then((res) => {
+      setComment("");
+    });
   };
+
+  // 새로운 댓글을 입력할 때 변화 감지 함수
   const handleChange = (e) => {
     setComment(e.target.value);
   };
@@ -40,8 +44,15 @@ const Comments = ({ postId, curPost }) => {
           댓글
         </label>
         <div className="comments">
-          {curPost?.comments.map((it, index) => {
-            return <SingleComment key={index} it={it} postId={postId} />;
+          {comments.map((comment, index) => {
+            return (
+              <SingleComment
+                key={index}
+                comment={comment}
+                postId={postId}
+                getPost={getPost}
+              />
+            );
           })}
         </div>
         <div style={{ display: "flex" }}>
@@ -62,7 +73,7 @@ const Comments = ({ postId, curPost }) => {
               type="submit"
               value="댓글입력"
               onClick={(e) => {
-                handleClick(e);
+                handleCommentSubmit(e);
               }}
             />
           </form>

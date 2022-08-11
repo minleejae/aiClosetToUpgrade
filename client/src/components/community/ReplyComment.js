@@ -1,17 +1,19 @@
 import React from "react";
 
 const ReplyComment = ({ comments, postId, parentCommentId }) => {
-  console.log("REPLY", comments);
-
   return (
     <div>
       {comments.map((it) => {
-        console.log("reply comments", comments);
-        console.log("test", parentCommentId, it.parentment_id);
-        return parentCommentId === it.parentment_id ? (
+        // console.log("it:", it);
+        // console.log("test", parentCommentId, it.parentment_id, it.comment);
+        return (
           <div
             key={it._id}
-            style={{ border: "1px solid gray", margin: 10 + "px" }}
+            style={{
+              border: "1px solid gray",
+              margin: 10 + "px",
+              marginLeft: 100 + "px",
+            }}
           >
             <h5>작성자:{it.author.name}</h5>
             <h3>내용:{it.comment}</h3>
@@ -19,8 +21,6 @@ const ReplyComment = ({ comments, postId, parentCommentId }) => {
               {/* <LikeDislikes comment userId={123} commentId={123} /> */}
             </div>
           </div>
-        ) : (
-          <></>
         );
       })}
     </div>

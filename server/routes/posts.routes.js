@@ -22,7 +22,7 @@ router.get("/list", async (req, res, next) => {
         const page = Number(req.query.page);
         const perPage = Number(req.query.perPage);
 
-        const posts = await Post.find({ postType: 2 })
+        const posts = await Post.find({ postType: 2, show: true })
         .sort({ createdAt: -1 }) 
         .skip(page) 
         .limit(perPage)
@@ -48,20 +48,25 @@ router.get("/list/:shortId", async (req, res, next) => {
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments author",
+                        match: { show: true },
                         
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
+                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
+                        match: { show: true },
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
@@ -74,21 +79,25 @@ router.get("/list/:shortId", async (req, res, next) => {
             .populate([
                 {
                     path: "comments",
+                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments author",
-                        
+                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
+                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments",
+                        match: { show: true },
                         model: "Downment",
                         populate: {
                             path: "author",
-                            model: "User"
+                            model: "User",
+                            match: { show: true },
                         }
                     },
                 },
@@ -179,8 +188,8 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 // 특정 게시글에 댓글 달기
 router.post("/list/:shortId/comment", async (req, res, next) => {
     const { shortId } = req.params;
-    let { comment, email } = req.body;
-    
+    let { comment} = req.body;
+    const email = req.tokenInfo.email;
     try {
         const authData = await User.findOne({email});
         const postData = await Post.findOne({shortId}).populate('author');
@@ -208,12 +217,12 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 //특정 게시글 댓글에 대댓글 달기
 router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
     const { shortId, p_shortId } = req.params;
-    let { comment, email } = req.body;
-
+    let { comment} = req.body;
+    const email = req.tokenInfo.email;
     try {
         const authData = await User.findOne({email});
         const postData = await Post.findOne({shortId});
-        const parentData = await Upment.findOne({p_shortId});
+        const parentData = await Upment.findOne({shortId: p_shortId});
 
         const newcomment = await Downment.create({
             postType: 2,
@@ -223,7 +232,7 @@ router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
             comment: comment
         });
 
-        await Upment.updateOne({p_shortId}, {"$push": {"comments": newcomment}});
+        await Upment.updateOne({shortId: p_shortId}, {"$push": {"comments": newcomment}});
         
         res.status(200).json({
             result: '댓글이 작성 되었습니다.'
