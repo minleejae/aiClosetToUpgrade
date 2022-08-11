@@ -27,7 +27,12 @@ router.get("/getlikes", async (req, res, next) => {
             postId: postData,
             upmentId: upmentData,
             downmentId: downmentData
-        });
+        }).populate('userId');
+                        
+        const likesData = likes.reduce((acc, it) => {
+            return [it.userId.email, ...acc];
+        }, []);
+        console.log(likesData);
 
         res.status(200).json(likes);
     } catch (err) {
@@ -60,8 +65,13 @@ router.get("/getdislikes", async (req, res, next) => {
             upmentId: upmentData,
             downmentId: downmentData
         });
+                
+        const dislikesData = dislikes.reduce((acc, it) => {
+            return [it.userId.email, ...acc];
+        }, []);
+        console.log(dislikesData);
 
-        res.status(200).json(dislikes);
+        res.status(200).json(likes);
     } catch (err) {
         err.message = `${err.message}, get dislike error.`;
         next(err);
