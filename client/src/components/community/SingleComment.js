@@ -10,6 +10,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
   const [commentValue, setCommentValue] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
 
+  console.log("SINGle", comment._id, comment.comment);
   useEffect(() => {}, [commentValue]);
 
   const onClickReplyOpen = () => {
@@ -48,8 +49,9 @@ const SingleComment = ({ comment, postId, getPost }) => {
           <h5>작성자:{comment.author.name}</h5>
           <h3>내용:{comment.comment}</h3>
           <h4>comment.shortId: {comment.shortId}</h4>
+          <h4>comment._id : {comment._id}</h4>
           <div style={{ display: "flex" }}>
-            {/* <LikeDislikes comment userId={123} commentId={123} /> */}
+            <LikeDislikes keyId={comment.shortId} urlType={"upmentId"} />
             <button onClick={onClickReplyOpen}>대댓글</button>
           </div>
         </div>

@@ -86,7 +86,7 @@ const MarketViewForm = ({ postType }) => {
               <p>{curPost && curPost.content}</p>
             </div>
             <div>
-              <LikeDislikes userId={123} postId={paramsId} />
+              <LikeDislikes keyId={paramsId} urlType={"postId"} />
             </div>
           </div>
           {myPost ? (

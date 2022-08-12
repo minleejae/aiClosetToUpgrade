@@ -41,6 +41,7 @@ const MarketImages = ({
         style={{ display: "flex", flexWrap: "wrap", padding: 16 + "px" }}
       >
         {images.map((it, index) => {
+          console.log(images);
           const srcUrl = port.url + "/" + it.img.url.split("/")[1];
           return (
             <span

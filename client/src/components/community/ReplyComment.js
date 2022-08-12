@@ -1,4 +1,5 @@
 import React from "react";
+import LikeDislikes from "./LikeDislikes";
 
 const ReplyComment = ({ comments, postId, parentCommentId }) => {
   return (
@@ -18,7 +19,7 @@ const ReplyComment = ({ comments, postId, parentCommentId }) => {
             <h5>작성자:{it.author.name}</h5>
             <h3>내용:{it.comment}</h3>
             <div style={{ display: "flex" }}>
-              {/* <LikeDislikes comment userId={123} commentId={123} /> */}
+              <LikeDislikes keyId={it.shortId} urlType={"downmentId"} />
             </div>
           </div>
         );
