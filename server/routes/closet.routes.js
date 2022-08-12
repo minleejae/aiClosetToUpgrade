@@ -27,7 +27,6 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const category = JSON.parse(type).dressType;
         const authData = await User.findOne({email});
         const url = pathmodule.join(pathmodule.dirname(req.file.path), pathmodule.basename(req.file.path));
-        console.log(url);
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 1,
