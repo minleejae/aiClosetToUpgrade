@@ -111,7 +111,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 ;       const {content, title} = req.body;
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
-        const url = pathmodule.join(pathmodule.dirname(req.file.path), pathmodule.basename(req.file.path));
+        const url = req.file.destination + pathmodule.basename(req.file.path);
         await Post.create({
             title: title,
             content: content,
