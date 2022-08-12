@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { Downment, Post, Upment, User } from '../models/index.js'
+import pathmodule from 'path';
+
 
 export const path = '/market';
 export const router = Router();
@@ -26,6 +28,8 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const content = req.body.content;
         const price = Number(req.body.price);
         const authData = await User.findOne({email});
+        const url = pathmodule.join(pathmodule.dirname(req.file.path), pathmodule.basename(req.file.path));
+
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 3,
@@ -33,7 +37,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
             title: title,
             content: content,
             img: {
-                   url: req.file.path
+                   url: url
             },
             author: authData
         });
