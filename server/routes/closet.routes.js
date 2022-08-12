@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { Post, User } from '../models/index.js'
+import pathmodule from 'path';
 
 export const path = '/closet';
 export const router = Router();
@@ -25,11 +26,13 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const email = req.tokenInfo.email;
         const category = JSON.parse(type).dressType;
         const authData = await User.findOne({email});
+        const url = pathmodule.join(pathmodule.dirname(req.file.path), pathmodule.basename(req.file.path));
+        console.log(url);
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 1,
             img: {
-                   url: req.file.path,
+                   url: url,
                    category: category
             },
             author: authData
