@@ -47,7 +47,7 @@ const Comments = ({ postId, curPost, getPost }) => {
           {comments.map((comment, index) => {
             return (
               <SingleComment
-                key={index}
+                key={comment._id}
                 comment={comment}
                 postId={postId}
                 getPost={getPost}

@@ -20,7 +20,6 @@ export const fetchMarketImages = (page, perPage, accessToken) => {
         dispatch(fetchImagesSuccess(images));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(fetchImagesFailure(error));
       });
   };
