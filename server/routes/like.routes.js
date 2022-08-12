@@ -13,13 +13,13 @@ router.get("/getlikes", async (req, res, next) => {
         let downmentData = null;
         if (req.query.postId) {
             const postId = req.query.postId;
-            postData = await Post.findOne({postId});
+            postData = await Post.findOne({shortId: postId});
         } else if (req.query.upmentId) { 
             const upmentId = req.body.upmentId
-            upmentData = await Upment.findOne({upmentId});
+            upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.query.downmentId
-            downmentData = await Downment.findOne({downmentId});
+            downmentData = await Downment.findOne({shortId: downmentId});
         }    
        
     
@@ -32,7 +32,6 @@ router.get("/getlikes", async (req, res, next) => {
         const likesData = likes.reduce((acc, it) => {
             return [it.userId.email, ...acc];
         }, []);
-        console.log(likesData);
 
         res.status(200).json(likesData);
     } catch (err) {
@@ -50,13 +49,13 @@ router.get("/getdislikes", async (req, res, next) => {
         let downmentData = null;
         if (req.query.postId) {
             const postId = req.query.postId;
-            postData = await Post.findOne({postId});
+            postData = await Post.findOne({shortId: postId});
         } else if (req.query.upmentId) { 
             const upmentId = req.body.upmentId
-            upmentData = await Upment.findOne({upmentId});
+            upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.query.downmentId
-            downmentData = await Downment.findOne({downmentId});
+            downmentData = await Downment.findOne({shortId: downmentId});
         }    
        
     
@@ -64,12 +63,11 @@ router.get("/getdislikes", async (req, res, next) => {
             postId: postData,
             upmentId: upmentData,
             downmentId: downmentData
-        });
+        }).populate("userId");
                 
         const dislikesData = dislikes.reduce((acc, it) => {
             return [it.userId.email, ...acc];
         }, []);
-        console.log(dislikesData);
 
         res.status(200).json(dislikesData);
     } catch (err) {
@@ -83,19 +81,19 @@ router.post("/uplike", async (req, res, next) => {
     const email = req.tokenInfo.email;
     try {
         
-        const userData = await User.findOne({email});
+        const userData = await User.findOne({email: email});
         let postData = null;
         let upmentData = null;
         let downmentData = null;
         if (req.body.postId) {
             const postId = req.body.postId;
-            postData = await Post.findOne({postId});
+            postData = await Post.findOne({shortId: postId});
         } else if (req.body.upmentId) { 
             const upmentId = req.body.upmentId
-            upmentData = await Upment.findOne({upmentId});
+            upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.body.downmentId
-            downmentData = await Downment.findOne({downmentId});
+            downmentData = await Downment.findOne({shortId: downmentId});
         }
         
         const liked = await Like.findOne({
@@ -104,6 +102,7 @@ router.post("/uplike", async (req, res, next) => {
             upmentId: upmentData,
             downmentId: downmentData 
         });
+
         const disliked = await Dislike.findOne({
             userId: userData,
             postId: postData,
@@ -112,14 +111,10 @@ router.post("/uplike", async (req, res, next) => {
         });
 
         if (liked) {
-            await Like.findOneAndDelete(
-                liked._id
-            );
+            await Like.findOneAndDelete({_id: liked._id});
             return res.status(200).json({ liked: false, disliked: false});
         } else if (disliked) {
-            await Dislike.findOneAndDelete(
-                disliked._id
-            );
+            await Dislike.findOneAndDelete({_id: disliked._id});
             await Like.create({
                 userId: userData,
                 postId: postData,
@@ -150,19 +145,19 @@ router.post("/updislike", async (req, res, next) => {
 
     try {
 
-        const userData = await User.findOne({email});
+        const userData = await User.findOne({email: email});
         let postData = null;
         let upmentData = null;
         let downmentData = null;
         if (req.body.postId) {
             const postId = req.body.postId;
-            postData = await Post.findOne({postId});
+            postData = await Post.findOne({shortId: postId});
         } else if (req.body.upmentId) { 
             const upmentId = req.body.upmentId
-            upmentData = await Upment.findOne({upmentId});
+            upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.body.downmentId
-            downmentData = await Downment.findOne({downmentId});
+            downmentData = await Downment.findOne({shortId: downmentId});
         }
         
         const liked = await Like.findOne({
@@ -179,14 +174,10 @@ router.post("/updislike", async (req, res, next) => {
         });
 
         if (disliked) {
-            await Dislike.findOneAndDelete(
-                disliked._id
-            );
+            await Dislike.findOneAndDelete({_id: disliked._id});
             return res.status(200).json({ liked:false ,disliked: false });
         } else if (liked) {
-            await Like.findOneAndDelete(
-                liked._id
-            );
+            await Like.findOneAndDelete({_id: liked._id});
             await Dislike.create({
                 userId: userData,
                 postId: postData,
