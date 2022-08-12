@@ -48,8 +48,6 @@ const SingleComment = ({ comment, postId, getPost }) => {
         >
           <h5>작성자:{comment.author.name}</h5>
           <h3>내용:{comment.comment}</h3>
-          <h4>comment.shortId: {comment.shortId}</h4>
-          <h4>comment._id : {comment._id}</h4>
           <div style={{ display: "flex" }}>
             <LikeDislikes keyId={comment.shortId} urlType={"upmentId"} />
             <button onClick={onClickReplyOpen}>대댓글</button>
@@ -70,7 +68,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
               value={commentValue}
               name="recomment"
               id="recomment"
-              placeholder="댓글을 입력해주세요."
+              placeholder="대댓글을 입력해주세요."
               style={{ minWidth: 300 + "%" }}
               onChange={(e) => {
                 onHandleChange(e);
