@@ -16,8 +16,6 @@ const LikeDislikes = ({ keyId, urlType }) => {
 
   const url = `${urlType}=${keyId}`;
 
-  console.log(`/api/like/getlikes?${url}`, keyId);
-
   useEffect(() => {
     axios
       .get(port.url + `/api/like/getlikes?${url}`, {

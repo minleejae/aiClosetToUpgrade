@@ -10,7 +10,6 @@ const SingleComment = ({ comment, postId, getPost }) => {
   const [commentValue, setCommentValue] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
 
-  console.log("SINGle", comment._id, comment.comment);
   useEffect(() => {}, [commentValue]);
 
   const onClickReplyOpen = () => {
@@ -39,6 +38,22 @@ const SingleComment = ({ comment, postId, getPost }) => {
     console.log(result);
   };
 
+  const commentUpdate = () => {};
+
+  const commentUpdateSubmit = () => {
+    axios.put(port.url + `/api/comment/update/${comment.shortId}`);
+  };
+
+  const commentDelete = async () => {
+    console.log("abcd");
+    await axios.delete(port.url + `/api/comment/delete/${comment.shortId}`, {
+      headers: { accessToken: cookies.userData.accessToken },
+    });
+    getPost();
+  };
+
+  console.log("comment", comment);
+
   return (
     <>
       <div>
@@ -47,10 +62,28 @@ const SingleComment = ({ comment, postId, getPost }) => {
           style={{ border: "1px solid gray", margin: 10 + "px" }}
         >
           <h5>작성자:{comment.author.name}</h5>
-          <h3>내용:{comment.comment}</h3>
+          <h3>{comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}</h3>
           <div style={{ display: "flex" }}>
             <LikeDislikes keyId={comment.shortId} urlType={"upmentId"} />
             <button onClick={onClickReplyOpen}>대댓글</button>
+            {cookies.userData.email === comment.author.email && comment.show && (
+              <>
+                <button
+                  onClick={() => {
+                    commentUpdate();
+                  }}
+                >
+                  수정
+                </button>
+                <button
+                  onClick={() => {
+                    commentDelete();
+                  }}
+                >
+                  삭제
+                </button>
+              </>
+            )}
           </div>
         </div>
         <ReplyComment
