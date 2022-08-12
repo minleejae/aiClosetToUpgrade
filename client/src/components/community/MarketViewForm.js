@@ -26,7 +26,6 @@ const MarketViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
-    console.log(post);
   };
 
   const handleUpdateButton = () => {
@@ -49,7 +48,7 @@ const MarketViewForm = ({ postType }) => {
         <div className="container">
           <div style={{ display: "flex", alignItems: "center" }}>
             <i
-              class="fa-solid fa-angle-left"
+              className="fa-solid fa-angle-left"
               style={{ fontSize: 150 + "px", color: "gray" }}
             ></i>
             <div
@@ -71,7 +70,7 @@ const MarketViewForm = ({ postType }) => {
               </div>
             </div>
             <i
-              class="fa-solid fa-angle-right"
+              className="fa-solid fa-angle-right"
               style={{ fontSize: 150 + "px", color: "gray" }}
             ></i>
           </div>
@@ -86,7 +85,7 @@ const MarketViewForm = ({ postType }) => {
               <p>{curPost && curPost.content}</p>
             </div>
             <div>
-              <LikeDislikes userId={123} postId={paramsId} />
+              <LikeDislikes keyId={paramsId} urlType={"postId"} />
             </div>
           </div>
           {myPost ? (
