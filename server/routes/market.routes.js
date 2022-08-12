@@ -74,7 +74,7 @@ router.get("/list/:shortId", async (req, res, next) => {
     try {
         
         //shortId의 맞는 데이터를 가져옵니다. (title과 content를 가져옵니다)
-        let data = await Post.findOne({ shortId, show: true })
+        let data = await Post.findOne({ shortId: shortId, show: true })
             .populate("author")
             .populate([
                 {
@@ -99,31 +99,26 @@ router.get("/list/:shortId", async (req, res, next) => {
             ]);
             // 사용자와 게시글 작성자 비교
         if (req.tokenInfo.email !== data.author.email) {
-            await Post.updateOne({ shortId }, { $inc: { views: 1}});
-            data = await Post.findOne({ shortId, show: true })
+            await Post.updateOne({ shortId: shortId }, { $inc: { views: 1}});
+            data = await Post.findOne({ shortId: shortId, show: true })
             .populate("author")
             .populate([
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true }, 
                     populate: {
                         path: "comments author",
-                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
-                        match: { show: true },
                         populate: {
                             path: "author",
                             model: "User",
-                            match: { show: true },
                         }
                     },
                 },
