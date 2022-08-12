@@ -15,7 +15,7 @@ router.get("/getlikes", async (req, res, next) => {
             const postId = req.query.postId;
             postData = await Post.findOne({shortId: postId});
         } else if (req.query.upmentId) { 
-            const upmentId = req.body.upmentId
+            const upmentId = req.query.upmentId
             upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.query.downmentId
@@ -51,7 +51,7 @@ router.get("/getdislikes", async (req, res, next) => {
             const postId = req.query.postId;
             postData = await Post.findOne({shortId: postId});
         } else if (req.query.upmentId) { 
-            const upmentId = req.body.upmentId
+            const upmentId = req.query.upmentId
             upmentData = await Upment.findOne({shortId: upmentId});
         } else { 
             const downmentId = req.query.downmentId
