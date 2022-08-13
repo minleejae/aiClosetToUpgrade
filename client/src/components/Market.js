@@ -4,7 +4,7 @@ import "./componentsCss/Community.css";
 import MarketImages from "./community/MarketImages";
 
 const Market = () => {
-  const [searchType, setSearchType] = useState("");
+  const [searchType, setSearchType] = useState("제목");
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
@@ -58,10 +58,10 @@ const Market = () => {
                 setSearchType(e.target.value);
               }}
             >
-              <option>Title</option>
-              <option>Content</option>
-              <option>Title or Content</option>
-              <option>Writer</option>
+              <option>제목</option>
+              <option>내용</option>
+              <option>제목 내용</option>
+              <option>작성자</option>
             </select>
           </div>
           <input

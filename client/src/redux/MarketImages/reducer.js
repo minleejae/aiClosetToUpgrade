@@ -10,16 +10,29 @@ const initialState = {
   loading: false,
   err: null,
   hasMore: true,
+  search: "",
 };
 
 const imagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_IMAGES_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
+      console.log("request:", state, action);
+      if (state.search === action.payload) {
+        return {
+          ...state,
+          items: [...state.items],
+          loading: true,
+        };
+      } else {
+        return {
+          ...state,
+          items: [],
+          search: action.payload,
+          loading: true,
+        };
+      }
     case FETCH_IMAGES_SUCCESS:
+      console.log("success:", action.payload, "state", state);
       if (action.payload.posts.length > 0) {
         return {
           ...state,

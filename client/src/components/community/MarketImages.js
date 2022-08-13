@@ -27,13 +27,16 @@ const MarketImages = ({
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       if (!hasMore) return;
+      if (searchValue) return;
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           console.log("visible");
           fetchMarketImages(
             images.length,
             perPages,
-            cookies.userData.accessToken
+            cookies.userData.accessToken,
+            searchType,
+            searchValue
           );
         }
       });
@@ -43,9 +46,14 @@ const MarketImages = ({
   );
 
   useEffect(() => {
-    if (count === 0) window.scrollTo(0, 0);
-    fetchMarketImages(images.length, perPages, cookies.userData.accessToken);
-  }, []);
+    fetchMarketImages(
+      images.length,
+      perPages,
+      cookies.userData.accessToken,
+      searchType,
+      searchValue
+    );
+  }, [searchValue]);
 
   //무한스크롤 기능 수정 더 효율적으로 필요 현재 게시물이 적은 경우 요청을 많이함
 
