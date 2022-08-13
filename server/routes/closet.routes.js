@@ -26,7 +26,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const email = req.tokenInfo.email;
         const category = JSON.parse(type).dressType;
         const authData = await User.findOne({email});
-        const url = pathmodule.join(pathmodule.dirname(req.file.path), pathmodule.basename(req.file.path));
+        const url = req.file.destination + pathmodule.basename(req.file.path);
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 1,
@@ -47,10 +47,17 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
  router.get("/list", async (req, res, next) => {
     try {
         const email = req.tokenInfo.email;
-        const posts = await Post.find({ postType: 1, email, show: true })
+        const postsData = await Post.find({ postType: 1, show: true })
             .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
-    
+        
+        const posts = postsData.reduce((acc, it) => {
+            if (it.author.email == email) {
+                return [ ...acc, it]
+            }
+            return [...acc];
+        }, [])
+
         res.json({ posts });
     } catch(err) {
         err.message = `${err.message}, closet list error.`;
