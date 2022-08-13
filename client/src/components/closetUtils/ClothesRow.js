@@ -10,6 +10,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   background-color: #333;
   padding: 1rem;
+  min-height: 230px;
   margin-top: 1rem;
 `;
 
@@ -39,11 +40,14 @@ const DeleteButton = styled.input.attrs({
 //   width: 100%,
 // `;
 
+const CATEGORY_TYPE = ["TOP", "BOTTOM", "SHOE", "ETC"];
+
 const ClothesRow = ({ items, setItems }) => {
   const [dragging, setDragging] = useState(false);
   const dragItem = useRef();
   const dragItemNode = useRef();
   const draggableItems = useRef([]);
+  const containersRef = useRef([]);
 
   useEffect(() => {
     draggableItems.current = draggableItems.current.slice(0, items.length);
@@ -72,9 +76,8 @@ const ClothesRow = ({ items, setItems }) => {
   };
 
   //현재 드래그 위치와 가장 가까운 사진을 찾는 함수
-  //빈 어레이에 놓였을때도 고려해야함
   const getClosest = (pageX, pageY) => {
-    return draggableItems.current.reduce(
+    let calculateOffset = draggableItems.current.reduce(
       (acc, it, index) => {
         const itInfo = it.getBoundingClientRect();
         const y = itInfo.top + itInfo.height / 2 + window.scrollY;
@@ -88,8 +91,27 @@ const ClothesRow = ({ items, setItems }) => {
         }
         return acc;
       },
-      { offset: Number.POSITIVE_INFINITY, selected: -1, direction: "right" }
+      {
+        offset: Number.POSITIVE_INFINITY,
+        selected: -1,
+        direction: "right",
+        toEmptyContainer: "INIT",
+      }
     );
+
+    containersRef.current.reduce((acc, it, index) => {
+      const itInfo = it.getBoundingClientRect();
+      const y = itInfo.top + itInfo.height / 2 + window.scrollY;
+      const x = itInfo.right - itInfo.width / 2 + window.scrollX;
+      const curOffset = Math.abs(pageX - x) + Math.abs(pageY - y);
+      if (curOffset < acc.offset) {
+        acc.offset = curOffset;
+        acc.toEmptyContainer = index;
+      }
+      return acc;
+    }, calculateOffset);
+
+    return calculateOffset;
   };
 
   const handleDragEnd = (e, item) => {
@@ -102,41 +124,50 @@ const ClothesRow = ({ items, setItems }) => {
 
     //가장 가까운 요소 찾기
     const result = getClosest(e.pageX, e.pageY);
-
     //깊은 복사 : 드래그시 이미지의 타입을 변경해주는 효과를 만들기 위함
     const copyItem = JSON.parse(JSON.stringify(item));
-    copyItem.item.img.category = items[result.selected].img.category;
-
     let newItems = [...items];
     newItems.splice(copyItem.itemIndex, 1);
-    if (result.direction === "right") {
-      newItems.splice(result.selected, 0, copyItem.item);
-    } else {
-      if (result.selected === 0) {
-        newItems = [copyItem.item, ...newItems];
-      } else newItems.splice(result.selected - 1, 0, copyItem.item);
-    }
 
+    if (result.toEmptyContainer === "INIT") {
+      copyItem.item.img.category = items[result.selected].img.category;
+
+      if (result.direction === "right") {
+        newItems.splice(result.selected, 0, copyItem.item);
+      } else {
+        if (result.selected === 0) {
+          newItems = [copyItem.item, ...newItems];
+        } else newItems.splice(result.selected - 1, 0, copyItem.item);
+      }
+    } else {
+      //emptyContainer로 가는경우
+      copyItem.item.img.category = CATEGORY_TYPE[result.toEmptyContainer];
+
+      newItems = [...newItems, copyItem.item];
+    }
     setItems(newItems);
   };
 
   //놓기 전에 효과 주려면 위치계산하는 걸 dragEnter에서도 만들어야함
   const handleDragEnter = (e, category) => {
-    console.log("handleDragEnter", e.target);
-    // console.log("dragItemNode.current", dragItemNode.current);
+    // console.log("handleDragEnter", e.target);
   };
 
   //로우 컴포넌트
-  const RowComponent = ({ itemCategroy }) => (
-    <div onDragEnter={(e) => handleDragEnter(e, itemCategroy)}>
+  const RowComponent = ({ itemCategroy, categoryIndex }) => (
+    <div
+      key={itemCategroy}
+      onDragEnter={(e) => handleDragEnter(e, itemCategroy)}
+      ref={(el) => (containersRef.current[categoryIndex] = el)}
+    >
       <h1 style={{ textAlign: "center" }}>{itemCategroy}</h1>
       <Container>
         {items.map((item, itemIndex) => {
           const imgUrl = port.url + "/" + item.img.url.split("/")[1];
-          if (item.img.category === itemCategroy) {
-            return (
+          return (
+            item.img.category === itemCategroy && (
               <div
-                key={item._id}
+                key={itemIndex}
                 draggable
                 className="draggable"
                 onDragStart={(e) => {
@@ -171,10 +202,8 @@ const ClothesRow = ({ items, setItems }) => {
                   </div>
                 </DraggableDiv>
               </div>
-            );
-          } else {
-            return <></>;
-          }
+            )
+          );
         })}
       </Container>
     </div>
@@ -182,10 +211,10 @@ const ClothesRow = ({ items, setItems }) => {
 
   return (
     <>
-      <RowComponent key={"TOP"} itemCategroy={"TOP"} />
-      <RowComponent key={"BOTTOM"} itemCategroy={"BOTTOM"} />
-      <RowComponent key={"SHOE"} itemCategroy={"SHOE"} />
-      <RowComponent key={"ETC"} itemCategroy={"ETC"} />
+      <RowComponent key={"TOP"} itemCategroy={"TOP"} categoryIndex={0} />
+      <RowComponent key={"BOTTOM"} itemCategroy={"BOTTOM"} categoryIndex={1} />
+      <RowComponent key={"SHOE"} itemCategroy={"SHOE"} categoryIndex={2} />
+      <RowComponent key={"ETC"} itemCategroy={"ETC"} categoryIndex={3} />
     </>
   );
 };
