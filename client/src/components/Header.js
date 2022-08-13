@@ -19,7 +19,8 @@ const Header = ({ width, columns, updateWidth }) => {
 
   //width 관리
   useEffect(() => {
-    updateWidth(document.documentElement.clientWidth);
+    updateWidth(document.documentElement.clientWidth - 15);
+    console.log(document.documentElement.clientWidth);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
     return () => {

@@ -20,7 +20,6 @@ const imagesReducer = (state = initialState, action) => {
         loading: true,
       };
     case FETCH_IMAGES_SUCCESS:
-      console.log("fetch:", action.payload.posts.length);
       if (action.payload.posts.length > 0) {
         return {
           ...state,

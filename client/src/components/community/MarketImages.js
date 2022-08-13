@@ -50,7 +50,12 @@ const MarketImages = ({
     <>
       <div
         className="image-box"
-        style={{ display: "flex", flexWrap: "wrap", padding: 16 + "px" }}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          padding: 16 + "px",
+          justifyContent: "center",
+        }}
       >
         {images.map((it, index) => {
           const srcUrl = port.url + "/" + it.img.url.split("/")[1];
