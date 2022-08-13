@@ -29,7 +29,6 @@ const MarketImages = ({
       if (searchValue) return;
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-          console.log("visible");
           fetchMarketImages(
             images.length,
             perPages,
@@ -46,15 +45,13 @@ const MarketImages = ({
 
   useEffect(() => {
     fetchMarketImages(
-      images.length,
+      0,
       perPages,
       cookies.userData.accessToken,
       searchType,
       searchValue
     );
   }, [searchValue]);
-
-  //무한스크롤 기능 수정 더 효율적으로 필요 현재 게시물이 적은 경우 요청을 많이함
 
   return (
     <>

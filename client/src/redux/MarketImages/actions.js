@@ -16,10 +16,11 @@ export const fetchMarketImages = (
 ) => {
   return (dispatch) => {
     dispatch(fetchImagesRequest(searchValue));
-    console.log(searchValue);
+
+    console.log("actions page!", searchValue, page);
     let fetchUrl = `${port.url}/api/market/list?page=${page}&perPage=${perPage}`;
     if (searchValue) {
-      fetchUrl = `${port.url}/api/search/?postType=3&option=${searchType}&content=${searchValue}`;
+      fetchUrl = `${port.url}/api/search/?postType=3&option=${searchType}&content=${searchValue}&page=${page}&perPage=${perPage}`;
     }
 
     fetch(fetchUrl, {
@@ -29,7 +30,7 @@ export const fetchMarketImages = (
     })
       .then((response) => response.json())
       .then((images) => {
-        console.log(images);
+        console.log("imgaes", images);
         dispatch(fetchImagesSuccess(images));
       })
       .catch((error) => {

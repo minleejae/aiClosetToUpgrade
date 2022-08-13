@@ -28,11 +28,12 @@ const imagesReducer = (state = initialState, action) => {
           ...state,
           items: [],
           search: action.payload,
+          hasMore: true,
           loading: true,
         };
       }
     case FETCH_IMAGES_SUCCESS:
-      console.log("success:", action.payload, "state", state);
+      console.log("success: action.payload:", action.payload, "state", state);
       if (action.payload.posts.length > 0) {
         return {
           ...state,
