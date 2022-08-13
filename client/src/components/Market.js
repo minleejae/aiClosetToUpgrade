@@ -21,7 +21,6 @@ const Market = () => {
   };
 
   const handleChange = (e) => {
-    console.log("handleChange", e.target.value);
     setSearchValue(e.target.value);
   };
 
@@ -53,7 +52,7 @@ const Market = () => {
         </button>
       </div>
       <hr></hr>
-      <form
+      <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -85,7 +84,7 @@ const Market = () => {
             <i class="fa-solid fa-magnifying-glass"></i>
           </button> */}
         </div>
-      </form>
+      </div>
       <div className="image-list">
         <MarketImages
           postType={3}

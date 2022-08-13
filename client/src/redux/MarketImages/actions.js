@@ -17,7 +17,6 @@ export const fetchMarketImages = (
   return (dispatch) => {
     dispatch(fetchImagesRequest(searchValue));
 
-    console.log("actions page!", searchValue, page);
     let fetchUrl = `${port.url}/api/market/list?page=${page}&perPage=${perPage}`;
     if (searchValue) {
       fetchUrl = `${port.url}/api/search/?postType=3&option=${searchType}&content=${searchValue}&page=${page}&perPage=${perPage}`;
@@ -30,11 +29,9 @@ export const fetchMarketImages = (
     })
       .then((response) => response.json())
       .then((images) => {
-        console.log("imgaes", images);
         dispatch(fetchImagesSuccess(images));
       })
       .catch((error) => {
-        console.log("action err", error);
         dispatch(fetchImagesFailure(error));
       });
   };

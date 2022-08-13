@@ -16,7 +16,6 @@ const initialState = {
 const imagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_IMAGES_REQUEST:
-      console.log("request:", state, action);
       if (state.search === action.payload) {
         return {
           ...state,
@@ -33,7 +32,6 @@ const imagesReducer = (state = initialState, action) => {
         };
       }
     case FETCH_IMAGES_SUCCESS:
-      console.log("success: action.payload:", action.payload, "state", state);
       if (action.payload.posts.length > 0) {
         return {
           ...state,
