@@ -43,6 +43,7 @@ const DeleteButton = styled.input.attrs({
 const CATEGORY_TYPE = ["TOP", "BOTTOM", "SHOE", "ETC"];
 
 const ClothesRow = ({ items, setItems }) => {
+  const [draggingItem, setDraggingItem] = useState(null);
   const [dragging, setDragging] = useState(false);
   const dragItem = useRef();
   const dragItemNode = useRef();
@@ -68,10 +69,12 @@ const ClothesRow = ({ items, setItems }) => {
     dragItemNode.current.addEventListener("dragend", (e) => {
       handleDragEnd(e, item);
     });
-    dragItem.current = item;
+    dragItem.current = item.item;
+    console.log("handleDragStart", item.item);
 
     setTimeout(() => {
       setDragging(true);
+      setDraggingItem(item);
     }, 0);
   };
 
@@ -129,6 +132,7 @@ const ClothesRow = ({ items, setItems }) => {
     let newItems = [...items];
     newItems.splice(copyItem.itemIndex, 1);
 
+    //image 옆으로 이동하는 경우
     if (result.toEmptyContainer === "INIT") {
       copyItem.item.img.category = items[result.selected].img.category;
 
@@ -148,9 +152,16 @@ const ClothesRow = ({ items, setItems }) => {
     setItems(newItems);
   };
 
-  //놓기 전에 효과 주려면 위치계산하는 걸 dragEnter에서도 만들어야함
+  //놓기 전에 효과 주려면 위치계산하는 걸 dragEnter에서도 만들어야함->나중에
   const handleDragEnter = (e, category) => {
-    // console.log("handleDragEnter", e.target);
+    const result = getClosest(e.pageX, e.pageY);
+
+    // // 깊은 복사 : 드래그시 이미지의 타입을 변경해주는 효과를 만들기 위함
+    // const copyItem = JSON.parse(JSON.stringify(draggingItem));
+    // let newItems = [...items];
+    // newItems.splice(copyItem.itemIndex, 1);
+
+    // console.log("resut", result);
   };
 
   //로우 컴포넌트
@@ -160,7 +171,9 @@ const ClothesRow = ({ items, setItems }) => {
       onDragEnter={(e) => handleDragEnter(e, itemCategroy)}
       ref={(el) => (containersRef.current[categoryIndex] = el)}
     >
-      <h1 style={{ textAlign: "center" }}>{itemCategroy}</h1>
+      <h1 style={{ textAlign: "center", paddingTop: 10 + "px" }}>
+        {itemCategroy}
+      </h1>
       <Container>
         {items.map((item, itemIndex) => {
           const imgUrl = port.url + "/" + item.img.url.split("/")[1];

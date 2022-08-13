@@ -6,8 +6,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
 import LikeDislikes from "./LikeDislikes";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -26,6 +24,7 @@ const MarketViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
+    console.log(post.data);
   };
 
   const handleUpdateButton = () => {
