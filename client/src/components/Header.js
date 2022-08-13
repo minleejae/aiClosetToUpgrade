@@ -15,6 +15,7 @@ const Header = ({ width, columns, updateWidth }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+    // console.log("scroll");
   };
 
   //width 관리

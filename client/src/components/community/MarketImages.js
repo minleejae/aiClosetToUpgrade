@@ -21,7 +21,6 @@ const MarketImages = ({
   const [count, setCount] = useState(0);
   const observer = useRef();
 
-  console.log(searchType, searchValue);
   const lastImageElementRef = useCallback(
     (node) => {
       if (loading) return;

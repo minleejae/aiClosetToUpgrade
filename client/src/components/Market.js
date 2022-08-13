@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./componentsCss/Community.css";
 import MarketImages from "./community/MarketImages";
@@ -8,10 +8,24 @@ const Market = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log(searchType, searchValue);
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 500);
+    };
   };
+
+  const handleChange = (e) => {
+    console.log("handleChange", e.target.value);
+    setSearchValue(e.target.value);
+  };
+
+  const optimisedVersion = useCallback(debounce(handleChange), []);
 
   return (
     <div style={{ paddingTop: 100 + "px" }}>
@@ -46,9 +60,6 @@ const Market = () => {
           width: 30 + "%",
           margin: "auto",
         }}
-        onSubmit={(e) => {
-          handleSearch(e);
-        }}
       >
         <div className="input-group mb-3">
           <div className="input-group-text p-0" style={{ width: 30 + "%" }}>
@@ -68,9 +79,7 @@ const Market = () => {
             type="search"
             className="form-control"
             placeholder="Search Here"
-            onChange={(e) => {
-              setSearchValue(e.target.value);
-            }}
+            onChange={optimisedVersion}
           />
           {/* <button className="input-group-text shadow-none px-4 btn-warning">
             <i class="fa-solid fa-magnifying-glass"></i>

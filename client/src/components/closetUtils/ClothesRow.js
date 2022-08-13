@@ -51,6 +51,7 @@ const ClothesRow = ({ items, setItems }) => {
   const containersRef = useRef([]);
 
   useEffect(() => {
+    console.log(items);
     draggableItems.current = draggableItems.current.slice(0, items.length);
   }, [items]);
 
@@ -175,7 +176,7 @@ const ClothesRow = ({ items, setItems }) => {
         {itemCategroy}
       </h1>
       <Container>
-        {items.map((item, itemIndex) => {
+        {items?.map((item, itemIndex) => {
           const imgUrl = port.url + "/" + item.img.url.split("/")[1];
           return (
             item.img.category === itemCategroy && (

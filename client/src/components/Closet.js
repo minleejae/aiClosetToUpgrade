@@ -20,6 +20,7 @@ const Closet = () => {
       })
       .then((res) => {
         setItems(res.data.posts);
+        console.log(res.data.posts);
       });
   };
 
