@@ -9,6 +9,7 @@ const initialState = {
   items: [],
   loading: false,
   err: null,
+  hasMore: true,
 };
 
 const imagesReducer = (state = initialState, action) => {
@@ -19,11 +20,21 @@ const imagesReducer = (state = initialState, action) => {
         loading: true,
       };
     case FETCH_IMAGES_SUCCESS:
-      return {
-        ...state,
-        items: [...state.items, ...action.payload.posts],
-        loading: false,
-      };
+      console.log("fetch:", action.payload.posts.length);
+      if (action.payload.posts.length > 0) {
+        return {
+          ...state,
+          items: [...state.items, ...action.payload.posts],
+          loading: false,
+        };
+      } else {
+        return {
+          ...state,
+          items: [...state.items, ...action.payload.posts],
+          loading: false,
+          hasMore: false,
+        };
+      }
     case FETCH_IMAGES_FAILURE:
       return {
         ...state,

@@ -94,12 +94,12 @@ const WritingForm = ({
       })
       .then((res) => {
         console.log(res);
+        navigate(afterSubmitUrl[postType - 1]);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
-
-    navigate(afterSubmitUrl[postType - 1]);
   };
 
   return (

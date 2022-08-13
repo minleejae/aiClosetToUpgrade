@@ -17,6 +17,7 @@ export const fetchMarketImages = (page, perPage, accessToken) => {
     })
       .then((response) => response.json())
       .then((images) => {
+        console.log(images);
         dispatch(fetchImagesSuccess(images));
       })
       .catch((error) => {
