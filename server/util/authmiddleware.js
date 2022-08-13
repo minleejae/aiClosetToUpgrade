@@ -25,7 +25,7 @@ const authmiddleware = async (req, res, next) => {
 
             //request의 tokenInfo부분에 토큰의 인증에 사용된 값을 저장합니다.
             req.tokenInfo = tokenInfo;
-            console.log(tokenInfo);
+            console.log("tokenInfo:", tokenInfo);
             //미들웨어로써 동작하기 때문에 next()를 작성해 주셔야 다음 미들웨어가 동작합니다.
             next();
 

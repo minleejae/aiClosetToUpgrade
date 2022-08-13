@@ -47,10 +47,17 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
  router.get("/list", async (req, res, next) => {
     try {
         const email = req.tokenInfo.email;
-        const posts = await Post.find({ postType: 1, email, show: true })
+        const postsData = await Post.find({ postType: 1, show: true })
             .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
-    
+        
+        const posts = postsData.reduce((acc, it) => {
+            if (it.author.email == email) {
+                return [ ...acc, it]
+            }
+            return [...acc];
+        }, [])
+
         res.json({ posts });
     } catch(err) {
         err.message = `${err.message}, closet list error.`;
