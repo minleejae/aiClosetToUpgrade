@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { Post, User, Upment, Downment } from '../models/index.js';
+import pathmodule from 'path';
 
 export const path = '/posts';
 export const router = Router();
@@ -42,31 +43,26 @@ router.get("/list", async (req, res, next) => {
 router.get("/list/:shortId", async (req, res, next) => {
     let {shortId} = req.params;
     try {
-        let data = await Post.findOne({shortId})
+        let data = await Post.findOne({shortId, show: true})
             .populate("author")
             .populate([
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true },
                     populate: {
                         path: "comments author",
-                        match: { show: true },
                         
                     },
                 },
                 {
                     path: "comments",
                     model: "Upment",
-                    match: { show: true },
                     populate: {
                         path: "comments",
                         model: "Downment",
-                        match: { show: true },
                         populate: {
                             path: "author",
                             model: "User",
-                            match: { show: true },
                         }
                     },
                 },
@@ -74,30 +70,25 @@ router.get("/list/:shortId", async (req, res, next) => {
         // 사용자와 게시글 작성자 비교
     if (req.tokenInfo.email !== data.author.email) {
         await Post.updateOne({ shortId }, { $inc: { views: 1}});
-        data = await Post.findOne({ shortId })
+        data = await Post.findOne({ shortId, show: true })
             .populate("author")
             .populate([
                 {
                     path: "comments",
-                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments author",
-                        match: { show: true },
                     },
                 },
                 {
                     path: "comments",
-                    match: { show: true },
                     model: "Upment",
                     populate: {
                         path: "comments",
-                        match: { show: true },
                         model: "Downment",
                         populate: {
                             path: "author",
                             model: "User",
-                            match: { show: true },
                         }
                     },
                 },
@@ -120,12 +111,13 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
 ;       const {content, title} = req.body;
         const authData = await User.findOne({email});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", title, "\n4\n", content);
+        const url = req.file.destination + pathmodule.basename(req.file.path);
         await Post.create({
             title: title,
             content: content,
             postType: 2,
             img: {
-                url: req.file.path,
+                url: url,
             },
             author: authData
         });
@@ -148,7 +140,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         if (tokenInfo.email !== postUserId.author.email) {
             return next(new Error("작성자가 아닙니다!"));
         }
-        await Post.deleteOne({shortId});
+        await Post.updateOne({ shortId }, {show: false});
         res.status(200).json({
             result: '삭제가 완료 되었습니다.'
         })
