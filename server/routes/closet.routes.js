@@ -48,7 +48,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     try {
         const email = req.tokenInfo.email;
         const postsData = await Post.find({ postType: 1, show: true })
-            .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
+            .sort({ updatedAt: 1 }) //가장 먼저 업데이트된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
         
         const posts = postsData.reduce((acc, it) => {
@@ -88,3 +88,25 @@ router.delete("/delete/:shortId", async (req, res, next) => {
     }
 
 });
+
+router.put("/list/update", async (req, res, next) => {
+    //top부터 차례대로 옷 리스트를 받는다.
+    const { list } = req.body;
+    const tokenInfo = req.tokenInfo;
+    const dressList = Object.values(list);
+    try {
+        //작성자 검증 
+        if (!tokenInfo) {
+            return next(new Error("로그인을 해주세요."));
+        }
+        //옷장의 옷들을 top -> bottom -> shoes -> etc 순으로 update함.
+        await Promise.all(dressList.map(async it => {
+        const shortId = it.shortId;
+        await Post.updateOne({ shortId }, { updatedAt: Date.now() });
+    }));
+        res.json({ message: "업데이트 성공!"})
+        }catch (err) {
+            err.message = `${err.message} closet update error`
+            next(err)
+    }
+})
