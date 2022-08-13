@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ClothesRow.css";
 import port from "./../../data/port.json";
-import { useCookies } from "react-cookie";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -40,25 +39,15 @@ const DeleteButton = styled.input.attrs({
 //   width: 100%,
 // `;
 
-const ClothesRow = () => {
-  //userid에 따른 옷데이터
-  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
-  const [items, setItems] = useState([]);
+const ClothesRow = ({ items, setItems }) => {
+  const [dragging, setDragging] = useState(false);
+  const dragItem = useRef();
+  const dragItemNode = useRef();
+  const draggableItems = useRef([]);
 
   useEffect(() => {
-    getImages();
-  }, []);
-
-  const getImages = async () => {
-    await axios
-      .get(port.url + "/api/closet/list", {
-        headers: { accessToken: cookies.userData.accessToken },
-      })
-      .then((res) => {
-        setItems(res.data.posts);
-        console.log(res.data.posts);
-      });
-  };
+    draggableItems.current = draggableItems.current.slice(0, items.length);
+  }, [items]);
 
   //server에 image delete 요청 보내야함
   const handleDeleteBtn = (id) => {
@@ -68,17 +57,83 @@ const ClothesRow = () => {
     setItems(newItems);
   };
 
+  // --------------------------drag and Drop---------------------------------------------------
+
+  const handleDragStart = (e, item) => {
+    dragItemNode.current = e.target;
+    dragItemNode.current.addEventListener("dragend", (e) => {
+      handleDragEnd(e, item);
+    });
+    dragItem.current = item;
+
+    setTimeout(() => {
+      setDragging(true);
+    }, 0);
+  };
+
+  const handleDragEnd = (e, item) => {
+    setDragging(false);
+
+    dragItem.current = null;
+    dragItemNode.current.removeEventListener("dragend", (e) => {
+      handleDragEnd(e, item);
+    });
+    dragItemNode.current = null;
+    //가장 가까운 요소 찾기
+
+    //좌표 거의 정확함!! good!!
+    const result = draggableItems.current.reduce(
+      (acc, it, index) => {
+        const itInfo = it.getBoundingClientRect();
+        const y = itInfo.top + itInfo.height / 2 + window.scrollY;
+        const x = itInfo.right - itInfo.width / 2 + window.scrollX;
+        const curOffset = Math.abs(e.pageX - x) + Math.abs(e.pageY - y);
+        if (curOffset < acc.offset) {
+          acc.offset = curOffset;
+          acc.selected = index;
+          if (e.pageX > x) acc.direction = "right";
+          else acc.direction = "left";
+        }
+        return acc;
+      },
+      { offset: Number.POSITIVE_INFINITY, selected: -1, direction: "right" }
+    );
+    //빈 어레이에 놓였을때도 고려해야함
+
+    const newItems = [...items];
+    newItems.splice(item.itemIndex, 1);
+    if (result.direction === "right") {
+      newItems.splice(result.selected, 0, item.item);
+    } else {
+      newItems.splice(result.selected - 1, 0, item.item);
+    }
+
+    setItems(newItems);
+  };
+
+  //놓기 전에 효과 주려면 위치계산하는 걸 dragEnter에서도 만들어야함
+  const handleDragEnter = (e, category) => {
+    console.log("handleDragEnter", e.target);
+    // console.log("dragItemNode.current", dragItemNode.current);
+  };
+
   //로우 컴포넌트
   const RowComponent = ({ itemCategroy }) => (
-    <>
+    <div onDragEnter={(e) => handleDragEnter(e, itemCategroy)}>
       <h1 style={{ textAlign: "center" }}>{itemCategroy}</h1>
       <Container>
-        {items.map((item, index) => {
+        {items.map((item, itemIndex) => {
           const imgUrl = port.url + "/" + item.img.url.split("/")[1];
           if (item.img.category === itemCategroy) {
-            console.log(item._id);
             return (
-              <div key={item._id} draggable>
+              <div
+                key={item._id}
+                draggable
+                className="draggable"
+                onDragStart={(e) => {
+                  handleDragStart(e, { item, itemIndex });
+                }}
+              >
                 <DraggableDiv>
                   <img
                     src={imgUrl}
@@ -88,13 +143,23 @@ const ClothesRow = () => {
                       WebkitUserDrag: "none",
                       width: 100 + "%",
                     }}
+                    className={itemCategroy}
+                    ref={(el) => (draggableItems.current[itemIndex] = el)}
                   />
-
                   <DeleteButton
                     onClick={() => {
                       handleDeleteBtn(item.id);
                     }}
                   />
+                  <div
+                    style={{
+                      marginLeft: -50 + "px",
+                      marginTop: -20 + "px",
+                      fontSize: 30 + "px",
+                    }}
+                  >
+                    {itemIndex}
+                  </div>
                 </DraggableDiv>
               </div>
             );
@@ -103,7 +168,7 @@ const ClothesRow = () => {
           }
         })}
       </Container>
-    </>
+    </div>
   );
 
   return (
