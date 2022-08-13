@@ -13,8 +13,8 @@ const MarketViewForm = ({ postType }) => {
   const paramsId = useParams().id;
   const [curPost, setCurPost] = useState(null);
   const [myPost, setMyPost] = useState(false);
-  const [nextPost, setNextPost] = useState("");
-  const [prePost, setPrePost] = useState("");
+  const [nextPost, setNextPost] = useState(null);
+  const [prePost, setPrePost] = useState(null);
 
   useEffect(() => {
     getPost();
@@ -69,14 +69,16 @@ const MarketViewForm = ({ postType }) => {
       <div className="album">
         <div className="container">
           <div style={{ display: "flex", alignItems: "center" }}>
-            <i
-              className="fa-solid fa-angle-left"
-              style={{ fontSize: 150 + "px", color: "gray" }}
-              onClick={() => {
-                navigate("/market/" + prePost);
-                window.location.reload();
-              }}
-            ></i>
+            {nextPost && (
+              <i
+                className="fa-solid fa-angle-left"
+                style={{ fontSize: 150 + "px", color: "gray" }}
+                onClick={() => {
+                  navigate("/market/" + nextPost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
             <div
               className="card mb-3"
               style={{
@@ -95,14 +97,16 @@ const MarketViewForm = ({ postType }) => {
                 )}
               </div>
             </div>
-            <i
-              className="fa-solid fa-angle-right"
-              style={{ fontSize: 150 + "px", color: "gray" }}
-              onClick={() => {
-                navigate("/market/" + nextPost);
-                window.location.reload();
-              }}
-            ></i>
+            {prePost && (
+              <i
+                className="fa-solid fa-angle-right"
+                style={{ fontSize: 150 + "px", color: "gray" }}
+                onClick={() => {
+                  navigate("/market/" + prePost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
           </div>
           <div className="mb-3">
             <h1>제목: {curPost && curPost.title}</h1>
