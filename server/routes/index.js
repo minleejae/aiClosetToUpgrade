@@ -23,6 +23,4 @@ router.use(movepost.path, movepost.router);
 router.use(search.path, search.router);
 router.use(comment.path, authmiddleware, comment.router);
 
-
-
 export default router;
