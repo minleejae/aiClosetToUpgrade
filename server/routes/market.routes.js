@@ -61,8 +61,6 @@ router.get("/list", async (req, res, next) => {
         .limit(perPage) // 6개씩 가져와줘.
         .populate("author");
         
-        // const total = await Post.countDocuments({postType: 3});
-        // const totalPage = Math.ceil(total / perPage); 무한스크롤이기때문에 필요없을듯.
     
         res.status(200).json({ posts });
     } catch(err) {

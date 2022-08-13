@@ -53,10 +53,10 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         
         const posts = postsData.reduce((acc, it) => {
             if (it.author.email == email) {
-                return [ ...acc, it]
+                return [ ...acc, it];
             }
             return [...acc];
-        }, [])
+        }, []);
 
         res.json({ posts });
     } catch(err) {
