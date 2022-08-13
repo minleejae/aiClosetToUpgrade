@@ -10,6 +10,7 @@ const Closet = () => {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("items", items);
     getImages();
   }, []);
 

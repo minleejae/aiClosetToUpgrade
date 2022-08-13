@@ -71,41 +71,50 @@ const ClothesRow = ({ items, setItems }) => {
     }, 0);
   };
 
-  const handleDragEnd = (e, item) => {
-    setDragging(false);
-
-    dragItem.current = null;
-    dragItemNode.current.removeEventListener("dragend", (e) => {
-      handleDragEnd(e, item);
-    });
-    dragItemNode.current = null;
-    //가장 가까운 요소 찾기
-
-    //좌표 거의 정확함!! good!!
-    const result = draggableItems.current.reduce(
+  //현재 드래그 위치와 가장 가까운 사진을 찾는 함수
+  //빈 어레이에 놓였을때도 고려해야함
+  const getClosest = (pageX, pageY) => {
+    return draggableItems.current.reduce(
       (acc, it, index) => {
         const itInfo = it.getBoundingClientRect();
         const y = itInfo.top + itInfo.height / 2 + window.scrollY;
         const x = itInfo.right - itInfo.width / 2 + window.scrollX;
-        const curOffset = Math.abs(e.pageX - x) + Math.abs(e.pageY - y);
+        const curOffset = Math.abs(pageX - x) + Math.abs(pageY - y);
         if (curOffset < acc.offset) {
           acc.offset = curOffset;
           acc.selected = index;
-          if (e.pageX > x) acc.direction = "right";
+          if (pageX > x) acc.direction = "right";
           else acc.direction = "left";
         }
         return acc;
       },
       { offset: Number.POSITIVE_INFINITY, selected: -1, direction: "right" }
     );
-    //빈 어레이에 놓였을때도 고려해야함
+  };
 
-    const newItems = [...items];
-    newItems.splice(item.itemIndex, 1);
+  const handleDragEnd = (e, item) => {
+    setDragging(false);
+    dragItem.current = null;
+    dragItemNode.current.removeEventListener("dragend", (e) => {
+      handleDragEnd(e, item);
+    });
+    dragItemNode.current = null;
+
+    //가장 가까운 요소 찾기
+    const result = getClosest(e.pageX, e.pageY);
+
+    //깊은 복사 : 드래그시 이미지의 타입을 변경해주는 효과를 만들기 위함
+    const copyItem = JSON.parse(JSON.stringify(item));
+    copyItem.item.img.category = items[result.selected].img.category;
+
+    let newItems = [...items];
+    newItems.splice(copyItem.itemIndex, 1);
     if (result.direction === "right") {
-      newItems.splice(result.selected, 0, item.item);
+      newItems.splice(result.selected, 0, copyItem.item);
     } else {
-      newItems.splice(result.selected - 1, 0, item.item);
+      if (result.selected === 0) {
+        newItems = [copyItem.item, ...newItems];
+      } else newItems.splice(result.selected - 1, 0, copyItem.item);
     }
 
     setItems(newItems);
