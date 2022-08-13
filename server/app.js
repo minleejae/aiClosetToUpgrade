@@ -1,6 +1,8 @@
 import express from 'express';
 import router from './routes/index.js';
 import mongoose from 'mongoose';
+import {createServer} from 'http';
+import {Server} from 'socket.io';
 // import passport from 'passport';
 // import swaggerJsdoc from 'swagger-jsdoc';
 // import swaggerUi from 'swagger-ui-express';
@@ -8,8 +10,16 @@ import mongoose from 'mongoose';
 // import router from './routes';
 // import errorHandler from './utils/error/errorHandler';
 import cors from 'cors';
+import socket from './util/socket.js'; 
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
 
 mongoose.connect("mongodb://localhost:27017/Ocloset");
 
@@ -53,5 +63,16 @@ app.use('/api', router);
 // 에러 핸들러
 app.use(function(err, req, res, next) {
   res.json(err.message);
+});
+
+
+const port = '8070';
+
+server.listen(port, () => {
+  console.log(`
+  ################################################
+  🛡️  Server listening on port: ${port}🛡️
+  ################################################
+    `);
 });
 export default app;
