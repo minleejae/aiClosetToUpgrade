@@ -15,11 +15,12 @@ const Header = ({ width, columns, updateWidth }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+    // console.log("scroll");
   };
 
   //width 관리
   useEffect(() => {
-    updateWidth(document.documentElement.clientWidth);
+    updateWidth(document.documentElement.clientWidth - 20);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", updateScroll);
     return () => {
@@ -64,11 +65,13 @@ const Header = ({ width, columns, updateWidth }) => {
           className="single-nav"
           onClick={() => {
             navigate("/");
+            window.location.reload();
           }}
         >
           <li
             onClick={() => {
               navigate("/");
+              window.location.reload();
             }}
           >
             HOME
@@ -82,6 +85,7 @@ const Header = ({ width, columns, updateWidth }) => {
               navigate("/login");
             } else {
               navigate("/closet");
+              window.location.reload();
             }
           }}
         >
@@ -95,6 +99,7 @@ const Header = ({ width, columns, updateWidth }) => {
               navigate("/login");
             } else {
               navigate("/board");
+              window.location.reload();
             }
           }}
         >
@@ -108,6 +113,7 @@ const Header = ({ width, columns, updateWidth }) => {
               navigate("/login");
             } else {
               navigate("/market");
+              window.location.reload();
             }
           }}
         >
@@ -120,6 +126,7 @@ const Header = ({ width, columns, updateWidth }) => {
             <li
               onClick={() => {
                 navigate("/mypage");
+                window.location.reload();
               }}
             >
               My Page
@@ -128,8 +135,9 @@ const Header = ({ width, columns, updateWidth }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 removeCookie("userData");
-                navigate("/");
                 alert("로그아웃 되었습니다.");
+                navigate("/");
+                window.location.reload();
               }}
             >
               Log Out
@@ -140,6 +148,7 @@ const Header = ({ width, columns, updateWidth }) => {
             <li
               onClick={(e) => {
                 navigate("/login");
+                window.location.reload();
               }}
             >
               Login
@@ -147,6 +156,7 @@ const Header = ({ width, columns, updateWidth }) => {
             <li
               onClick={(e) => {
                 navigate("/signup");
+                window.location.reload();
               }}
             >
               Sign Up

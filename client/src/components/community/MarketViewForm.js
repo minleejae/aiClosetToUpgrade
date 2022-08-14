@@ -6,8 +6,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
 import LikeDislikes from "./LikeDislikes";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -15,9 +13,13 @@ const MarketViewForm = ({ postType }) => {
   const paramsId = useParams().id;
   const [curPost, setCurPost] = useState(null);
   const [myPost, setMyPost] = useState(false);
+  const [nextPost, setNextPost] = useState(null);
+  const [prePost, setPrePost] = useState(null);
 
   useEffect(() => {
     getPost();
+    getPrePost();
+    getNextPost();
   }, []);
 
   const getPost = async () => {
@@ -26,6 +28,26 @@ const MarketViewForm = ({ postType }) => {
     });
     setCurPost(post.data);
     setMyPost(post.data.author.email === cookies.userData.email);
+  };
+
+  const getPrePost = async () => {
+    const prev = await axios.get(
+      port.url + `/api/movepost/prevpost?shortId=${paramsId}&postType=3`,
+      {
+        headers: { accessToken: cookies.userData.accessToken },
+      }
+    );
+    setPrePost(prev.data.targetData.shortId);
+  };
+
+  const getNextPost = async () => {
+    const nxt = await axios.get(
+      port.url + `/api/movepost/nextpost?shortId=${paramsId}&postType=3`,
+      {
+        headers: { accessToken: cookies.userData.accessToken },
+      }
+    );
+    setNextPost(nxt.data.targetData.shortId);
   };
 
   const handleUpdateButton = () => {
@@ -47,10 +69,16 @@ const MarketViewForm = ({ postType }) => {
       <div className="album">
         <div className="container">
           <div style={{ display: "flex", alignItems: "center" }}>
-            <i
-              className="fa-solid fa-angle-left"
-              style={{ fontSize: 150 + "px", color: "gray" }}
-            ></i>
+            {nextPost && (
+              <i
+                className="fa-solid fa-angle-left"
+                style={{ fontSize: 150 + "px", color: "gray" }}
+                onClick={() => {
+                  navigate("/market/" + nextPost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
             <div
               className="card mb-3"
               style={{
@@ -69,10 +97,16 @@ const MarketViewForm = ({ postType }) => {
                 )}
               </div>
             </div>
-            <i
-              className="fa-solid fa-angle-right"
-              style={{ fontSize: 150 + "px", color: "gray" }}
-            ></i>
+            {prePost && (
+              <i
+                className="fa-solid fa-angle-right"
+                style={{ fontSize: 150 + "px", color: "gray" }}
+                onClick={() => {
+                  navigate("/market/" + prePost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
           </div>
           <div className="mb-3">
             <h1>제목: {curPost && curPost.title}</h1>
