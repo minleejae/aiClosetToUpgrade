@@ -159,160 +159,158 @@ const MarketViewForm = ({ postType }) => {
 
   return (
     <>
-      <>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100vw",
-          }}
-        >
-          <TitleContainer>
-            <TItleDiv>MARKET</TItleDiv>
-          </TitleContainer>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <ContainerDiv>
-              <ArrowDiv>
-                {nextPost && (
-                  <i
-                    className="fa-solid fa-angle-left"
-                    style={{
-                      margin: "auto",
-                    }}
-                    onClick={() => {
-                      navigate("/market/" + nextPost);
-                      window.location.reload();
-                    }}
-                  ></i>
-                )}
-              </ArrowDiv>
-              <ImageDiv>
-                {curPost && (
-                  <img
-                    src={port.url + "/" + curPost?.img.url.split("/")[1]}
-                    alt="post"
-                    style={{ width: "100%" }}
-                  />
-                )}
-              </ImageDiv>
-              <ArrowDiv>
-                {prePost && (
-                  <i
-                    className="fa-solid fa-angle-right"
-                    style={{
-                      margin: "auto",
-                    }}
-                    onClick={() => {
-                      navigate("/market/" + prePost);
-                      window.location.reload();
-                    }}
-                  ></i>
-                )}
-              </ArrowDiv>
-            </ContainerDiv>
-          </div>
-          <ContentContainer>
-            <ContentDiv>
-              <ContentRow>
-                <ContentRowDivide>
-                  <div
-                    style={{
-                      fontSize: "1.5vw",
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                    }}
-                  >
-                    {curPost && curPost.author.name}
-                  </div>
-                </ContentRowDivide>
-                <ContentRowDivide>
-                  <div
-                    style={{
-                      textAlign: "right",
-                      color: "#777",
-                      fontSize: "1.3vw",
-                      position: "absolute",
-                      bottom: 0,
-                      right: 0,
-                    }}
-                  >
-                    조회수 : {curPost && curPost.views}
-                  </div>
-                </ContentRowDivide>
-              </ContentRow>
-              <p
-                style={{
-                  fontSize: "1.5vw",
-                  lineHeight: "130%",
-                }}
-              >
-                {curPost && curPost.title}
-                <br></br>
-                가격 : {curPost && curPost.price}원<br></br>
-                {curPost && curPost.content}
-              </p>
-              <ContentRow>
-                <div style={{ fontSize: "1.5vw" }}>
-                  <LikeDislikes keyId={paramsId} urlType={"postId"} />
-                </div>
-                <div>
-                  {myPost ? (
-                    <>
-                      <button
-                        type="button"
-                        className="btn btn-outline-primary"
-                        style={{
-                          fontSize: "1vw",
-                        }}
-                        onClick={() => {
-                          handleUpdateButton();
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-outline-danger"
-                        style={{ fontSize: "1vw" }}
-                        onClick={() => {
-                          handleRemoveButton();
-                        }}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary"
-                    style={{ fontSize: "1vw" }}
-                    onClick={() => navigate(-1)}
-                  >
-                    뒤로가기
-                  </button>
-                </div>
-              </ContentRow>
-            </ContentDiv>
-          </ContentContainer>
-          <ContentContainer>
-            <ContentDiv>
-              <div>
-                {curPost && (
-                  <Comments
-                    postId={paramsId}
-                    curPost={curPost}
-                    getPost={getPost}
-                  ></Comments>
-                )}
-              </div>
-            </ContentDiv>
-          </ContentContainer>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100vw",
+        }}
+      >
+        <TitleContainer>
+          <TItleDiv>MARKET</TItleDiv>
+        </TitleContainer>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <ContainerDiv>
+            <ArrowDiv>
+              {nextPost && (
+                <i
+                  className="fa-solid fa-angle-left"
+                  style={{
+                    margin: "auto",
+                  }}
+                  onClick={() => {
+                    navigate("/market/" + nextPost);
+                    window.location.reload();
+                  }}
+                ></i>
+              )}
+            </ArrowDiv>
+            <ImageDiv>
+              {curPost && (
+                <img
+                  src={port.url + "/" + curPost?.img.url.split("/")[1]}
+                  alt="post"
+                  style={{ width: "100%" }}
+                />
+              )}
+            </ImageDiv>
+            <ArrowDiv>
+              {prePost && (
+                <i
+                  className="fa-solid fa-angle-right"
+                  style={{
+                    margin: "auto",
+                  }}
+                  onClick={() => {
+                    navigate("/market/" + prePost);
+                    window.location.reload();
+                  }}
+                ></i>
+              )}
+            </ArrowDiv>
+          </ContainerDiv>
         </div>
-      </>
+        <ContentContainer>
+          <ContentDiv>
+            <ContentRow>
+              <ContentRowDivide>
+                <div
+                  style={{
+                    fontSize: "1.5vw",
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                  }}
+                >
+                  {curPost && curPost.author.name}
+                </div>
+              </ContentRowDivide>
+              <ContentRowDivide>
+                <div
+                  style={{
+                    textAlign: "right",
+                    color: "#777",
+                    fontSize: "1.3vw",
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                  }}
+                >
+                  조회수 : {curPost && curPost.views}
+                </div>
+              </ContentRowDivide>
+            </ContentRow>
+            <p
+              style={{
+                fontSize: "1.5vw",
+                lineHeight: "130%",
+              }}
+            >
+              {curPost && curPost.title}
+              <br></br>
+              가격 : {curPost && curPost.price}원<br></br>
+              {curPost && curPost.content}
+            </p>
+            <ContentRow>
+              <div style={{ fontSize: "1.5vw" }}>
+                <LikeDislikes keyId={paramsId} urlType={"postId"} />
+              </div>
+              <div>
+                {myPost ? (
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary"
+                      style={{
+                        fontSize: "1vw",
+                      }}
+                      onClick={() => {
+                        handleUpdateButton();
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      style={{ fontSize: "1vw" }}
+                      onClick={() => {
+                        handleRemoveButton();
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  style={{ fontSize: "1vw" }}
+                  onClick={() => navigate(-1)}
+                >
+                  뒤로가기
+                </button>
+              </div>
+            </ContentRow>
+          </ContentDiv>
+        </ContentContainer>
+        <ContentContainer>
+          <ContentDiv>
+            <div>
+              {curPost && (
+                <Comments
+                  postId={paramsId}
+                  curPost={curPost}
+                  getPost={getPost}
+                ></Comments>
+              )}
+            </div>
+          </ContentDiv>
+        </ContentContainer>
+      </div>
     </>
   );
 };
