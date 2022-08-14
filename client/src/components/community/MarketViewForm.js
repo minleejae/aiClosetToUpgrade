@@ -13,8 +13,6 @@ const TitleContainer = styled.div`
   width: 70vw;
   height: 3vw;
   margin-top: 100px;
-  border: 1px solid gray;
-  background-color: yellow;
   display: flex;
   justify-content: center;
 `;
@@ -25,16 +23,12 @@ const TItleDiv = styled.div`
   color: gray;
   display: flex;
   algin-items: center;
-  border: 1px solid gray;
-  background-color: skyblue;
   font-size: 2.3vw;
 `;
 
 const ContainerDiv = styled.div`
   width: 70vw;
   height: 40vw;
-  border: 1px solid gray;
-  background-color: yellow;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +37,6 @@ const ContainerDiv = styled.div`
 const CommunityTitle = styled.div`
   width: 50vw;
   height: 5vw;
-  background-color: red;
 `;
 
 const ArrowDiv = styled.div`
@@ -52,7 +45,6 @@ const ArrowDiv = styled.div`
   display: flex;
   alight-items: center;
   justify-content: center;
-  background-color: salmon;
   &:hover {
     color: black;
     cursor: pointer;
@@ -64,25 +56,22 @@ const ArrowDiv = styled.div`
 const ImageDiv = styled.div`
   width: 50vw;
   height: 40vw;
-  background-color: orange;
   align-items: center;
   display: flex;
   justify-content: center;
   overflow: hidden;
+  border: 1px solid silver;
 `;
 
 const ContentDiv = styled.div`
   width: 50vw;
   height: 100%;
-  background-color: orange;
   overflow: hidden;
 `;
 
 const ContentContainer = styled.div`
   width: 70vw;
   height: 100%;
-  border: 1px solid gray;
-  background-color: yellow;
   display: flex;
   justify-content: center;
 `;
@@ -91,7 +80,6 @@ const ContentRow = styled.div`
   width: 50vw;
   height: 4vw;
   display: flex;
-  border: 1px solid black;
   font-size: 2vw;
   justify-content: space-between;
 `;
@@ -99,7 +87,6 @@ const ContentRow = styled.div`
 const ContentContentRow = styled.div`
   width: 50vw;
   display: flex;
-  border: 1px solid black;
   font-size: 2vw;
   justify-content: space-between;
   overflow: hidden;
@@ -108,8 +95,8 @@ const ContentContentRow = styled.div`
 
 const ContentRowDivide = styled.div`
   width: 25vw;
-  height: 4vw;
-  border: 1px solid black;
+  height: 4w;
+  position: relative;
 `;
 
 const MarketViewForm = ({ postType }) => {
@@ -232,6 +219,9 @@ const MarketViewForm = ({ postType }) => {
                   <div
                     style={{
                       fontSize: "1.5vw",
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
                     }}
                   >
                     {curPost && curPost.author.name}
@@ -243,28 +233,26 @@ const MarketViewForm = ({ postType }) => {
                       textAlign: "right",
                       color: "#777",
                       fontSize: "1.3vw",
+                      position: "absolute",
+                      bottom: 0,
+                      right: 0,
                     }}
                   >
                     조회수 : {curPost && curPost.views}
                   </div>
                 </ContentRowDivide>
               </ContentRow>
-              <ContentRow>{curPost && curPost.title}</ContentRow>
-              <hr></hr>
-
-              <ContentRow style={{ fontSize: "1.5vw" }}>
-                {curPost && curPost.price}원
-              </ContentRow>
-              <ContentContentRow>
-                <p
-                  style={{
-                    fontSize: "1.5vw",
-                  }}
-                >
-                  {curPost && curPost.content}
-                </p>
-              </ContentContentRow>
-
+              <p
+                style={{
+                  fontSize: "1.5vw",
+                  lineHeight: "130%",
+                }}
+              >
+                {curPost && curPost.title}
+                <br></br>
+                가격 : {curPost && curPost.price}원<br></br>
+                {curPost && curPost.content}
+              </p>
               <ContentRow>
                 <div style={{ fontSize: "1.5vw" }}>
                   <LikeDislikes keyId={paramsId} urlType={"postId"} />
@@ -308,7 +296,6 @@ const MarketViewForm = ({ postType }) => {
                   </button>
                 </div>
               </ContentRow>
-              <hr></hr>
             </ContentDiv>
           </ContentContainer>
           <ContentContainer>
