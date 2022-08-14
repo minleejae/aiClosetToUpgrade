@@ -86,6 +86,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
                 <input
                   type="submit"
                   value="댓글 수정"
+                  className="btn btn-outline-success"
                   onClick={(e) => {
                     commentUpdateSubmit(e);
                   }}
@@ -94,7 +95,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
             </>
           ) : (
             <>
-              <h5>작성자:{comment.author.name}</h5>
+              <h5>{comment.author.name}</h5>
               <h4>
                 {comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}
               </h4>
@@ -114,6 +115,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
                           onClick={() => {
                             setCommentUpdateState(true);
                           }}
+                          className="btn btn-outline-success"
                         >
                           수정
                         </button>
@@ -121,12 +123,16 @@ const SingleComment = ({ comment, postId, getPost }) => {
                           onClick={() => {
                             commentDelete();
                           }}
+                          className="btn btn-outline-danger"
                         >
                           삭제
                         </button>
                       </>
                     )}
-                  <button onClick={onClickReplyOpen}>
+                  <button
+                    onClick={onClickReplyOpen}
+                    className="btn btn-outline-dark"
+                  >
                     <i className="fas fa-reply me-1"></i> Reply
                   </button>
                 </div>
@@ -167,6 +173,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
             <input
               type="submit"
               value="댓글입력"
+              className="btn btn-outline-primary"
               onClick={(e) => {
                 onReplySubmit(e);
               }}

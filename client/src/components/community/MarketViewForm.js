@@ -282,7 +282,7 @@ const MarketViewForm = ({ postType }) => {
                           handleUpdateButton();
                         }}
                       >
-                        수정하기
+                        수정
                       </button>
                       <button
                         type="button"
@@ -292,7 +292,7 @@ const MarketViewForm = ({ postType }) => {
                           handleRemoveButton();
                         }}
                       >
-                        삭제하기
+                        삭제
                       </button>
                     </>
                   ) : (

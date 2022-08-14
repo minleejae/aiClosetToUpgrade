@@ -68,6 +68,7 @@ const Comments = ({ postId, curPost, getPost }) => {
             <input
               type="submit"
               value="댓글입력"
+              className="btn btn-outline-primary"
               onClick={(e) => {
                 handleCommentSubmit(e);
               }}

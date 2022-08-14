@@ -56,6 +56,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
             <input
               type="submit"
               value="댓글 수정"
+              className="btn btn-outline-success"
               onClick={(e) => {
                 commentUpdateSubmit(e);
               }}
@@ -64,7 +65,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
         </>
       ) : (
         <>
-          <h5>작성자:{comment.author.name}</h5>
+          <h5>{comment.author.name}</h5>
           <h4>{comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}</h4>
           <div
             className="d-flex justify-content-between align-items-center"
@@ -79,6 +80,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
                   onClick={() => {
                     setCommentUpdateState(true);
                   }}
+                  className="btn btn-outline-success"
                 >
                   수정
                 </button>
@@ -86,6 +88,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
                   onClick={() => {
                     commentDelete();
                   }}
+                  className="btn btn-outline-danger"
                 >
                   삭제
                 </button>
