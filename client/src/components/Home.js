@@ -1,5 +1,5 @@
 import homeImage from "./../images/home.jpeg";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const StyledContainerDiv = styled.div`
   position: relative;
@@ -10,32 +10,34 @@ const DescribeDiv = styled.div`
   height: 100%;
   background-color: yellow;
   display: flex;
-  padding: 10% 5%;
+  padding: 8vw 15vw;
 `;
 
 const ColumnDiv = styled.div`
-  width: 50%;
+  width: 50vw;
   height: 100%;
   background-color: white;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 30px;
+  align-items: left;
+  padding: 2vw;
 `;
 
 const DescribeBox = styled.div`
   width: 100%;
   aspect-ratio: 16 / 12;
   background-color: yellow;
-  min-height: 150px;
-  min-width: 200px;
+  border: 1px solid gray;
+
+  min-height: 100px;
 `;
 
 const DescribeText = styled.div`
   width: 100%;
   border: 1px solid gray;
   height: 25%;
+  font-size: 2vw;
   bakcground-color: gray;
 `;
 
@@ -44,22 +46,84 @@ const DescribeImage = styled.div`
   border: 1px solid gray;
   height: 75%;
   bakcground-color: gray;
+  border-radius: 8%;
+  overflow: hidden;
 `;
 
 const PreviewDiv = styled.div`
   width: 100%;
-  height: 65vw;
+  height: 50vw;
   display: flex;
   flex-direction: column;
   background-color: orange;
   justify-content: space-evenly;
+  overflow: hidden;
 `;
 
+const imageMove = keyframes`{
+  0% {
+      transform: translate(0, 0);
+  }
+  100% {
+      transform: translate(-100vw, 0);
+  }
+}`;
+
+const ReverseImageMove = keyframes`{
+  0% {
+      transform: translate(-50vw, 0);
+  }
+  100% {
+      transform: translate(0, 0);
+  }
+}`;
+
 const RotateImageContainer = styled.div`
-  width: 100%;
+  width: 200vw;
   height: 20vw;
+  position: relative;
   background-color: salmon;
-  border: 1px solid gray;
+  display: flex;
+  animation: ${imageMove} 16s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+`;
+
+const ReverseRotateImageContainer = styled.div`
+  width: 200vw;
+  height: 20vw;
+  position: relative;
+  background-color: salmon;
+  display: flex;
+  animation: ${ReverseImageMove} 16s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+`;
+
+const ImageContainer = styled.div`
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: green;
+
+  border-radius: 12%;
+
+  padding: 1.125rem;
+`;
+
+const ImageDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 12%;
+  &:hover {
+    background-color: skyblue;
+    color: blue;
+    cursor: pointer;
+  }
 `;
 
 const Home = () => {
@@ -106,44 +170,114 @@ const Home = () => {
       <DescribeDiv>
         <ColumnDiv>
           <div>
-            <p style={{ fontSize: "min(8vh, 4vw)", marginLeft: -40 + "%" }}>
+            <p
+              style={{
+                fontSize: "2.8vw",
+                lineHeight: 110 + "%",
+                marginBottom: 0,
+              }}
+            >
               Our Service <br />
               For you
               <br />
-              By AI ClOSET
-              <i className="bi bi-emoji-smile"></i>
+              By AI ClOSET!
             </p>
           </div>
-          <div style={{ height: "min(22vh, 8vw)" }}></div>
+          <div style={{ height: "11vw" }}></div>
           <DescribeBox>
-            <DescribeText>sadda</DescribeText>
-            <DescribeImage></DescribeImage>
+            <DescribeText>
+              <h1 style={{ fontSize: "1.5vw", color: "gray" }}>OOTD</h1>
+              Upload Your Today's Fashion!
+            </DescribeText>
+            <DescribeImage>
+              <img
+                src="https://cdn.pixabay.com/photo/2014/08/03/22/01/friends-409403_960_720.jpg"
+                alt="ootd"
+                style={{ width: "100%" }}
+              />
+            </DescribeImage>
           </DescribeBox>
-          <hr></hr>
         </ColumnDiv>
         <ColumnDiv>
           <DescribeBox>
-            <DescribeText>sadda</DescribeText>
-            <DescribeImage></DescribeImage>
+            <DescribeText>
+              <h1 style={{ fontSize: "1.5vw", color: "gray" }}>CLOSET</h1>
+              AI will classfy your clothes!
+            </DescribeText>
+            <DescribeImage>
+              <img
+                src="https://cdn.pixabay.com/photo/2015/08/29/01/18/closet-912694_960_720.jpg"
+                alt="ootd"
+                style={{ width: "100%" }}
+              />
+            </DescribeImage>
           </DescribeBox>
-          <hr></hr>
 
-          <div style={{ height: "min(33vh, 18vw)" }}></div>
-          <hr></hr>
+          <div style={{ height: "18vw" }}></div>
+
           <DescribeBox>
-            <DescribeText>sadda</DescribeText>
-            <DescribeImage></DescribeImage>
+            <DescribeText>
+              <h1 style={{ fontSize: "1.5vw", color: "gray" }}>MARKET</h1>Upload
+              Your Cloth to Sell!
+            </DescribeText>
+            <DescribeImage>
+              <img
+                src="https://cdn.pixabay.com/photo/2016/11/19/15/40/clothes-1839935_960_720.jpg"
+                alt="ootd"
+                style={{ width: "100%" }}
+              />
+            </DescribeImage>
           </DescribeBox>
         </ColumnDiv>
       </DescribeDiv>
+      <div style={{ textAlign: "center", fontSize: "3vw" }}>
+        Community Preview
+      </div>
       <PreviewDiv>
+        <div style={{ textAlign: "center", fontSize: "2.5vw" }}>OOTD</div>
         <RotateImageContainer>
-          <h1>OOTD</h1>
+          <ImageContainer>
+            <ImageDiv></ImageDiv>
+          </ImageContainer>
+          <ImageContainer>
+            <ImageDiv></ImageDiv>
+          </ImageContainer>
+          <ImageContainer>3</ImageContainer>
+          <ImageContainer>4</ImageContainer>
+          <ImageContainer>5</ImageContainer>
+          <ImageContainer>6</ImageContainer>
+          <ImageContainer>7</ImageContainer>
+          <ImageContainer>8</ImageContainer>
+          <ImageContainer>9</ImageContainer>
+          <ImageContainer>10</ImageContainer>
+          <ImageContainer>11</ImageContainer>
+          <ImageContainer>12</ImageContainer>
+          <ImageContainer>13</ImageContainer>
+          <ImageContainer>14</ImageContainer>
         </RotateImageContainer>
-        <RotateImageContainer>
-          <h1>MARKET</h1>
-        </RotateImageContainer>
+        <div style={{ textAlign: "center", fontSize: "2.5vw" }}>MARKET</div>
+        <ReverseRotateImageContainer>
+          <ImageContainer>
+            <ImageDiv></ImageDiv>
+          </ImageContainer>
+          <ImageContainer>
+            <ImageDiv></ImageDiv>
+          </ImageContainer>
+          <ImageContainer>3</ImageContainer>
+          <ImageContainer>4</ImageContainer>
+          <ImageContainer>5</ImageContainer>
+          <ImageContainer>6</ImageContainer>
+          <ImageContainer>7</ImageContainer>
+          <ImageContainer>8</ImageContainer>
+          <ImageContainer>9</ImageContainer>
+          <ImageContainer>10</ImageContainer>
+          <ImageContainer>11</ImageContainer>
+          <ImageContainer>12</ImageContainer>
+          <ImageContainer>13</ImageContainer>
+          <ImageContainer>14</ImageContainer>
+        </ReverseRotateImageContainer>
       </PreviewDiv>
+      <div style={{ textAlign: "center", padding: "4vw" }}></div>
     </div>
   );
 };
