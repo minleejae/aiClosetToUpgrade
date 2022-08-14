@@ -110,6 +110,10 @@ const ImageContainer = styled.div`
 const ImageDiv = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background-color: white;
   border: 1px solid silver;
   border-radius: 12%;

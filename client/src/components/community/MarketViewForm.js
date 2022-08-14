@@ -274,7 +274,7 @@ const MarketViewForm = ({ postType }) => {
                       </button>
                       <button
                         type="button"
-                        className="btn btn-danger"
+                        className="btn btn-outline-danger"
                         style={{ fontSize: "1vw" }}
                         onClick={() => {
                           handleRemoveButton();
