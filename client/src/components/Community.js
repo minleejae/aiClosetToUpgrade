@@ -18,7 +18,7 @@ const Community = () => {
         }}
       >
         <h1>OOTD</h1>
-        <p>
+        <p style={{ fontSize: 22 + "px" }}>
           Upload Your Today's Fashion!
           <br />
           Share Your Fashion with Friends!

@@ -229,6 +229,7 @@ const ClothesRow = ({ items, setItems }) => {
       <RowComponent key={"BOTTOM"} itemCategroy={"BOTTOM"} categoryIndex={1} />
       <RowComponent key={"SHOE"} itemCategroy={"SHOE"} categoryIndex={2} />
       <RowComponent key={"ETC"} itemCategroy={"ETC"} categoryIndex={3} />
+      <div style={{ height: "4vw" }}></div>
     </>
   );
 };

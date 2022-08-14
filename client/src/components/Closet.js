@@ -34,7 +34,7 @@ const Closet = () => {
         }}
       >
         <h1>CLOSET</h1>
-        <p>
+        <p style={{ fontSize: 22 + "px" }}>
           When you upload your clothes,
           <br />
           AI will classfy your clothes.

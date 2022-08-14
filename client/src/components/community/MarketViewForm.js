@@ -7,6 +7,110 @@ import axios from "axios";
 import Comments from "./Comments";
 import LikeDislikes from "./LikeDislikes";
 
+import styled from "styled-components";
+
+const TitleContainer = styled.div`
+  width: 70vw;
+  height: 3vw;
+  margin-top: 100px;
+  border: 1px solid gray;
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+`;
+
+const TItleDiv = styled.div`
+  width: 50vw;
+  height: 3vw;
+  color: gray;
+  display: flex;
+  algin-items: center;
+  border: 1px solid gray;
+  background-color: skyblue;
+  font-size: 2.3vw;
+`;
+
+const ContainerDiv = styled.div`
+  width: 70vw;
+  height: 40vw;
+  border: 1px solid gray;
+  background-color: yellow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const CommunityTitle = styled.div`
+  width: 50vw;
+  height: 5vw;
+  background-color: red;
+`;
+
+const ArrowDiv = styled.div`
+  width: 10vw;
+  height: 10vw;
+  display: flex;
+  alight-items: center;
+  justify-content: center;
+  background-color: salmon;
+  &:hover {
+    color: black;
+    cursor: pointer;
+  }
+  font-size: 10vw;
+  color: silver;
+`;
+
+const ImageDiv = styled.div`
+  width: 50vw;
+  height: 40vw;
+  background-color: orange;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+`;
+
+const ContentDiv = styled.div`
+  width: 50vw;
+  height: 70vw;
+  background-color: orange;
+`;
+
+const ContentContainer = styled.div`
+  width: 70vw;
+  height: 100%;
+  border: 1px solid gray;
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+`;
+
+const ContentRow = styled.div`
+  width: 50vw;
+  height: 4vw;
+  display: flex;
+  border: 1px solid black;
+  font-size: 2vw;
+  justify-content: space-between;
+`;
+
+const ContentContentRow = styled.div`
+  width: 50vw;
+  display: flex;
+  border: 1px solid black;
+  font-size: 2vw;
+  justify-content: space-between;
+  overflow: hidden;
+  word-wrap: break-word;
+`;
+
+const ContentRowDivide = styled.div`
+  width: 25vw;
+  height: 4vw;
+  border: 1px solid black;
+`;
+
 const MarketViewForm = ({ postType }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
@@ -52,6 +156,7 @@ const MarketViewForm = ({ postType }) => {
 
   const handleUpdateButton = () => {
     navigate("update");
+    window.location.reload();
   };
 
   const handleRemoveButton = async () => {
@@ -61,110 +166,161 @@ const MarketViewForm = ({ postType }) => {
       });
     } catch {}
     navigate("/market");
+    window.location.reload();
   };
 
   return (
-    <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
-      <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
-      <div className="album">
-        <div className="container">
+    <>
+      <>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100vw",
+          }}
+        >
+          <TitleContainer>
+            <TItleDiv>MARKET</TItleDiv>
+          </TitleContainer>
           <div style={{ display: "flex", alignItems: "center" }}>
-            {nextPost && (
-              <i
-                className="fa-solid fa-angle-left"
-                style={{ fontSize: 150 + "px", color: "gray" }}
-                onClick={() => {
-                  navigate("/market/" + nextPost);
-                  window.location.reload();
-                }}
-              ></i>
-            )}
-            <div
-              className="card mb-3"
-              style={{
-                width: 100 + "%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div style={{ display: "flex" }}>
+            <ContainerDiv>
+              <ArrowDiv>
+                {nextPost && (
+                  <i
+                    className="fa-solid fa-angle-left"
+                    style={{
+                      margin: "auto",
+                    }}
+                    onClick={() => {
+                      navigate("/market/" + nextPost);
+                      window.location.reload();
+                    }}
+                  ></i>
+                )}
+              </ArrowDiv>
+              <ImageDiv>
                 {curPost && (
                   <img
                     src={port.url + "/" + curPost?.img.url.split("/")[1]}
-                    alt="temp"
-                    style={{ width: 60 + "%" }}
+                    alt="post"
+                    style={{ width: "100%" }}
                   />
                 )}
-              </div>
-            </div>
-            {prePost && (
-              <i
-                className="fa-solid fa-angle-right"
-                style={{ fontSize: 150 + "px", color: "gray" }}
-                onClick={() => {
-                  navigate("/market/" + prePost);
-                  window.location.reload();
-                }}
-              ></i>
-            )}
+              </ImageDiv>
+              <ArrowDiv>
+                {prePost && (
+                  <i
+                    className="fa-solid fa-angle-right"
+                    style={{
+                      margin: "auto",
+                    }}
+                    onClick={() => {
+                      navigate("/market/" + prePost);
+                      window.location.reload();
+                    }}
+                  ></i>
+                )}
+              </ArrowDiv>
+            </ContainerDiv>
           </div>
-          <div className="mb-3">
-            <h1>제목: {curPost && curPost.title}</h1>
-            <h5>작성자 : {curPost && curPost.author.name}</h5>
-          </div>
-          <h4>가격 : {curPost && curPost.price} 원</h4>
-          <h6>조회수 : {curPost && curPost.views}</h6>
-          <div className="mb-3">
-            <div style={{ border: "1px solid silver", fontSize: 1.4 + "rem" }}>
-              <p>{curPost && curPost.content}</p>
-            </div>
-            <div>
-              <LikeDislikes keyId={paramsId} urlType={"postId"} />
-            </div>
-          </div>
-          {myPost ? (
-            <>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                style={{ marginRight: "2%" }}
-                onClick={() => {
-                  handleUpdateButton();
-                }}
-              >
-                수정하기
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                style={{ marginRight: "2%" }}
-                onClick={() => {
-                  handleRemoveButton();
-                }}
-              >
-                삭제하기
-              </button>
-            </>
-          ) : (
-            <></>
-          )}
-          <button
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={() => navigate(-1)}
-          >
-            뒤로가기
-          </button>
+          <ContentContainer>
+            <ContentDiv>
+              <ContentRow>
+                <ContentRowDivide>
+                  <div
+                    style={{
+                      fontSize: "1.5vw",
+                    }}
+                  >
+                    {curPost && curPost.author.name}
+                  </div>
+                </ContentRowDivide>
+                <ContentRowDivide>
+                  <div
+                    style={{
+                      textAlign: "right",
+                      color: "gray",
+                      fontSize: "1.3vw",
+                    }}
+                  >
+                    조회수 : {curPost && curPost.views}
+                  </div>
+                </ContentRowDivide>
+              </ContentRow>
+              <ContentRow>{curPost && curPost.title}</ContentRow>
+              <hr></hr>
+
+              <ContentRow>{curPost && curPost.price}원</ContentRow>
+              <ContentContentRow>
+                <p
+                  style={{
+                    fontSize: "1.5vw",
+                  }}
+                >
+                  {curPost && curPost.content}
+                </p>
+              </ContentContentRow>
+
+              <ContentRow>
+                <div style={{ fontSize: "1.5vw" }}>
+                  <LikeDislikes keyId={paramsId} urlType={"postId"} />
+                </div>
+                <div>
+                  {myPost ? (
+                    <>
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        style={{
+                          fontSize: "1vw",
+                        }}
+                        onClick={() => {
+                          handleUpdateButton();
+                        }}
+                      >
+                        수정하기
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        style={{ fontSize: "1vw" }}
+                        onClick={() => {
+                          handleRemoveButton();
+                        }}
+                      >
+                        삭제하기
+                      </button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    style={{ fontSize: "1vw" }}
+                    onClick={() => navigate(-1)}
+                  >
+                    뒤로가기
+                  </button>
+                </div>
+              </ContentRow>
+              <hr></hr>
+            </ContentDiv>
+          </ContentContainer>
         </div>
-        {curPost && (
-          <Comments
-            postId={paramsId}
-            curPost={curPost}
-            getPost={getPost}
-          ></Comments>
-        )}
-      </div>
-    </div>
+
+        <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
+          {curPost && (
+            <Comments
+              postId={paramsId}
+              curPost={curPost}
+              getPost={getPost}
+            ></Comments>
+          )}
+        </div>
+      </>
+    </>
   );
 };
 

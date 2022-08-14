@@ -29,7 +29,7 @@ export const Footer = () => {
             : theme.palette.grey[800],
       }}
     >
-      <footer class="py-3 my-4" style={{ fontSize: "1.1vw" }}>
+      <footer class="py-3 my-4" style={{ fontSize: "22px" }}>
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
           Designed By Nam, You, Lee
         </ul>
