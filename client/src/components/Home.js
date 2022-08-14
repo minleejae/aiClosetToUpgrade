@@ -51,7 +51,7 @@ const DescribeImage = styled.div`
 
 const PreviewDiv = styled.div`
   width: 100%;
-  height: 50vw;
+  height: 45vw;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -177,6 +177,7 @@ const Home = ({ fetchMarketImages, images }) => {
                 fontSize: "2.8vw",
                 lineHeight: 110 + "%",
                 marginBottom: 0,
+                fontWeight: "bold",
               }}
             >
               Our Service <br />
@@ -232,12 +233,28 @@ const Home = ({ fetchMarketImages, images }) => {
           </DescribeBox>
         </ColumnDiv>
       </DescribeDiv>
-      <hr></hr>
-      <div style={{ textAlign: "center", fontSize: "3vw", paddingTop: "4vw" }}>
-        Community Preview
+      <div
+        style={{
+          width: 100 + "%",
+          padding: "0 17vw 0 17vw",
+          marginTop: "-1.5vw",
+        }}
+      >
+        <hr></hr>
+      </div>
+      <div
+        style={{
+          fontSize: "2.8vw",
+          marginLeft: "17vw",
+          paddingTop: "4vw",
+          marginBottom: "-1.5vw",
+          fontWeight: "bold",
+        }}
+      >
+        OOTD & MARKET Preview<br></br>
       </div>
       <PreviewDiv>
-        <div style={{ textAlign: "center", fontSize: "2.5vw" }}>OOTD</div>
+        {/* <div style={{ textAlign: "center", fontSize: "2vw" }}>OOTD</div> */}
         <RotateImageContainer>
           {images.map((it, index) => {
             const srcUrl = port.url + "/" + it.img.url.split("/")[1];
@@ -258,7 +275,7 @@ const Home = ({ fetchMarketImages, images }) => {
             );
           })}
         </RotateImageContainer>
-        <div style={{ textAlign: "center", fontSize: "2.5vw" }}>MARKET</div>
+        {/* <div style={{ textAlign: "center", fontSize: "2vw" }}>MARKET</div> */}
         <ReverseRotateImageContainer>
           {images.map((it, index) => {
             const srcUrl = port.url + "/" + it.img.url.split("/")[1];
