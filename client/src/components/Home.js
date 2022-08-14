@@ -268,7 +268,11 @@ const Home = ({ fetchMarketImages, images }) => {
                   <img
                     src={srcUrl}
                     alt="market"
-                    style={{ width: "100%", borderRadius: 12 + "%" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 12 + "%",
+                    }}
                     onClick={() => {
                       navigate(`/market/${it.shortId}`);
                       window.location.reload();
@@ -289,7 +293,11 @@ const Home = ({ fetchMarketImages, images }) => {
                   <img
                     src={srcUrl}
                     alt="market"
-                    style={{ width: "100%", borderRadius: 12 + "%" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 12 + "%",
+                    }}
                     onClick={() => {
                       navigate(`/market/${it.shortId}`);
                       window.location.reload();
