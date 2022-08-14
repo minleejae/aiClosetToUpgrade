@@ -101,10 +101,10 @@ router.put("/list/update", async (req, res, next) => {
         }
         //옷장의 옷들을 top -> bottom -> shoes -> etc 순으로 update함.
         await Promise.all(dressList.map(async it => {
-        const shortId = it.shortId;
-        await Post.updateOne({ shortId }, { updatedAt: Date.now() });
-    }));
-        res.json({ message: "업데이트 성공!"})
+            const shortId = it.shortId;
+            await Post.updateOne({ shortId }, { updatedAt: Date.now() });
+        }));
+        res.json({ message: "옷장 저장에 성공했습니다!"})
         }catch (err) {
             err.message = `${err.message} closet update error`
             next(err)
