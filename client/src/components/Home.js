@@ -1,5 +1,11 @@
 import homeImage from "./../images/home.jpeg";
 import styled, { keyframes } from "styled-components";
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { fetchMarketImages } from "../redux";
+import { connect } from "react-redux";
+import port from "./../data/port.json";
+import { useNavigate } from "react-router-dom";
 
 const StyledContainerDiv = styled.div`
   position: relative;
@@ -8,7 +14,6 @@ const StyledContainerDiv = styled.div`
 const DescribeDiv = styled.div`
   width: 100%;
   height: 100%;
-  background-color: yellow;
   display: flex;
   padding: 8vw 15vw;
 `;
@@ -17,7 +22,6 @@ const ColumnDiv = styled.div`
   width: 50vw;
   height: 100%;
   background-color: white;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -27,15 +31,11 @@ const ColumnDiv = styled.div`
 const DescribeBox = styled.div`
   width: 100%;
   aspect-ratio: 16 / 12;
-  background-color: yellow;
-  border: 1px solid gray;
-
   min-height: 100px;
 `;
 
 const DescribeText = styled.div`
   width: 100%;
-  border: 1px solid gray;
   height: 25%;
   font-size: 2vw;
   bakcground-color: gray;
@@ -43,7 +43,6 @@ const DescribeText = styled.div`
 
 const DescribeImage = styled.div`
   width: 100%;
-  border: 1px solid gray;
   height: 75%;
   bakcground-color: gray;
   border-radius: 8%;
@@ -55,7 +54,6 @@ const PreviewDiv = styled.div`
   height: 50vw;
   display: flex;
   flex-direction: column;
-  background-color: orange;
   justify-content: space-evenly;
   overflow: hidden;
 `;
@@ -82,7 +80,6 @@ const RotateImageContainer = styled.div`
   width: 200vw;
   height: 20vw;
   position: relative;
-  background-color: salmon;
   display: flex;
   animation: ${imageMove} 16s linear infinite;
 
@@ -95,7 +92,6 @@ const ReverseRotateImageContainer = styled.div`
   width: 200vw;
   height: 20vw;
   position: relative;
-  background-color: salmon;
   display: flex;
   animation: ${ReverseImageMove} 16s linear infinite;
 
@@ -107,10 +103,7 @@ const ReverseRotateImageContainer = styled.div`
 const ImageContainer = styled.div`
   height: 100%;
   aspect-ratio: 1/1;
-  background-color: green;
-
   border-radius: 12%;
-
   padding: 1.125rem;
 `;
 
@@ -118,15 +111,24 @@ const ImageDiv = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
+  border: 1px solid silver;
   border-radius: 12%;
   &:hover {
-    background-color: skyblue;
-    color: blue;
     cursor: pointer;
   }
 `;
 
-const Home = () => {
+const Home = ({ fetchMarketImages, images }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    getImages();
+  }, []);
+
+  const getImages = async () => {
+    await fetchMarketImages(0, 20, cookies.userData.accessToken, "", "");
+  };
+
   return (
     <div>
       <StyledContainerDiv>
@@ -180,7 +182,7 @@ const Home = () => {
               Our Service <br />
               For you
               <br />
-              By AI ClOSET!
+              By AI CLOSET!
             </p>
           </div>
           <div style={{ height: "11vw" }}></div>
@@ -230,56 +232,68 @@ const Home = () => {
           </DescribeBox>
         </ColumnDiv>
       </DescribeDiv>
-      <div style={{ textAlign: "center", fontSize: "3vw" }}>
+      <hr></hr>
+      <div style={{ textAlign: "center", fontSize: "3vw", paddingTop: "4vw" }}>
         Community Preview
       </div>
       <PreviewDiv>
         <div style={{ textAlign: "center", fontSize: "2.5vw" }}>OOTD</div>
         <RotateImageContainer>
-          <ImageContainer>
-            <ImageDiv></ImageDiv>
-          </ImageContainer>
-          <ImageContainer>
-            <ImageDiv></ImageDiv>
-          </ImageContainer>
-          <ImageContainer>3</ImageContainer>
-          <ImageContainer>4</ImageContainer>
-          <ImageContainer>5</ImageContainer>
-          <ImageContainer>6</ImageContainer>
-          <ImageContainer>7</ImageContainer>
-          <ImageContainer>8</ImageContainer>
-          <ImageContainer>9</ImageContainer>
-          <ImageContainer>10</ImageContainer>
-          <ImageContainer>11</ImageContainer>
-          <ImageContainer>12</ImageContainer>
-          <ImageContainer>13</ImageContainer>
-          <ImageContainer>14</ImageContainer>
+          {images.map((it, index) => {
+            const srcUrl = port.url + "/" + it.img.url.split("/")[1];
+            return (
+              <ImageContainer key={it._id}>
+                <ImageDiv>
+                  <img
+                    src={srcUrl}
+                    alt="market"
+                    style={{ width: "100%", borderRadius: 12 + "%" }}
+                    onClick={() => {
+                      navigate(`/market/${it.shortId}`);
+                      window.location.reload();
+                    }}
+                  ></img>
+                </ImageDiv>
+              </ImageContainer>
+            );
+          })}
         </RotateImageContainer>
         <div style={{ textAlign: "center", fontSize: "2.5vw" }}>MARKET</div>
         <ReverseRotateImageContainer>
-          <ImageContainer>
-            <ImageDiv></ImageDiv>
-          </ImageContainer>
-          <ImageContainer>
-            <ImageDiv></ImageDiv>
-          </ImageContainer>
-          <ImageContainer>3</ImageContainer>
-          <ImageContainer>4</ImageContainer>
-          <ImageContainer>5</ImageContainer>
-          <ImageContainer>6</ImageContainer>
-          <ImageContainer>7</ImageContainer>
-          <ImageContainer>8</ImageContainer>
-          <ImageContainer>9</ImageContainer>
-          <ImageContainer>10</ImageContainer>
-          <ImageContainer>11</ImageContainer>
-          <ImageContainer>12</ImageContainer>
-          <ImageContainer>13</ImageContainer>
-          <ImageContainer>14</ImageContainer>
+          {images.map((it, index) => {
+            const srcUrl = port.url + "/" + it.img.url.split("/")[1];
+            return (
+              <ImageContainer key={it._id}>
+                <ImageDiv>
+                  <img
+                    src={srcUrl}
+                    alt="market"
+                    style={{ width: "100%", borderRadius: 12 + "%" }}
+                    onClick={() => {
+                      navigate(`/market/${it.shortId}`);
+                      window.location.reload();
+                    }}
+                  ></img>
+                </ImageDiv>
+              </ImageContainer>
+            );
+          })}
         </ReverseRotateImageContainer>
       </PreviewDiv>
       <div style={{ textAlign: "center", padding: "4vw" }}></div>
     </div>
   );
 };
+const mapStateToProps = ({ marketImages }) => {
+  return {
+    images: marketImages.items,
+    loading: marketImages.loading,
+    hasMore: marketImages.hasMore,
+  };
+};
 
-export default Home;
+const mapDispatchToProps = {
+  fetchMarketImages,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
