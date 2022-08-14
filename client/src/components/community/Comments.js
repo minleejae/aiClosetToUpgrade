@@ -39,10 +39,6 @@ const Comments = ({ postId, curPost, getPost }) => {
   return (
     <>
       <div className="album container">
-        <div>Comments</div>
-        <label htmlFor="comment" className="form-label">
-          댓글
-        </label>
         <div className="comments">
           {comments.map((comment, index) => {
             return (
@@ -56,7 +52,7 @@ const Comments = ({ postId, curPost, getPost }) => {
           })}
         </div>
         <div style={{ display: "flex" }}>
-          <form style={{ display: "flex" }}>
+          <form style={{ display: "flex", width: "100%" }}>
             <input
               type="text"
               className="form-control"
@@ -64,7 +60,7 @@ const Comments = ({ postId, curPost, getPost }) => {
               name="comment"
               id="comment"
               placeholder="댓글을 입력해주세요."
-              style={{ minWidth: 300 + "%" }}
+              style={{ width: "100%" }}
               onChange={(e) => {
                 handleChange(e);
               }}

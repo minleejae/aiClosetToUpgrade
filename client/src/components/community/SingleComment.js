@@ -65,7 +65,8 @@ const SingleComment = ({ comment, postId, getPost }) => {
       <div>
         <div
           key={comment._id}
-          style={{ border: "1px solid gray", margin: 10 + "px" }}
+          style={{ width: "100%" }}
+          className="col-md-11 col-lg-9 col-xl-7 d-flex flex-start mb-1 card w-110 card-body p-4"
         >
           {commentUpdateState ? (
             <>
@@ -94,34 +95,41 @@ const SingleComment = ({ comment, postId, getPost }) => {
           ) : (
             <>
               <h5>작성자:{comment.author.name}</h5>
-              <h3>
+              <h4>
                 {comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}
-              </h3>
+              </h4>
 
-              <div style={{ display: "flex" }}>
+              <div
+                className="d-flex justify-content-between align-items-center"
+                style={{ display: "flex" }}
+              >
                 {comment.show && (
                   <LikeDislikes keyId={comment.shortId} urlType={"upmentId"} />
                 )}
-                <button onClick={onClickReplyOpen}>대댓글</button>
-                {cookies.userData.email === comment.author.email &&
-                  comment.show && (
-                    <>
-                      <button
-                        onClick={() => {
-                          setCommentUpdateState(true);
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        onClick={() => {
-                          commentDelete();
-                        }}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  )}
+                <div>
+                  {cookies.userData.email === comment.author.email &&
+                    comment.show && (
+                      <>
+                        <button
+                          onClick={() => {
+                            setCommentUpdateState(true);
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button
+                          onClick={() => {
+                            commentDelete();
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    )}
+                  <button onClick={onClickReplyOpen}>
+                    <i className="fas fa-reply me-1"></i> Reply
+                  </button>
+                </div>
               </div>
             </>
           )}
@@ -140,16 +148,18 @@ const SingleComment = ({ comment, postId, getPost }) => {
           })}
       </div>
       {openReply && (
-        <div style={{ display: "flex", marginLeft: 100 + "px" }}>
-          <form style={{ display: "flex" }}>
+        <div style={{ display: "flex", width: "44vw", marginLeft: "10%" }}>
+          <form style={{ display: "flex", width: "100%" }}>
             <input
               type="text"
+              style={{
+                width: "100%",
+              }}
               className="form-control"
               value={commentValue}
               name="recomment"
               id="recomment"
               placeholder="대댓글을 입력해주세요."
-              style={{ minWidth: 300 + "%" }}
               onChange={(e) => {
                 onHandleChange(e);
               }}

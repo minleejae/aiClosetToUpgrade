@@ -33,14 +33,14 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
     <div
       key={comment._id}
       style={{
-        border: "1px solid gray",
-        margin: 10 + "px",
-        marginLeft: 100 + "px",
+        width: 90 + "%",
+        marginLeft: 10 + "%",
       }}
+      className="col-md-11 col-lg-9 col-xl-7 d-flex flex-start mb-1 card w-90 card-body p-4"
     >
       {commentUpdateState ? (
         <>
-          <form>
+          <form style={{ width: 100 + "%" }}>
             <input
               type="text"
               className="form-control"
@@ -48,7 +48,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
               name="recomment"
               id="recomment"
               placeholder="댓글을 입력해주세요."
-              style={{ minWidth: 200 + "px" }}
+              style={{ width: 100 + "%" }}
               onChange={(e) => {
                 setCommentUpdating(e.target.value);
               }}
@@ -65,13 +65,16 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
       ) : (
         <>
           <h5>작성자:{comment.author.name}</h5>
-          <h3>{comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}</h3>
-          <div style={{ display: "flex" }}>
+          <h4>{comment.show ? `${comment.comment}` : "삭제된 댓글입니다."}</h4>
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ display: "flex" }}
+          >
             {comment.show && (
               <LikeDislikes keyId={comment.shortId} urlType={"downmentId"} />
             )}
             {cookies.userData.email === comment.author.email && comment.show && (
-              <>
+              <div style={{ marginLeft: "-30px" }}>
                 <button
                   onClick={() => {
                     setCommentUpdateState(true);
@@ -86,7 +89,7 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
                 >
                   삭제
                 </button>
-              </>
+              </div>
             )}
           </div>
         </>

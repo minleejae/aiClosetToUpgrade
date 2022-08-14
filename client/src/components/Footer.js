@@ -28,6 +28,9 @@ export const Footer = () => {
             ? theme.palette.grey[100]
             : theme.palette.grey[800],
       }}
+      style={{
+        marginTop: "2vw",
+      }}
     >
       <footer class="py-3 my-4" style={{ fontSize: "22px" }}>
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">

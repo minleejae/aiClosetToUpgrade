@@ -73,8 +73,9 @@ const ImageDiv = styled.div`
 
 const ContentDiv = styled.div`
   width: 50vw;
-  height: 70vw;
+  height: 100%;
   background-color: orange;
+  overflow: hidden;
 `;
 
 const ContentContainer = styled.div`
@@ -240,7 +241,7 @@ const MarketViewForm = ({ postType }) => {
                   <div
                     style={{
                       textAlign: "right",
-                      color: "gray",
+                      color: "#777",
                       fontSize: "1.3vw",
                     }}
                   >
@@ -251,7 +252,9 @@ const MarketViewForm = ({ postType }) => {
               <ContentRow>{curPost && curPost.title}</ContentRow>
               <hr></hr>
 
-              <ContentRow>{curPost && curPost.price}원</ContentRow>
+              <ContentRow style={{ fontSize: "1.5vw" }}>
+                {curPost && curPost.price}원
+              </ContentRow>
               <ContentContentRow>
                 <p
                   style={{
@@ -308,16 +311,19 @@ const MarketViewForm = ({ postType }) => {
               <hr></hr>
             </ContentDiv>
           </ContentContainer>
-        </div>
-
-        <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
-          {curPost && (
-            <Comments
-              postId={paramsId}
-              curPost={curPost}
-              getPost={getPost}
-            ></Comments>
-          )}
+          <ContentContainer>
+            <ContentDiv>
+              <div>
+                {curPost && (
+                  <Comments
+                    postId={paramsId}
+                    curPost={curPost}
+                    getPost={getPost}
+                  ></Comments>
+                )}
+              </div>
+            </ContentDiv>
+          </ContentContainer>
         </div>
       </>
     </>
