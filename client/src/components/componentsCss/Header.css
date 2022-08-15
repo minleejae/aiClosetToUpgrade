@@ -121,10 +121,6 @@ li:hover {
     width: 100%;
   }
 
-  .navbar__menu li {
-    width: 100%;
-  }
-
   .navbar__log {
     display: none;
     justify-content: center;
