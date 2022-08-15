@@ -295,6 +295,7 @@ const MarketViewForm = ({ postType }) => {
                 </button>
               </div>
             </ContentRow>
+            <hr></hr>
           </ContentDiv>
         </ContentContainer>
         <ContentContainer>

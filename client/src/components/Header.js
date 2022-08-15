@@ -59,7 +59,7 @@ const Header = ({ width, columns, updateWidth }) => {
           AI CLOSET
         </li>
       </div>
-      <ul className="navbar__menu">
+      <ul className="navbar__menu" style={{ marginRight: "-4vw" }}>
         <div
           className="single-nav"
           onClick={() => {
@@ -122,6 +122,14 @@ const Header = ({ width, columns, updateWidth }) => {
       <ul className="navbar__log">
         {cookies.userData !== undefined ? (
           <>
+            <li
+              onClick={() => {
+                navigate("/chat");
+                window.location.reload();
+              }}
+            >
+              Chat
+            </li>
             <li
               onClick={() => {
                 navigate("/mypage");
