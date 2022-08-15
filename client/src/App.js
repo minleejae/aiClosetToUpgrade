@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login.js";
@@ -15,6 +16,7 @@ import OotdViewForm from "./components/community/OotdViewForm";
 import MarketViewForm from "./components/community/MarketViewForm";
 import MarketUpdateForm from "./components/community/MarketUpdateForm";
 import OotdUpdateForm from "./components/community/OotdUpdateForm";
+import Chat from "./components/chat/Chat";
 
 function App() {
   // 로그인 입력받을 데이터를 props로 넘겨줌
@@ -30,8 +32,6 @@ function App() {
     rePassword: "",
     name: "",
   });
-
-  useEffect(() => {});
 
   //로그인 입력시 STATE 변화시키는 함수
   const onChangeSignInData = (e) => {
@@ -94,6 +94,7 @@ function App() {
           </Route>
         </Route>
         <Route path="mypage" element={<MyPage />}></Route>
+        <Route path="chat" element={<Chat />}></Route>
       </Routes>
       <Footer />
     </div>
