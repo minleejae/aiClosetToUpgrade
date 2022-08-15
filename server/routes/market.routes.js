@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { Downment, Post, Upment, User } from '../models/index.js'
 import pathmodule from 'path';
+import authmiddleware from '../util/authmiddleware.js';
 
 
 export const path = '/market';
@@ -18,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // 게시글 생성하기
-router.post('/create', upload.single('img'), async function (req, res, next) {
+router.post('/create', authmiddleware, upload.single('img'), async function (req, res, next) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
     console.log(req.file);
@@ -71,7 +72,7 @@ router.get("/list", async (req, res, next) => {
 });
 
 //특정 게시글 불러오기
-router.get("/list/:shortId", async (req, res, next) => {
+router.get("/list/:shortId", authmiddleware, async (req, res, next) => {
     let { shortId } = req.params;
 
     try {
@@ -139,7 +140,7 @@ router.get("/list/:shortId", async (req, res, next) => {
 });
 
 //특정 게시글 수정
-router.put("/list/:shortId/update", async (req, res, next) => {
+router.put("/list/:shortId/update", authmiddleware, async (req, res, next) => {
     let { shortId } = req.params;
     let { title, content, price } = req.body;
     const tokenInfo = req.tokenInfo;
@@ -174,7 +175,7 @@ router.put("/list/:shortId/update", async (req, res, next) => {
 });
 
 //특정 게시글 삭제
-router.delete("/list/:shortId/delete", async (req, res, next) => {
+router.delete("/list/:shortId/delete", authmiddleware, async (req, res, next) => {
 
     //shortId를 파라미터를 통해 가져옵니다.
     const { shortId } = req.params;
@@ -204,7 +205,7 @@ router.delete("/list/:shortId/delete", async (req, res, next) => {
 });
 
 //특정 게시글에 댓글달기
-router.post("/list/:shortId/comment", async (req, res, next) => {
+router.post("/list/:shortId/comment", authmiddleware, async (req, res, next) => {
     const { shortId } = req.params;
     const { comment } = req.body;
     const email = req.tokenInfo.email;
@@ -236,7 +237,7 @@ router.post("/list/:shortId/comment", async (req, res, next) => {
 });
 
 //특정 게시글 댓글에 대댓글 달기
-router.post("/list/:shortId/recomment/:p_shortId", async (req, res, next) => {
+router.post("/list/:shortId/recomment/:p_shortId", authmiddleware, async (req, res, next) => {
     const { shortId, p_shortId } = req.params;
     const { comment } = req.body;
     const email = req.tokenInfo.email;
