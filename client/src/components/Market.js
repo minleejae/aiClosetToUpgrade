@@ -60,7 +60,7 @@ const Market = () => {
           margin: "auto",
         }}
       >
-        <div className="input-group mb-3">
+        <div className="input-group mb-3" style={{ minWidth: "400px" }}>
           <div className="input-group-text p-0" style={{ width: 30 + "%" }}>
             <select
               className="form-select form-select-lg shadow-none bg-light border-0"

@@ -13,7 +13,6 @@ a {
 }
 
 #previewImage {
-  width: 500px;
   border: solid 1px gray;
 }
 
@@ -22,11 +21,10 @@ a {
 }
 
 #uploadBox {
-  border: 1px solid gray;
+  border: 1px solid silver;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* center items vertically, in this case */
   align-items: center; /* center items horizontally, in this case */
 }
 
@@ -35,3 +33,14 @@ a {
 }
 
 /* ----------------여기까지 헤더 css----------- */
+
+.fa-solid:hover {
+  color: black;
+}
+
+.link-muted {
+  color: #aaa;
+}
+.link-muted:hover {
+  color: #1266f1;
+}
