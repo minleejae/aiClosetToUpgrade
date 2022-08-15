@@ -4,19 +4,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        AI CLOSET
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export const Footer = () => {
   return (
     <Box
@@ -29,7 +16,9 @@ export const Footer = () => {
             : theme.palette.grey[800],
       }}
       style={{
-        marginTop: "2vw",
+        marginTop: "160px",
+        bottom: 0,
+        width: "100%",
       }}
     >
       <footer class="py-3 my-4" style={{ fontSize: "22px" }}>

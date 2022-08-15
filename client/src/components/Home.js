@@ -309,7 +309,7 @@ const Home = ({ fetchMarketImages, images }) => {
           })}
         </ReverseRotateImageContainer>
       </PreviewDiv>
-      <div style={{ textAlign: "center", padding: "4vw" }}></div>
+      <div style={{ textAlign: "center" }}></div>
     </div>
   );
 };
