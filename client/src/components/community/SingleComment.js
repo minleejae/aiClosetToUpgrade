@@ -155,7 +155,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
       </div>
       {openReply && (
         <div style={{ display: "flex", width: "44vw", marginLeft: "10%" }}>
-          <form style={{ display: "flex", width: "100%" }}>
+          <form style={{ display: "flex", width: "96.8%" }}>
             <input
               type="text"
               style={{
