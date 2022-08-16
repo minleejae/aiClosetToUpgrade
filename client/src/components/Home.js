@@ -130,7 +130,7 @@ const Home = ({ fetchMarketImages, images }) => {
   }, []);
 
   const getImages = async () => {
-    await fetchMarketImages(0, 20, cookies.userData.accessToken, "", "");
+    await fetchMarketImages(0, 20, "", "", "");
   };
 
   return (

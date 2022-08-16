@@ -7,10 +7,22 @@ import {
 
 import port from "../../data/port.json";
 
-export const fetchOotdImages = (page, perPage, accessToken) => {
+export const fetchOotdImages = (
+  page,
+  perPage,
+  accessToken,
+  searchType,
+  searchValue
+) => {
   return (dispatch) => {
-    dispatch(fetchImagesRequest());
-    fetch(`${port.url}/api/posts/list?page=${page}&perPage=${perPage}`, {
+    dispatch(fetchImagesRequest(searchValue));
+
+    let fetchUrl = `${port.url}/api/posts/list?page=${page}&perPage=${perPage}`;
+    if (searchValue) {
+      fetchUrl = `${port.url}/api/search/?postType=2&option=${searchType}&content=${searchValue}&page=${page}&perPage=${perPage}`;
+    }
+
+    fetch(fetchUrl, {
       headers: {
         accessToken,
       },
@@ -40,8 +52,15 @@ const fetchImagesFailure = (error) => {
   };
 };
 
-const fetchImagesRequest = () => {
-  return {
-    type: FETCH_IMAGES_REQUEST,
-  };
+const fetchImagesRequest = (searchValue) => {
+  if (searchValue) {
+    return {
+      type: FETCH_IMAGES_REQUEST,
+      payload: searchValue,
+    };
+  } else {
+    return {
+      type: FETCH_IMAGES_REQUEST,
+    };
+  }
 };
