@@ -66,57 +66,31 @@ const MarketImages = ({
       >
         {images.map((it, index) => {
           const srcUrl = port.url + "/" + it.img.url.split("/")[1];
-          if (images.length === index + 1) {
-            return (
-              <span
-                key={index}
-                style={{
-                  display: "inlineBlock",
-                  height: `${Math.floor(width / columns)}px`,
-                  width: `${Math.floor(width / columns)}px`,
-                  overflow: "hidden",
+          return (
+            <span
+              key={index}
+              style={{
+                display: "inlineBlock",
+                height: `${Math.floor(width / columns)}px`,
+                width: `${Math.floor(width / columns)}px`,
+                overflow: "hidden",
+              }}
+              ref={images.length === index + 1 ? lastImageElementRef : null}
+            >
+              <img
+                onClick={() => {
+                  navigate("/market/" + it.shortId);
                 }}
-                ref={lastImageElementRef}
-              >
-                <img
-                  onClick={() => {
-                    navigate("/market/" + it.shortId);
-                  }}
-                  src={srcUrl}
-                  alt="market"
-                  style={{
-                    width: 100 + "%",
-                    height: 100 + "%",
-                    objectFit: "cover",
-                  }}
-                />
-              </span>
-            );
-          } else
-            return (
-              <span
-                key={index}
+                src={srcUrl}
+                alt="market"
                 style={{
-                  display: "inlineBlock",
-                  height: `${Math.floor(width / columns)}px`,
-                  width: `${Math.floor(width / columns)}px`,
-                  overflow: "hidden",
+                  width: 100 + "%",
+                  height: 100 + "%",
+                  objectFit: "cover",
                 }}
-              >
-                <img
-                  onClick={() => {
-                    navigate("/market/" + it.shortId);
-                  }}
-                  src={srcUrl}
-                  alt="market"
-                  style={{
-                    width: 100 + "%",
-                    height: 100 + "%",
-                    objectFit: "cover",
-                  }}
-                />
-              </span>
-            );
+              />
+            </span>
+          );
         })}
       </div>
     </>
