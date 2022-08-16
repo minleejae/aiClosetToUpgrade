@@ -62,20 +62,24 @@ const Closet = () => {
         </p>
         <div>
           <button
+            class="btn btn-outline-primary"
             onClick={() => {
               navigate("upload");
             }}
+            style={{ marginRight: "5px" }}
           >
-            upload
+            옷 추가
           </button>
           <button
+            class="btn btn-outline-success"
             onClick={() => {
               handleOrderSave();
             }}
+            style={{ marginRight: "5px" }}
           >
             순서 저장
           </button>
-          <button>오늘의 옷</button>
+          <button class="btn btn-outline-info">오늘의 옷</button>
         </div>
       </div>
       <hr></hr>
