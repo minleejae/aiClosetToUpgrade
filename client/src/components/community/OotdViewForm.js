@@ -248,7 +248,6 @@ const OotdViewForm = ({ postType }) => {
             >
               {curPost && curPost.title}
               <br></br>
-              가격 : {curPost && curPost.price}원<br></br>
               {curPost && curPost.content}
             </p>
             <ContentRow>
