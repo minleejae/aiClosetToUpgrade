@@ -55,13 +55,11 @@ const ClothesRow = ({ items, setItems }) => {
   const containersRef = useRef([]);
 
   useEffect(() => {
-    console.log(items);
     draggableItems.current = draggableItems.current.slice(0, items.length);
   }, [items]);
 
   //server에 image delete 요청 보내야함
   const handleDeleteBtn = (item) => {
-    console.log(item);
     const newItems = items.filter((it) => {
       return it._id !== item._id;
     });
@@ -84,7 +82,6 @@ const ClothesRow = ({ items, setItems }) => {
       handleDragEnd(e, item);
     });
     dragItem.current = item.item;
-    console.log("handleDragStart", item.item);
 
     setTimeout(() => {
       setDragging(true);
@@ -174,8 +171,6 @@ const ClothesRow = ({ items, setItems }) => {
     // const copyItem = JSON.parse(JSON.stringify(draggingItem));
     // let newItems = [...items];
     // newItems.splice(copyItem.itemIndex, 1);
-
-    // console.log("resut", result);
   };
 
   //로우 컴포넌트

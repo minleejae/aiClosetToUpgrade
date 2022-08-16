@@ -6,10 +6,22 @@ import { useCookies } from "react-cookie";
 import port from "./../data/port.json";
 
 //signInData, onChangeSignInData 만들어야함
-const Login = ({ signInData, onChangeSignInData }) => {
+const Login = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
+
+  //로그인 입력시 STATE 변화시키는 함수
+  const onChangeSignInData = (e) => {
+    setSignInData({
+      ...signInData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const onClickLoginButton = () => {
     if (signInData.email === "") {

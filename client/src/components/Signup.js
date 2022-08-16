@@ -5,8 +5,22 @@ import { useRef } from "react";
 import port from "./../data/port.json";
 import { useNavigate } from "react-router-dom";
 
-//signUpData, onChangeSignUpdata 만 들어야함
-const Signup = ({ signUpData, setSignUpdata, onChangeSignUpdata }) => {
+const Signup = () => {
+  // 회원가입 입력받을 데이터를 props로 넘겨줌
+  const [signUpData, setSignUpdata] = useState({
+    email: "",
+    password: "",
+    rePassword: "",
+    name: "",
+  });
+
+  const onChangeSignUpdata = (e) => {
+    setSignUpdata({
+      ...signUpData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const emailRef = useRef();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();

@@ -17,8 +17,6 @@ export const fetchOotdImages = (
   return (dispatch) => {
     dispatch(fetchImagesRequest(searchValue));
 
-    console.log("ootd");
-
     let fetchUrl = `${port.url}/api/posts/list?page=${page}&perPage=${perPage}`;
     if (searchValue) {
       fetchUrl = `${port.url}/api/search/?postType=2&option=${searchType}&content=${searchValue}&page=${page}&perPage=${perPage}`;

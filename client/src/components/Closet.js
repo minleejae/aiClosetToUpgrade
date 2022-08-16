@@ -20,13 +20,10 @@ const Closet = () => {
       })
       .then((res) => {
         setItems(res.data.posts);
-        console.log(res.data.posts);
       });
   };
 
   const handleOrderSave = () => {
-    console.log(items);
-
     axios
       .put(
         port.url + "/api/closet/list/update",

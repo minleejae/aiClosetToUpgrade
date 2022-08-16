@@ -112,7 +112,6 @@ const WritingForm = ({
         document.getElementById("previewImage")
       );
       formData.append("type", JSON.stringify(type));
-      console.log(type);
     } else if (postType === 2 || postType === 3) {
       formData.append("title", postForm.title);
       formData.append("content", postForm.content);
@@ -122,15 +121,12 @@ const WritingForm = ({
       }
     }
 
-    console.log(port.url + requestUrl[postType - 1]);
-
     //파일 data 서버로 post
     await axios
       .post(port.url + requestUrl[postType - 1], formData, {
         headers: { accessToken: cookies.userData.accessToken },
       })
       .then((res) => {
-        console.log(res);
         navigate(afterSubmitUrl[postType - 1]);
         window.location.reload();
       })
@@ -255,9 +251,6 @@ const WritingForm = ({
                           className="btn btn-outline-primary"
                           style={{ marginRight: "2%" }}
                           disabled={uploadButtonClicked}
-                          onClick={() => {
-                            console.log("button Click");
-                          }}
                         />
                         <button
                           type="button"
