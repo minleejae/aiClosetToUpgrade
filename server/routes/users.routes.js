@@ -190,3 +190,21 @@ router.get("/mylike", authmiddleware, async (req, res, next) => {
     }
 
 });
+
+router.put("/password/change", authmiddleware, async (req, res, next) => {
+    try {
+        const email = req.tokenInfo.email;
+        const { password } = req.body;
+    
+        let hashPassword = passwordHash(password);
+    
+        await User.updateOne({ email: email }, { password: hashPassword });
+    
+        res.json({
+            result: " 비밀번호가 변경되었습니다. "
+        })
+    } catch (err) {
+        next(err);
+    }
+
+});
