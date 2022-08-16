@@ -35,7 +35,7 @@
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819277-00c7b686-6bf3-4601-85ac-3537e509ff14.png">
 
 > - Post Schema <br>
-<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819621-79d2ef43-a66a-4b9c-942a-c5dd7bd374e7.png">
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184821225-d9fbcd88-a314-4e3d-b08e-ccf78bb97801.png">
 
 > - Upment Schema <br>
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819770-30c2e5fe-7ed4-427a-a2d8-9a3d6fbf6a77.png">
@@ -44,7 +44,7 @@
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819980-825fb7f3-1bec-4e79-897e-7e94b16722a3.png">
 
 > - Like Schema <br>
-<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820513-04dbb15a-e711-4ce5-9d4a-574660861da8.png">
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184821286-46266bca-c7dd-4a54-976c-33215b00a6a0.png">
 
 > - Dislike Schema 
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820623-2b9ac248-a787-409e-a767-7ad9d1f3fc3f.png">
