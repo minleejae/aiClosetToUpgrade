@@ -31,6 +31,9 @@
 
 ![Copy of closet ERD - 2022-08-16 06_16_46 - 2022-08-16 06_18_43](https://user-images.githubusercontent.com/101104244/184816981-63dc0fde-126e-4bb7-b3b1-5e8f3c208acf.png)
 
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184817939-166bc001-6f54-4ac5-a5d9-b43678089d61.png">
+
+
 ## 📌 작동구조
 ![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810625-28b9ac20-2673-479f-b0fe-9b5299fe132f.png)
 
