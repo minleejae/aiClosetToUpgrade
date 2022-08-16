@@ -33,11 +33,42 @@ const Closet = () => {
         }
       )
       .then((res) => {
-        console.log(res);
+        alert("현재 순서가 저장되었습니다.");
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  //type : CASUAL or SUIT
+  const todayRecommend = (type = "SUIT") => {
+    const topList = [];
+    const bottomList = [];
+    const shoeList = [];
+
+    items.forEach((it) => {
+      if (it.img.style === type) {
+        if (it.img.category === "TOP") {
+          topList.push(it);
+        } else if (it.img.category === "BOTTOM") {
+          bottomList.push(it);
+        } else if (it.img.category === "SHOE") {
+          shoeList.push(it);
+        }
+      }
+    });
+
+    if (
+      topList.length === 0 ||
+      bottomList.length === 0 ||
+      shoeList.length === 0
+    ) {
+      console.log(type + "한 옷이 부족합니다.");
+    }
+
+    console.log(topList[Math.floor(Math.random() * topList.length)]);
+    console.log(bottomList[Math.floor(Math.random() * bottomList.length)]);
+    console.log(shoeList[Math.floor(Math.random() * shoeList.length)]);
   };
 
   return (
@@ -76,7 +107,14 @@ const Closet = () => {
           >
             순서 저장
           </button>
-          <button className="btn btn-outline-info">오늘의 옷</button>
+          <button
+            className="btn btn-outline-info"
+            onClick={() => {
+              todayRecommend();
+            }}
+          >
+            오늘의 옷
+          </button>
         </div>
       </div>
       <hr></hr>
