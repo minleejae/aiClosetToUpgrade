@@ -32,8 +32,19 @@
 ![Copy of closet ERD - 2022-08-16 06_16_46 - 2022-08-16 06_18_43](https://user-images.githubusercontent.com/101104244/184816981-63dc0fde-126e-4bb7-b3b1-5e8f3c208acf.png)
 
 > - User Schema <br>
-
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819277-00c7b686-6bf3-4601-85ac-3537e509ff14.png">
+
+> - Post Schema <br>
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819621-79d2ef43-a66a-4b9c-942a-c5dd7bd374e7.png">
+
+> - Upment Schema <br>
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819770-30c2e5fe-7ed4-427a-a2d8-9a3d6fbf6a77.png">
+
+> - Downment Schema <br>
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819980-825fb7f3-1bec-4e79-897e-7e94b16722a3.png">
+
+> - Like & Dislike Schema <br>
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820170-299f3056-b5af-4d07-9c9b-4348e31048be.png">
 
 
 ## 📌 작동구조
