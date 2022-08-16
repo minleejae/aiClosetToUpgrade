@@ -89,6 +89,10 @@ const MarketUpdateForm = ({ postType, images }) => {
 
   //글 삭제하기 버튼 클릭시 이벤트
   const handleRemoveButton = async () => {
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
+      alert("취소 했습니다.");
+      return;
+    }
     try {
       await axios.delete(port.url + `/api/market/list/${paramsId}/delete`, {
         headers: { accessToken: cookies.userData.accessToken },
@@ -96,6 +100,8 @@ const MarketUpdateForm = ({ postType, images }) => {
     } catch (e) {
       console.log(e);
     }
+    alert("게시글을 삭제했습니다.");
+
     navigate("/market");
   };
 

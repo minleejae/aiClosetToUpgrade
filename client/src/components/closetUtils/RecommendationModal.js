@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import port from "../../data/port.json";
 import styled, { keyframes } from "styled-components";
+import useOnClickOutside from "./useOnClickOutside";
 
 const fadeIn = keyframes`{
   from {
@@ -24,9 +25,11 @@ const WrapperModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(0 0 0 / 71%);
+  -webkit-tap-highlight-color: transparent;
 `;
 
-const Modal = styled.div`
+const Modal = styled.div.attrs(({ ref }) => ({ ref: ref }))`
   position: relative;
   width: 800px;
   height: 500px;
@@ -127,11 +130,16 @@ const ShoeImage = styled.img`
 const RecommendationModal = ({ todayRecommend, setModalOpen }) => {
   const [selected, setSelected] = useState("");
   const [recommendItems, setRecommentItems] = useState(null);
+  const ref = useRef();
+
+  useOnClickOutside(ref, () => {
+    setModalOpen(false);
+  });
 
   return (
     <PresentationDiv>
       <WrapperModal>
-        <Modal>
+        <Modal ref={ref}>
           <ModalClose
             onClick={() => {
               setModalOpen(false);
@@ -194,7 +202,7 @@ const RecommendationModal = ({ todayRecommend, setModalOpen }) => {
                   justifySelf: "center",
                   alignSelf: "center",
                 }}
-                className="btn-outline-secondary"
+                className="btn btn-outline-info"
                 onClick={() => {
                   setSelected("");
                 }}

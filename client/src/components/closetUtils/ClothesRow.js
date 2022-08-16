@@ -55,7 +55,7 @@ const ClothesRow = ({ items, setItems }) => {
   //server에 image delete 요청 보내야함
   const handleDeleteBtn = (item) => {
     if (!window.confirm("옷장에서 옷을 삭제하시겠습니까?")) {
-      alert("취소를 누르셨습니다.");
+      alert("취소 했습니다.");
       return;
     }
 

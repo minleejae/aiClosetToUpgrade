@@ -23,10 +23,16 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
   };
 
   const commentDelete = async () => {
+    if (!window.confirm("댓글을 삭제하시겠습니까?")) {
+      alert("취소 했습니다.");
+      return;
+    }
+
     await axios.delete(port.url + `/api/comment/delete/${comment.shortId}`, {
       headers: { accessToken: cookies.userData.accessToken },
     });
     getPost();
+    alert("댓글을 삭제했습니다.");
   };
 
   return (
