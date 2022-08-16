@@ -28,12 +28,10 @@
 > - 커뮤니티에서 다른 사람들과 실시간으로 소통할 수 있습니다.
 
 ## 📌 백엔드 ERD
-![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810535-99a89ab2-4318-4304-beb0-9217c398f943.png)
 
 
 ## 📌 작동구조
-
-
+![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810625-28b9ac20-2673-479f-b0fe-9b5299fe132f.png)
 
 ## Used Stacks 
 
