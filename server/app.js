@@ -44,6 +44,11 @@ app.use('/api', router);
 
 // 에러 핸들러
 app.use(function(err, req, res, next) {
+  let error = [];
+  error = err.message.split("  ");
+  err.message = error[0];
+  err.code = Number(error[1]);
+  console.log("errermessage:  ", err.message, "\n\nerrorcode:  ", err.code);
   res.json(err.message);
 });
 
