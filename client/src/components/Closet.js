@@ -24,6 +24,25 @@ const Closet = () => {
       });
   };
 
+  const handleOrderSave = () => {
+    console.log(items);
+
+    axios
+      .put(
+        port.url + "/api/closet/list/update",
+        { list: items },
+        {
+          headers: { accessToken: cookies.userData.accessToken },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div style={{ paddingTop: 100 + "px" }}>
       <div
@@ -48,6 +67,13 @@ const Closet = () => {
             }}
           >
             upload
+          </button>
+          <button
+            onClick={() => {
+              handleOrderSave();
+            }}
+          >
+            순서 저장
           </button>
           <button>오늘의 옷</button>
         </div>
