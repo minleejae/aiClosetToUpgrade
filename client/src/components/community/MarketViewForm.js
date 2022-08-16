@@ -6,7 +6,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
 import LikeDislikes from "./LikeDislikes";
-
 import styled from "styled-components";
 
 const TitleContainer = styled.div`
