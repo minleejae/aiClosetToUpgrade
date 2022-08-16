@@ -11,10 +11,30 @@ const MyPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const validPasswordCheck = () => {
+    const pw = $("#password").val();
+    const num = pw.search(/[0-9]/g);
+    const eng = pw.search(/[a-z]/gi);
+
+    if (pw.length < 8 || pw.length > 20 || num < 0 || eng < 0) {
+      alert("비밀번호는 8자리 ~ 20자리 이내 영문,숫자 혼합하여 입력해주세요.");
+      return false;
+    } else if (pw.search(/\s/) !== -1) {
+      alert("비밀번호는 공백 없이 입력해주세요.");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const onClickSignUpButton = () => {
     if ($("#password").val() === "") {
       alert("비밀번호를 입력해주세요.");
       $("#password").focus();
+      return;
+    }
+
+    if (!validPasswordCheck()) {
       return;
     }
 
@@ -85,12 +105,16 @@ const MyPage = () => {
             <label htmlFor="password" className="form-label">
               Password
             </label>
+
             <input
               type="password"
               className="form-control"
               id="password"
               name="password"
             />
+            <div style={{ color: "salmon" }}>
+              비밀번호는 영어 숫자 혼합 8자리이상이어야 합니다.
+            </div>
           </div>
           <div className="mb-3">
             <label htmlFor="rePassword" className="form-label">
