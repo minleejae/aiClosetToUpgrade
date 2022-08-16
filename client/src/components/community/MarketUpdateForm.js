@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import $ from "jquery";
 
 const MarketUpdateForm = ({ postType, images }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -36,12 +37,44 @@ const MarketUpdateForm = ({ postType, images }) => {
 
   //수정하기 클릭시 이벤트
   const handleUpdateSubmitButton = async () => {
+    if (postForm.title.trim() === "") {
+      alert("제목을 입력해주세요!");
+      $("#title").focus();
+      return;
+    }
+
+    if (postType === 3 && postForm.price === "") {
+      alert("가격을 입력해주세요!");
+      $("#price").focus();
+      return;
+    }
+
+    console.log(postForm.price);
+    if (postType === 3 && (postForm.price + "").trim() === "") {
+      alert("가격을 입력해주세요!");
+      $("#price").focus();
+      return;
+    }
+
+    if (postType === 3 && isNaN(postForm.price)) {
+      alert("가격을 숫자로 입력해주세요!");
+      $("#price").focus();
+      return;
+    }
+
+    if (postForm.content.trim() === "") {
+      alert("내용을 입력해주세요!");
+      $("#content").focus();
+      return;
+    }
+
     try {
       await axios.put(
         port.url + `/api/market/list/${paramsId}/update`,
         {
           title: postForm.title,
           content: postForm.content,
+          price: postForm.price,
         },
         {
           headers: { accessToken: cookies.userData.accessToken },
@@ -51,6 +84,7 @@ const MarketUpdateForm = ({ postType, images }) => {
       console.log(e);
     }
     navigate("/market");
+    window.location.reload();
   };
 
   //글 삭제하기 버튼 클릭시 이벤트

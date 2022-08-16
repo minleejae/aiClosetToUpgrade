@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import $ from "jquery";
 
 const OotdUpdateForm = ({ postType, images }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
@@ -28,6 +29,18 @@ const OotdUpdateForm = ({ postType, images }) => {
 
   //수정하기 클릭시 이벤트
   const handleUpdateSubmitButton = async () => {
+    if (postForm.title.trim() === "") {
+      alert("제목을 입력해주세요!");
+      $("#title").focus();
+      return;
+    }
+
+    if (postForm.content.trim() === "") {
+      alert("내용을 입력해주세요!");
+      $("#content").focus();
+      return;
+    }
+
     try {
       await axios.put(
         port.url + `/api/posts/list/${paramsId}/update`,
