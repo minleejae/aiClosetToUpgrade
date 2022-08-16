@@ -43,9 +43,11 @@
 > - Downment Schema <br>
 <img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819980-825fb7f3-1bec-4e79-897e-7e94b16722a3.png">
 
-> - Like & Dislike Schema <br>
-<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820170-299f3056-b5af-4d07-9c9b-4348e31048be.png">
+> - Like Schema <br>
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820513-04dbb15a-e711-4ce5-9d4a-574660861da8.png">
 
+> - Dislike Schema 
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184820623-2b9ac248-a787-409e-a767-7ad9d1f3fc3f.png">
 
 ## 📌 작동구조
 ![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810625-28b9ac20-2673-479f-b0fe-9b5299fe132f.png)
