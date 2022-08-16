@@ -89,7 +89,7 @@ const MarketImages = ({
                     height: 100 + "%",
                     objectFit: "cover",
                   }}
-                ></img>{" "}
+                />
               </span>
             );
           } else
@@ -114,7 +114,7 @@ const MarketImages = ({
                     height: 100 + "%",
                     objectFit: "cover",
                   }}
-                ></img>{" "}
+                />
               </span>
             );
         })}
