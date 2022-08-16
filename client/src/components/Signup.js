@@ -25,9 +25,37 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const validEmailCheck = (obj) => {
+    var pattern =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    return obj.match(pattern) != null;
+  };
+
+  const validPasswordCheck = () => {
+    const pw = $("#password").val();
+    const num = pw.search(/[0-9]/g);
+    const eng = pw.search(/[a-z]/gi);
+
+    if (pw.length < 8 || pw.length > 20) {
+      alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
+      return false;
+    } else if (pw.search(/\s/) !== -1) {
+      alert("비밀번호는 공백 없이 입력해주세요.");
+      return false;
+    } else if (num < 0 || eng < 0) {
+      alert("비밀번호를 영문,숫자 혼합하여 입력해주세요.");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const onClickSignUpButton = () => {
-    if (signUpData.email === "") {
-      alert("이메일 입력해주세요.");
+    if (
+      signUpData.email === "" ||
+      validEmailCheck(signUpData.email) === false
+    ) {
+      alert("올바른 이메일 주소를 입력해주세요.");
       emailRef.current.focus();
       return;
     }
@@ -35,6 +63,10 @@ const Signup = () => {
     if (signUpData.password === "") {
       alert("비밀번호를 입력해주세요.");
       $("#password").focus();
+      return;
+    }
+
+    if (!validPasswordCheck()) {
       return;
     }
 
@@ -89,7 +121,7 @@ const Signup = () => {
       >
         <div>
           <h1 style={{ textAlign: "center" }}>Sign Up</h1>
-          <p>
+          <p style={{ fontSize: 22 + "px", marginBottom: "70px" }}>
             Hello,
             <br />
             Sign up and use AI CLOSET!
@@ -109,6 +141,7 @@ const Signup = () => {
                 ref={emailRef}
                 value={signUpData.email}
                 className="form-control"
+                placeholder="abc@example.com"
                 id="email"
                 name="email"
                 aria-describedby="emailHelp"
@@ -127,6 +160,9 @@ const Signup = () => {
                 name="password"
                 onChange={onChangeSignUpdata}
               />
+              <div style={{ color: "salmon" }}>
+                비밀번호는 영어 숫자 혼합 8자리이상이어야 합니다.
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="rePassword" className="form-label">

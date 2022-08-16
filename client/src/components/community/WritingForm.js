@@ -5,6 +5,7 @@ import DressClassifier from "../closetUtils/DressClassifier";
 import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import $ from "jquery";
 import { CircularProgress } from "@mui/material";
 import styled from "styled-components";
 
@@ -60,7 +61,11 @@ const WritingForm = ({
   postType,
   postFormpostType,
 }) => {
-  const [postForm, setPostForm] = useState({});
+  const [postForm, setPostForm] = useState({
+    title: "",
+    content: "",
+    price: "",
+  });
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [selectedFile, setSelectedFile] = useState(null);
   //현재 선택된 이미지의 source state
@@ -95,6 +100,33 @@ const WritingForm = ({
       alert("이미지를 선택해주세요!");
       return;
     }
+
+    if (postType === 2 || postType === 3) {
+      if (postForm.title.trim() === "") {
+        alert("제목을 입력해주세요!");
+        $("#title").focus();
+        return;
+      }
+
+      if (postType === 3 && postForm.price === "") {
+        alert("가격을 입력해주세요!");
+        $("#price").focus();
+        return;
+      }
+
+      if (postType === 3 && isNaN(postForm.price)) {
+        alert("가격을 숫자로 입력해주세요!");
+        $("#price").focus();
+        return;
+      }
+
+      if (postForm.content.trim() === "") {
+        alert("내용을 입력해주세요!");
+        $("#content").focus();
+        return;
+      }
+    }
+
     //버튼 여러번 클릭하는 것 차단
     setUploadButtonClicked(true);
 
@@ -254,7 +286,7 @@ const WritingForm = ({
                         />
                         <button
                           type="button"
-                          className="btn btn-secondary"
+                          className="btn btn-outline-secondary"
                           onClick={() => navigate(-1)}
                         >
                           뒤로가기

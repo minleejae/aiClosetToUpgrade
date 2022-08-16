@@ -84,6 +84,7 @@ const Login = () => {
                 id="email"
                 name="email"
                 aria-describedby="emailHelp"
+                placeholder="abc@example.com"
                 onChange={onChangeSignInData}
               />
             </div>

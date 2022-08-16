@@ -37,10 +37,19 @@ const MyPage = () => {
     };
     console.log(userUpdateData);
 
-    axios.post(port.url + "/api/users/update", userUpdateData).then((res) => {
-      console.log(res);
-      navigate("/");
-    });
+    axios
+      .put(
+        port.url + "/api/users/password/change",
+        { password: userUpdateData.password },
+        {
+          headers: { accessToken: cookies.userData.accessToken },
+        }
+      )
+      .then((res) => {
+        alert("비밀번호가 변경되었습니다!");
+        navigate("/");
+        window.location.reload();
+      });
   };
 
   return (
@@ -55,14 +64,6 @@ const MyPage = () => {
       >
         <h1>MY PAGE</h1>
         <p style={{ fontSize: 22 + "px" }}>Update Your profile</p>
-        <button
-          className="btn btn-outline-dark"
-          onClick={() => {
-            navigate("/market/write");
-          }}
-        >
-          글쓰기
-        </button>
       </div>
       <div className="container">
         <form>
