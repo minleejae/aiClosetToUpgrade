@@ -33,7 +33,7 @@
 
 > - User Schema <br>
 
-<img width="700" height="370" src"https://user-images.githubusercontent.com/101104244/184819277-00c7b686-6bf3-4601-85ac-3537e509ff14.png">
+<img width="700" height="370" src="https://user-images.githubusercontent.com/101104244/184819277-00c7b686-6bf3-4601-85ac-3537e509ff14.png">
 
 
 ## 📌 작동구조
