@@ -1,9 +1,18 @@
 # O'closet
 
+<img width="1440" alt="스크린샷 2022-08-16 오후 2 41 37" src="https://user-images.githubusercontent.com/97277365/184806194-7b8f260d-7340-448a-b7d9-8d25618ff768.png">
+
+
 ## 프로젝트 개요
 자신의 옷들을 정리해주는 AI 옷장, </br>
+
+
 자신의 착장을 사람들과 공유하고, </br>
+
+
 쓰지 않는 옷들을 거래할 수 있도록 게시판을 제공. </br>
+
+## 서비스 소개
 
 ## Used Stacks 
 
