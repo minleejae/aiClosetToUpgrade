@@ -213,15 +213,6 @@ const ClothesRow = ({ items, setItems }) => {
                       handleDeleteBtn(item);
                     }}
                   />
-                  <div
-                    style={{
-                      marginLeft: -50 + "px",
-                      marginTop: -20 + "px",
-                      fontSize: 30 + "px",
-                    }}
-                  >
-                    {itemIndex}
-                  </div>
                 </DraggableDiv>
               </div>
             )
