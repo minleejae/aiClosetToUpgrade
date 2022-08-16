@@ -4,9 +4,12 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import ClothesRow from "./closetUtils/ClothesRow.js";
 import port from "./../data/port.json";
+import RecommendationModal from "./closetUtils/RecommendationModal.js";
 
 const Closet = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -66,9 +69,11 @@ const Closet = () => {
       console.log(type + "한 옷이 부족합니다.");
     }
 
-    console.log(topList[Math.floor(Math.random() * topList.length)]);
-    console.log(bottomList[Math.floor(Math.random() * bottomList.length)]);
-    console.log(shoeList[Math.floor(Math.random() * shoeList.length)]);
+    const top = topList[Math.floor(Math.random() * topList.length)];
+    const bottom = bottomList[Math.floor(Math.random() * bottomList.length)];
+    const shoe = shoeList[Math.floor(Math.random() * shoeList.length)];
+
+    return { top, bottom, shoe };
   };
 
   return (
@@ -110,13 +115,20 @@ const Closet = () => {
           <button
             className="btn btn-outline-info"
             onClick={() => {
-              todayRecommend();
+              setModalOpen(true);
             }}
           >
             오늘의 옷
           </button>
         </div>
       </div>
+      {modalOpen && (
+        <RecommendationModal
+          todayRecommend={todayRecommend}
+          setModalOpen={setModalOpen}
+        ></RecommendationModal>
+      )}
+
       <hr></hr>
       <ClothesRow items={items} setItems={setItems} />
     </div>

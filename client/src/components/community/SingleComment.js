@@ -87,7 +87,6 @@ const SingleComment = ({ comment, postId, getPost }) => {
                   placeholder="댓글을 입력해주세요."
                   style={{ minWidth: 200 + "px" }}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setCommentUpdating(e.target.value);
                   }}
                 />

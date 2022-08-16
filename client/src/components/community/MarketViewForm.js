@@ -236,7 +236,9 @@ const MarketViewForm = ({ postType }) => {
                     right: 0,
                   }}
                 >
-                  조회수 : {curPost && curPost.views}
+                  작성일 : {curPost && curPost.createdAt.split("T")[0]}
+                  {" / "}
+                  {"      "} 조회수 : {curPost && curPost.views}
                 </div>
               </ContentRowDivide>
             </ContentRow>
