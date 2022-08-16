@@ -34,9 +34,6 @@
 ## 📌 작동구조
 ![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810625-28b9ac20-2673-479f-b0fe-9b5299fe132f.png)
 
-> - User
-![ERD_User](https://user-images.githubusercontent.com/101104244/184817132-1fc221d2-fd3b-4dca-8eb7-b831712540b5.png)
-
 ## Used Stacks 
 
 ##### node.js, React.js, express.js, MongoDB, tenserflow.js
