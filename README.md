@@ -28,7 +28,8 @@
 > - 커뮤니티에서 다른 사람들과 실시간으로 소통할 수 있습니다.
 
 ## 📌 백엔드 ERD
-![ERD](https://user-images.githubusercontent.com/101104244/184816878-52c8e21c-e67c-4740-a668-786774839c3e.png)
+
+![Copy of closet ERD - 2022-08-16 06_16_46 - 2022-08-16 06_18_43](https://user-images.githubusercontent.com/101104244/184816981-63dc0fde-126e-4bb7-b3b1-5e8f3c208acf.png)
 
 ## 📌 작동구조
 ![구조도 drawio (3)](https://user-images.githubusercontent.com/101104244/184810625-28b9ac20-2673-479f-b0fe-9b5299fe132f.png)
