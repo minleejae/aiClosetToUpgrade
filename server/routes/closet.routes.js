@@ -27,6 +27,8 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
         const category = JSON.parse(type).dressType;
         const authData = await User.findOne({email});
         const url = req.file.destination + pathmodule.basename(req.file.path);
+        
+        const total = await Post.countDocuments({author: authData._id, show: true, postType: 1});
         // console.log("--------------------\n\n\n", req.body, "\n2.\n", type,"\n3\n", email,"\n4\n", postType);
         await Post.create({
             postType: 1,
@@ -34,6 +36,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
                    url: url,
                    category: category
             },
+            views: total + 1,
             author: authData
         });
         res.json({ data: "이미지 업로드에 성공했습니다!"});
@@ -48,7 +51,7 @@ router.post('/create', upload.single('img'), async function (req, res, next) {
     try {
         const email = req.tokenInfo.email;
         const postsData = await Post.find({ postType: 1, show: true })
-            .sort({ updatedAt: 1 }) //가장 먼저 업데이트된 게시글을 첫번째 인덱스로 가져옴
+            .sort({ views: 1 }) //가장 먼저 업데이트된 게시글을 첫번째 인덱스로 가져옴
             .populate("author");
         
         const posts = postsData.reduce((acc, it) => {
@@ -100,9 +103,9 @@ router.put("/list/update", async (req, res, next) => {
             return next(new Error("로그인을 해주세요."));
         }
         //옷장의 옷들을 top -> bottom -> shoes -> etc 순으로 update함.
-        await Promise.all(dressList.map(async it => {
+        await Promise.all(dressList.map(async (it, index) => {
             const shortId = it.shortId;
-            await Post.updateOne({ shortId }, { updatedAt: Date.now() });
+            await Post.updateOne({ shortId }, { views: index });
         }));
         res.json({ message: "옷장 저장에 성공했습니다!"})
         }catch (err) {
