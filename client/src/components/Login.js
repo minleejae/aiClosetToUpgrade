@@ -48,6 +48,7 @@ const Login = ({ signInData, onChangeSignInData }) => {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
+          paddingBottom: 200 + "px",
         }}
       >
         {" "}

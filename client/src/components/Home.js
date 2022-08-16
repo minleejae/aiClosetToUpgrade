@@ -1,6 +1,6 @@
 import homeImage from "./../images/home.jpeg";
 import styled, { keyframes } from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { fetchMarketImages } from "../redux";
 import { connect } from "react-redux";
@@ -124,6 +124,7 @@ const ImageDiv = styled.div`
 
 const Home = ({ fetchMarketImages, images }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const [ootdImages, setOotdImages] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     getImages();
@@ -131,6 +132,16 @@ const Home = ({ fetchMarketImages, images }) => {
 
   const getImages = async () => {
     await fetchMarketImages(0, 20, "", "", "");
+
+    await fetch(`${port.url}/api/posts/list?page=0&perPage=20`, {})
+      .then((response) => response.json())
+      .then((ootdList) => {
+        setOotdImages(ootdList.posts);
+        console.log(ootdList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -260,7 +271,7 @@ const Home = ({ fetchMarketImages, images }) => {
       <PreviewDiv>
         {/* <div style={{ textAlign: "center", fontSize: "2vw" }}>OOTD</div> */}
         <RotateImageContainer>
-          {images.map((it, index) => {
+          {ootdImages.map((it, index) => {
             const srcUrl = port.url + "/" + it.img.url.split("/")[1];
             return (
               <ImageContainer key={it._id}>
@@ -274,8 +285,14 @@ const Home = ({ fetchMarketImages, images }) => {
                       borderRadius: 12 + "%",
                     }}
                     onClick={() => {
-                      navigate(`/market/${it.shortId}`);
-                      window.location.reload();
+                      if (cookies.userData) {
+                        navigate(`/board/${it.shortId}`);
+                        window.location.reload();
+                      } else {
+                        alert("로그인 후 게시판 이용이 가능합니다.");
+                        navigate(`/login`);
+                        window.location.reload();
+                      }
                     }}
                   ></img>
                 </ImageDiv>
@@ -299,8 +316,14 @@ const Home = ({ fetchMarketImages, images }) => {
                       borderRadius: 12 + "%",
                     }}
                     onClick={() => {
-                      navigate(`/market/${it.shortId}`);
-                      window.location.reload();
+                      if (cookies.userData) {
+                        navigate(`/market/${it.shortId}`);
+                        window.location.reload();
+                      } else {
+                        alert("로그인 후 게시판 이용이 가능합니다.");
+                        navigate(`/login`);
+                        window.location.reload();
+                      }
                     }}
                   ></img>
                 </ImageDiv>
@@ -314,10 +337,9 @@ const Home = ({ fetchMarketImages, images }) => {
   );
 };
 const mapStateToProps = ({ marketImages }) => {
+  // console.log("matStateToProps marketImages", marketImages);
   return {
     images: marketImages.items,
-    loading: marketImages.loading,
-    hasMore: marketImages.hasMore,
   };
 };
 
