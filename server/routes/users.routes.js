@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import cryto from "crypto";
-import {User} from "../models/index.js";
+import {User, Like, Post} from "../models/index.js";
 import jwt from "jsonwebtoken";
 import jwtConfig from "./../config/jwtConfig.js";
 import nodeMailer from "nodemailer";
+import authmiddleware from '../util/authmiddleware.js';
 
 export const path = '/users';
 export const router = Router();
@@ -137,3 +138,55 @@ const passwordHash = (password) => {
     return cryto.createHash("sha1").update(password).digest("hex");
 }
 
+
+// 내가 올린 게시글 목록 불러오기
+router.get("/mypost", authmiddleware, async (req, res, next) => {
+    try {
+        const postType = req.query.postType;
+        const email = req.tokenInfo.email;
+        const page = Number(req.query.page);
+        const perPage = Number(req.query.perPage);
+
+        const userId = await User.findOne({email: email});
+
+        const posts = await Post.find({ postType: postType, show: true, author: userId._id })
+            .populate("author")
+            .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
+            .skip(page) //ex> 2페이지라면 5번부터
+            .limit(perPage); // 6개씩 가져와줘.
+    
+        res.status(200).json({ posts });
+
+    } catch(err) {
+        err.message = `${err.message}, closet list error.`;
+        next(err);
+    }
+
+});
+
+// 내가 좋아요 누른 게시글 불러오기
+router.get("/mylike", authmiddleware, async (req, res, next) => {
+    try {
+        const email = req.tokenInfo.email;
+        const page = Number(req.query.page);
+        const perPage = Number(req.query.perPage);
+        
+        const userId = await User.findOne({email: email});
+
+        const postsData = await Like.find({userId: userId._id, postId: {$ne: null}})
+            .populate("postId")
+            .sort({ createdAt: -1 }) //마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
+            .skip(page) //ex> 2페이지라면 5번부터
+            .limit(perPage); // 6개씩 가져와줘.
+        
+        const posts = postsData.reduce((acc, it) => {
+                return [ ...acc, it.postId];
+        }, []);
+
+        res.json({ posts });
+    } catch(err) {
+        err.message = `${err.message}, closet list error.`;
+        next(err);
+    }
+
+});

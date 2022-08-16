@@ -6,6 +6,7 @@ import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import styled from "styled-components";
 
 const pageTitle = ["CLOSET", "OOTD", "MARKET"];
 
@@ -16,6 +17,42 @@ const requestUrl = [
 ];
 
 const afterSubmitUrl = ["/closet", "/board", "/market"];
+
+const TitleContainer = styled.div`
+  width: 70vw;
+  height: 3vw;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+`;
+
+const TItleDiv = styled.div`
+  width: 50vw;
+  height: 3vw;
+  color: gray;
+  display: flex;
+  algin-items: center;
+  font-size: 2.3vw;
+`;
+
+const ContainerDiv = styled.div`
+  width: 70vw;
+  height: 100%;
+  display: flex;
+`;
+
+const ArrowDiv = styled.div`
+  width: 10vw;
+  height: 10vw;
+  display: flex;
+`;
+
+const ImageDiv = styled.div`
+  width: 50vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+`;
 
 const WritingForm = ({
   uploadActive,
@@ -94,120 +131,151 @@ const WritingForm = ({
       })
       .then((res) => {
         console.log(res);
+        navigate(afterSubmitUrl[postType - 1]);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
-
-    navigate(afterSubmitUrl[postType - 1]);
   };
 
   return (
-    <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
-      <h1>{pageTitle[postType - 1]}</h1>
-      <div className="album">
-        <div className="container">
-          <div
-            className="card mb-3"
-            style={{
-              width: 100 + "%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div id="uploadBox">
-              업로드화면 {postType}
-              {/* row */}
-              <img
-                id="previewImage"
-                src={imgSrc || require("./top1.jpg")}
-                alt="preview"
-              />
-              {uploadButtonClicked && (
-                <CircularProgress style={{}}></CircularProgress>
-              )}
-              <form
-                onSubmit={(e) => {
-                  fileUploadHandler(e);
-                }}
-                encType="multipart/form-data"
-              >
-                <input
-                  type="file"
-                  accept="image/png, image/gif, image/jpeg"
-                  onChange={(e) => fileSelectedHandler(e)}
-                  name="photo"
-                />
-                <div>
-                  {postType === 1 ? (
-                    <></>
-                  ) : (
-                    <>
-                      <div className="mb-3">
-                        <label htmlFor="title" className="form-label">
-                          제목
-                        </label>
+    <div>
+      <>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <TitleContainer>
+            <TItleDiv>{pageTitle[postType - 1]}</TItleDiv>
+          </TitleContainer>
+          <div style={{ display: "flex" }}>
+            <ContainerDiv>
+              <ArrowDiv></ArrowDiv>
+              <ImageDiv>
+                <div
+                  id="uploadBox"
+                  style={{
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    id="previewImage"
+                    src={imgSrc || require("./top1.jpg")}
+                    alt="preview"
+                    style={{
+                      width: "48vw",
+                      height: "36vw",
+                      objectFit: "cover",
+                      overflow: "hidden",
+                    }}
+                  />
+                  {uploadButtonClicked && (
+                    <CircularProgress style={{}}></CircularProgress>
+                  )}
+                  <form
+                    onSubmit={(e) => {
+                      fileUploadHandler(e);
+                    }}
+                    encType="multipart/form-data"
+                    style={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/png, image/gif, image/jpeg"
+                      onChange={(e) => fileSelectedHandler(e)}
+                      className="form-control mb-3"
+                      name="photo"
+                    />
 
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="title"
-                          id="title"
-                          placeholder="제목을 입력해주세요."
-                          onChange={onChangeHandler}
-                        />
-                        {postType === 3 ? (
-                          <>
-                            <label htmlFor="price" className="form-label">
-                              가격
+                    <div>
+                      {postType === 1 ? (
+                        <></>
+                      ) : (
+                        <>
+                          <div className="mb-3">
+                            <label htmlFor="title" className="form-label">
+                              제목
                             </label>
+
                             <input
                               type="text"
                               className="form-control"
-                              name="price"
-                              id="price"
-                              placeholder="가격을 입력해주세요."
+                              name="title"
+                              id="title"
+                              placeholder="제목을 입력해주세요."
                               onChange={onChangeHandler}
                             />
-                          </>
-                        ) : undefined}
+                            {postType === 3 ? (
+                              <>
+                                <label htmlFor="price" className="form-label">
+                                  가격
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="price"
+                                  id="price"
+                                  placeholder="가격을 입력해주세요."
+                                  onChange={onChangeHandler}
+                                />
+                              </>
+                            ) : undefined}
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor="content" className="form-label">
+                              내용
+                            </label>
+                            <textarea
+                              className="form-control"
+                              name="content"
+                              id="content"
+                              rows="3"
+                              onChange={onChangeHandler}
+                            ></textarea>
+                          </div>
+                        </>
+                      )}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <input
+                          type="submit"
+                          className="btn btn-outline-primary"
+                          style={{ marginRight: "2%" }}
+                          disabled={uploadButtonClicked}
+                          onClick={() => {
+                            console.log("button Click");
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={() => navigate(-1)}
+                        >
+                          뒤로가기
+                        </button>
                       </div>
-                      <div className="mb-3">
-                        <label htmlFor="content" className="form-label">
-                          내용
-                        </label>
-                        <textarea
-                          className="form-control"
-                          name="content"
-                          id="content"
-                          rows="3"
-                          onChange={onChangeHandler}
-                        ></textarea>
-                      </div>
-                    </>
-                  )}
-                  <input
-                    type="submit"
-                    className="btn btn-outline-primary"
-                    style={{ marginRight: "2%" }}
-                    disabled={uploadButtonClicked}
-                    onClick={() => {
-                      console.log("button Click");
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => navigate(-1)}
-                  >
-                    뒤로가기
-                  </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              </ImageDiv>
+              <ArrowDiv></ArrowDiv>
+            </ContainerDiv>
           </div>
         </div>
-      </div>
+      </>
     </div>
   );
 };

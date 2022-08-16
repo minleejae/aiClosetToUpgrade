@@ -5,6 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@tensorflow-models/mobilenet": "^2.1.0",
@@ -15,7 +18,10 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
     "buffer": "^6.0.3",
+    "dayjs": "^1.11.5",
     "form-data": "^4.0.0",
     "jquery": "^3.6.0",
     "react": "^18.2.0",
@@ -29,6 +35,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.5",
     "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"

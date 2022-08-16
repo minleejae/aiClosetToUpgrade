@@ -1,10 +1,28 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import ClothesRow from "./closetUtils/ClothesRow.js";
+import port from "./../data/port.json";
 
 const Closet = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const [items, setItems] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getImages();
+  }, []);
+
+  const getImages = async () => {
+    await axios
+      .get(port.url + "/api/closet/list", {
+        headers: { accessToken: cookies.userData.accessToken },
+      })
+      .then((res) => {
+        setItems(res.data.posts);
+        console.log(res.data.posts);
+      });
+  };
 
   return (
     <div style={{ paddingTop: 100 + "px" }}>
@@ -16,7 +34,7 @@ const Closet = () => {
         }}
       >
         <h1>CLOSET</h1>
-        <p>
+        <p style={{ fontSize: 22 + "px" }}>
           When you upload your clothes,
           <br />
           AI will classfy your clothes.
@@ -35,7 +53,7 @@ const Closet = () => {
         </div>
       </div>
       <hr></hr>
-      <ClothesRow />
+      <ClothesRow items={items} setItems={setItems} />
     </div>
   );
 };

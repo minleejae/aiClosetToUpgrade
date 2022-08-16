@@ -13,7 +13,6 @@ a {
 }
 
 #previewImage {
-  width: 500px;
   border: solid 1px gray;
 }
 
@@ -22,11 +21,10 @@ a {
 }
 
 #uploadBox {
-  border: 1px solid gray;
+  border: 1px solid silver;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* center items vertically, in this case */
   align-items: center; /* center items horizontally, in this case */
 }
 
@@ -35,3 +33,58 @@ a {
 }
 
 /* ----------------여기까지 헤더 css----------- */
+
+.fa-solid:hover {
+  color: black;
+}
+
+.link-muted {
+  color: #aaa;
+}
+.link-muted:hover {
+  color: #1266f1;
+}
+
+/* -----chat css--- */
+
+#root {
+  min-height: 100vh;
+}
+
+button.with-icon {
+  display: flex;
+}
+
+.w300 {
+  width: 300px;
+}
+
+.message-nickname {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.send-btn {
+  height: 38px;
+  margin-left: 6px;
+}
+
+.card {
+  padding: 14px;
+}
+
+.text-box {
+  padding: 6px;
+}
+
+.time {
+  margin-left: 4px;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.chat-window {
+  height: 400px;
+  overflow-y: auto;
+}
