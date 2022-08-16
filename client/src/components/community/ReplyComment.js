@@ -58,6 +58,11 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
               value="댓글 수정"
               className="btn btn-outline-success"
               onClick={(e) => {
+                e.preventDefault();
+                if (commentUpdating.trim() === "") {
+                  alert("댓글을 입력해주세요.");
+                  return;
+                }
                 commentUpdateSubmit(e);
               }}
             />

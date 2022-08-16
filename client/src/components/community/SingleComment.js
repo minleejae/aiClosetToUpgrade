@@ -87,6 +87,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
                   placeholder="댓글을 입력해주세요."
                   style={{ minWidth: 200 + "px" }}
                   onChange={(e) => {
+                    console.log(e.target.value);
                     setCommentUpdating(e.target.value);
                   }}
                 />
@@ -95,6 +96,11 @@ const SingleComment = ({ comment, postId, getPost }) => {
                   value="댓글 수정"
                   className="btn btn-outline-success"
                   onClick={(e) => {
+                    e.preventDefault();
+                    if (commentUpdating.trim() === "") {
+                      alert("댓글을 입력해주세요.");
+                      return;
+                    }
                     commentUpdateSubmit(e);
                   }}
                 />
