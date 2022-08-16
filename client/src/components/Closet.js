@@ -59,7 +59,7 @@ const Closet = () => {
         </p>
         <div>
           <button
-            class="btn btn-outline-primary"
+            className="btn btn-outline-primary"
             onClick={() => {
               navigate("upload");
             }}
@@ -68,7 +68,7 @@ const Closet = () => {
             옷 추가
           </button>
           <button
-            class="btn btn-outline-success"
+            className="btn btn-outline-success"
             onClick={() => {
               handleOrderSave();
             }}
@@ -76,7 +76,7 @@ const Closet = () => {
           >
             순서 저장
           </button>
-          <button class="btn btn-outline-info">오늘의 옷</button>
+          <button className="btn btn-outline-info">오늘의 옷</button>
         </div>
       </div>
       <hr></hr>

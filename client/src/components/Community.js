@@ -80,9 +80,6 @@ const Community = () => {
             placeholder="Search Here"
             onChange={optimisedVersion}
           />
-          {/* <button className="input-group-text shadow-none px-4 btn-warning">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button> */}
         </div>
       </div>
       <div className="image-list">

@@ -21,11 +21,11 @@ export const Footer = () => {
         width: "100%",
       }}
     >
-      <footer class="py-3 my-4" style={{ fontSize: "22px" }}>
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <footer className="py-3 my-4" style={{ fontSize: "22px" }}>
+        <ul className="nav justify-content-center border-bottom pb-3 mb-3">
           Designed By Nam, You, Lee
         </ul>
-        <p class="text-center text-muted">© 2022 AI CLOSET Team</p>
+        <p className="text-center text-muted">© 2022 AI CLOSET Team</p>
       </footer>
     </Box>
   );
