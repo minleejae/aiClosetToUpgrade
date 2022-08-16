@@ -4,6 +4,7 @@ import axios from "axios";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import ReplyComment from "./ReplyComment";
+import $ from "jquery";
 
 const SingleComment = ({ comment, postId, getPost }) => {
   const [openReply, setOpenReply] = useState(false);
@@ -24,6 +25,12 @@ const SingleComment = ({ comment, postId, getPost }) => {
 
   const onReplySubmit = async (e) => {
     e.preventDefault();
+    if (commentValue.trim() === "") {
+      alert("댓글을 입력해주세요.");
+      $("#recomment").focus();
+      return;
+    }
+
     await axios.post(
       //게시물 , 원래 댓글
       port.url + `/api/market/list/${postId}/recomment/${comment.shortId}`,
@@ -155,7 +162,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
       </div>
       {openReply && (
         <div style={{ display: "flex", width: "44vw", marginLeft: "10%" }}>
-          <form style={{ display: "flex", width: "100%" }}>
+          <form style={{ display: "flex", width: "96.8%" }}>
             <input
               type="text"
               style={{

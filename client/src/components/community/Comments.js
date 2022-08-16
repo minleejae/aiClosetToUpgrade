@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useCookies } from "react-cookie";
 import port from "../../data/port.json";
 import LikeDislikes from "./LikeDislikes";
+import $ from "jquery";
 import SingleComment from "./SingleComment";
 
 //comments 구조 수정 필요
@@ -10,6 +11,7 @@ const Comments = ({ postId, curPost, getPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(curPost.comments);
+  const commentRef = useRef();
 
   useEffect(() => {
     setComments(curPost.comments);
@@ -17,6 +19,12 @@ const Comments = ({ postId, curPost, getPost }) => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (comment.trim() === "") {
+      alert("댓글을 입력해주세요.");
+      $("#comment").focus();
+      return;
+    }
+
     const result = await axios.post(
       port.url + `/api/market/list/${postId}/comment`,
       {

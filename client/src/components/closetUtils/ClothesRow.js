@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ClothesRow.css";
 import port from "./../../data/port.json";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
 
 const Container = styled.div`
   display: flex;
@@ -28,9 +29,11 @@ const DeleteButton = styled.input.attrs({
   type: "submit",
   value: "X",
 })`
-  margin: -10px;
+  margin: -14px;
+  width: 30px;
   height: 30px;
-  border-radius: 15%;
+
+  border-radius: 100%;
   background-color: white;
 `;
 
@@ -43,6 +46,7 @@ const DeleteButton = styled.input.attrs({
 const CATEGORY_TYPE = ["TOP", "BOTTOM", "SHOE", "ETC"];
 
 const ClothesRow = ({ items, setItems }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [draggingItem, setDraggingItem] = useState(null);
   const [dragging, setDragging] = useState(false);
   const dragItem = useRef();
@@ -51,16 +55,23 @@ const ClothesRow = ({ items, setItems }) => {
   const containersRef = useRef([]);
 
   useEffect(() => {
-    console.log(items);
     draggableItems.current = draggableItems.current.slice(0, items.length);
   }, [items]);
 
   //server에 image delete 요청 보내야함
-  const handleDeleteBtn = (id) => {
+  const handleDeleteBtn = (item) => {
     const newItems = items.filter((it) => {
-      return it.id !== id;
+      return it._id !== item._id;
     });
     setItems(newItems);
+
+    axios
+      .delete(port.url + `/api/closet/delete/${item.shortId}`, {
+        headers: { accessToken: cookies.userData.accessToken },
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // --------------------------drag and Drop---------------------------------------------------
@@ -71,7 +82,6 @@ const ClothesRow = ({ items, setItems }) => {
       handleDragEnd(e, item);
     });
     dragItem.current = item.item;
-    console.log("handleDragStart", item.item);
 
     setTimeout(() => {
       setDragging(true);
@@ -161,8 +171,6 @@ const ClothesRow = ({ items, setItems }) => {
     // const copyItem = JSON.parse(JSON.stringify(draggingItem));
     // let newItems = [...items];
     // newItems.splice(copyItem.itemIndex, 1);
-
-    // console.log("resut", result);
   };
 
   //로우 컴포넌트
@@ -202,7 +210,7 @@ const ClothesRow = ({ items, setItems }) => {
                   />
                   <DeleteButton
                     onClick={() => {
-                      handleDeleteBtn(item.id);
+                      handleDeleteBtn(item);
                     }}
                   />
                   <div

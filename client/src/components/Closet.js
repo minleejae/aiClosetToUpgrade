@@ -20,7 +20,23 @@ const Closet = () => {
       })
       .then((res) => {
         setItems(res.data.posts);
-        console.log(res.data.posts);
+      });
+  };
+
+  const handleOrderSave = () => {
+    axios
+      .put(
+        port.url + "/api/closet/list/update",
+        { list: items },
+        {
+          headers: { accessToken: cookies.userData.accessToken },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -43,13 +59,24 @@ const Closet = () => {
         </p>
         <div>
           <button
+            class="btn btn-outline-primary"
             onClick={() => {
               navigate("upload");
             }}
+            style={{ marginRight: "5px" }}
           >
-            upload
+            옷 추가
           </button>
-          <button>오늘의 옷</button>
+          <button
+            class="btn btn-outline-success"
+            onClick={() => {
+              handleOrderSave();
+            }}
+            style={{ marginRight: "5px" }}
+          >
+            순서 저장
+          </button>
+          <button class="btn btn-outline-info">오늘의 옷</button>
         </div>
       </div>
       <hr></hr>
