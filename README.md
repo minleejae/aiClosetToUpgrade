@@ -29,6 +29,10 @@
 
 ## 📌 백엔드 ERD
 
+
+## 📌 작동구조
+
+
 ## Used Stacks 
 
 ##### node.js, React.js, express.js, MongoDB, tenserflow.js
