@@ -45,6 +45,25 @@ const MyPage = () => {
 
   return (
     <div className="album" style={{ paddingTop: 100 + "px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1>MY PAGE</h1>
+        <p style={{ fontSize: 22 + "px" }}>Update Your profile</p>
+        <button
+          className="btn btn-outline-dark"
+          onClick={() => {
+            navigate("/market/write");
+          }}
+        >
+          글쓰기
+        </button>
+      </div>
       <div className="container">
         <form>
           <div className="mb-3">
