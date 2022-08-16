@@ -103,7 +103,6 @@ const Signup = () => {
   };
 
   const sendSignUpdata = async () => {
-    console.log(signUpData);
     return await axios.post(port.url + "/api/users/signup", signUpData);
   };
 

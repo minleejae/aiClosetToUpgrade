@@ -38,9 +38,13 @@ const Login = () => {
 
     sendSignInData()
       .then((res) => {
-        setCookie("userData", res.data, { path: "/" });
-        alert("로그인이 완료되었습니다.");
-        navigate("/");
+        if (res.data.status) {
+          setCookie("userData", res.data, { path: "/" });
+          alert("로그인이 완료되었습니다.");
+          navigate("/");
+        } else {
+          alert("아이디나 비밀번호가 틀렸습니다.");
+        }
       })
       .catch((e) => {
         setErrorMessage(e.response.data.fail);
