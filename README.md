@@ -7,7 +7,7 @@
 
 ## Used Stacks 
 
-##### node.js, React.js, express.js, MongoDB
+##### node.js, React.js, express.js, MongoDB, tenserflow.js
 
 ## How to use branch
 
