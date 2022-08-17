@@ -143,6 +143,7 @@ const WritingForm = ({
       const type = await DressClassifier(
         document.getElementById("previewImage")
       );
+      console.log(type);
       formData.append("type", JSON.stringify(type));
     } else if (postType === 2 || postType === 3) {
       formData.append("title", postForm.title);

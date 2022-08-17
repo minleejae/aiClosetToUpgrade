@@ -137,7 +137,6 @@ const Home = ({ fetchMarketImages, images }) => {
       .then((response) => response.json())
       .then((ootdList) => {
         setOotdImages(ootdList.posts);
-        console.log(ootdList);
       })
       .catch((err) => {
         console.log(err);

@@ -147,11 +147,18 @@ const OotdViewForm = ({ postType }) => {
   };
 
   const handleRemoveButton = async () => {
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
+      alert("취소 했습니다.");
+      return;
+    }
+
     try {
-      await axios.post(port.url + `/api/posts/list/${paramsId}/delete`, {
+      await axios.delete(port.url + `/api/posts/list/${paramsId}/delete`, {
         headers: { accessToken: cookies.userData.accessToken },
       });
     } catch {}
+
+    alert("게시글을 삭제했습니다.");
     navigate("/board");
     window.location.reload();
   };
@@ -236,7 +243,9 @@ const OotdViewForm = ({ postType }) => {
                     right: 0,
                   }}
                 >
-                  조회수 : {curPost && curPost.views}
+                  작성일 : {curPost && curPost.createdAt.split("T")[0]}
+                  {" / "}
+                  {"      "} 조회수 : {curPost && curPost.views}
                 </div>
               </ContentRowDivide>
             </ContentRow>

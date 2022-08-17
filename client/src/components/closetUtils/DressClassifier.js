@@ -9,7 +9,8 @@ const getDressType = (predictions) => {
       return "TOP";
     } else if (
       curClassName.includes("jean") ||
-      curClassName.includes("skirt")
+      curClassName.includes("skirt") ||
+      curClassName.includes("trunk")
     ) {
       return "BOTTOM"; //skirt 추가하기
     } else if (
@@ -24,7 +25,7 @@ const getDressType = (predictions) => {
 
 //옷의 타입 SUIT / CASUAL 리턴
 const getStyleType = (predictions) => {
-  for (let i = 0; i < predictions.length; i++) {
+  for (let i = 0; i < predictions.length * 0.4; i++) {
     const curClassName = predictions[i].className.toLowerCase();
     if (curClassName.includes("suit") || curClassName.includes("loafer")) {
       return "SUIT";
@@ -37,8 +38,6 @@ const getStyleType = (predictions) => {
 const DressClassifier = async (img) => {
   const model = await mobilenet.load();
   const predictions = await model.classify(img, 10);
-  console.log("Predictions: ");
-  console.log(predictions);
 
   const dressType = getDressType(predictions);
   const styleType = getStyleType(predictions);

@@ -61,10 +61,17 @@ const SingleComment = ({ comment, postId, getPost }) => {
   };
 
   const commentDelete = async () => {
+    if (!window.confirm("댓글을 삭제하시겠습니까?")) {
+      alert("취소 했습니다.");
+      return;
+    }
+
     await axios.delete(port.url + `/api/comment/delete/${comment.shortId}`, {
       headers: { accessToken: cookies.userData.accessToken },
     });
     getPost();
+
+    alert("댓글을 삭제했습니다.");
   };
 
   return (
@@ -95,6 +102,11 @@ const SingleComment = ({ comment, postId, getPost }) => {
                   value="댓글 수정"
                   className="btn btn-outline-success"
                   onClick={(e) => {
+                    e.preventDefault();
+                    if (commentUpdating.trim() === "") {
+                      alert("댓글을 입력해주세요.");
+                      return;
+                    }
                     commentUpdateSubmit(e);
                   }}
                 />

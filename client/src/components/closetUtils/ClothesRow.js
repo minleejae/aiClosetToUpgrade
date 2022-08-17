@@ -37,12 +37,6 @@ const DeleteButton = styled.input.attrs({
   background-color: white;
 `;
 
-// const ClothImage = styled.img`
-//   user-drag:none,
-//   webkit-user-drag:none,
-//   width: 100%,
-// `;
-
 const CATEGORY_TYPE = ["TOP", "BOTTOM", "SHOE", "ETC"];
 
 const ClothesRow = ({ items, setItems }) => {
@@ -60,6 +54,11 @@ const ClothesRow = ({ items, setItems }) => {
 
   //server에 image delete 요청 보내야함
   const handleDeleteBtn = (item) => {
+    if (!window.confirm("옷장에서 옷을 삭제하시겠습니까?")) {
+      alert("취소 했습니다.");
+      return;
+    }
+
     const newItems = items.filter((it) => {
       return it._id !== item._id;
     });
@@ -72,6 +71,8 @@ const ClothesRow = ({ items, setItems }) => {
       .catch((err) => {
         console.log(err);
       });
+
+    alert("옷을 삭제했습니다.");
   };
 
   // --------------------------drag and Drop---------------------------------------------------
@@ -213,15 +214,6 @@ const ClothesRow = ({ items, setItems }) => {
                       handleDeleteBtn(item);
                     }}
                   />
-                  <div
-                    style={{
-                      marginLeft: -50 + "px",
-                      marginTop: -20 + "px",
-                      fontSize: 30 + "px",
-                    }}
-                  >
-                    {itemIndex}
-                  </div>
                 </DraggableDiv>
               </div>
             )
