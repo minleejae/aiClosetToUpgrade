@@ -66,7 +66,8 @@ const Closet = () => {
       bottomList.length === 0 ||
       shoeList.length === 0
     ) {
-      console.log(type + "한 옷이 부족합니다.");
+      alert(type + " 스타일의 옷이 부족합니다.");
+      return false;
     }
 
     const top = topList[Math.floor(Math.random() * topList.length)];

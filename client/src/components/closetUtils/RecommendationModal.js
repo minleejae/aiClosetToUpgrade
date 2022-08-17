@@ -165,8 +165,11 @@ const RecommendationModal = ({ todayRecommend, setModalOpen }) => {
               <SuitlImg
                 src={require("./suit.png")}
                 onClick={() => {
-                  setSelected("SUIT");
                   const items = todayRecommend("SUIT");
+                  if (!items) {
+                    return;
+                  }
+                  setSelected("SUIT");
                   setRecommentItems(items);
                 }}
               />
