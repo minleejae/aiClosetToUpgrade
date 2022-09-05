@@ -38,7 +38,7 @@ function ChatRoom() {
   }, [socket, handleReceiveMessage]);
 
   return (
-    <div className="d-flex flex-column" style={{ width: 1000 }}>
+    <div className="d-flex flex-column" style={{ width: "90%" }}>
       <div className="text-box">
         <span>{cookies.userData.name}</span> 님 환영합니다!
       </div>

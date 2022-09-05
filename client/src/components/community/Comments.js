@@ -46,43 +46,41 @@ const Comments = ({ postId, curPost, getPost }) => {
 
   return (
     <>
-      <div className="album container">
-        <div className="comments">
-          {comments.map((comment, index) => {
-            return (
-              <SingleComment
-                key={comment._id}
-                comment={comment}
-                postId={postId}
-                getPost={getPost}
-              />
-            );
-          })}
-        </div>
-        <div style={{ display: "flex" }}>
-          <form style={{ display: "flex", width: "100%" }}>
-            <input
-              type="text"
-              className="form-control"
-              value={comment}
-              name="comment"
-              id="comment"
-              placeholder="댓글을 입력해주세요."
-              style={{ width: "100%" }}
-              onChange={(e) => {
-                handleChange(e);
-              }}
+      <div className="comments">
+        {comments.map((comment, index) => {
+          return (
+            <SingleComment
+              key={comment._id}
+              comment={comment}
+              postId={postId}
+              getPost={getPost}
             />
-            <input
-              type="submit"
-              value="댓글입력"
-              className="btn btn-outline-primary"
-              onClick={(e) => {
-                handleCommentSubmit(e);
-              }}
-            />
-          </form>
-        </div>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex" }}>
+        <form style={{ display: "flex", width: "100%" }}>
+          <input
+            type="text"
+            className="form-control"
+            value={comment}
+            name="comment"
+            id="comment"
+            placeholder="댓글을 입력해주세요."
+            style={{ width: "100%" }}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+          <input
+            type="submit"
+            value="댓글입력"
+            className="btn btn-outline-primary"
+            onClick={(e) => {
+              handleCommentSubmit(e);
+            }}
+          />
+        </form>
       </div>
     </>
   );

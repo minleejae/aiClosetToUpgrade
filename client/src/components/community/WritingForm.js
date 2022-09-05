@@ -281,6 +281,7 @@ const WritingForm = ({
                       >
                         <input
                           type="submit"
+                          value="제출"
                           className="btn btn-outline-primary"
                           style={{ marginRight: "2%" }}
                           disabled={uploadButtonClicked}

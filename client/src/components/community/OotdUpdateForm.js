@@ -5,8 +5,62 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import $ from "jquery";
+import styled from "styled-components";
 
-const OotdUpdateForm = ({ postType, images }) => {
+const SectionComponent = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 100px 250px 200px;
+
+  @media screen and (max-width: 1400px) {
+    padding: 100px 150px 150px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    padding: 100px 50px 100px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 100px 0 0;
+  }
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  row-gap: 5px;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: repeat(4, auto);
+`;
+
+const BoardCategory = styled.span`
+  grid-column: 2/3;
+  grid-row: 1/2;
+  align-self: end;
+  font-size: calc(20px + 1vw);
+  color: gray;
+`;
+
+const ImageContainer = styled.div`
+  grid-column: 2/3;
+  grid-row: 2/3;
+  width: 100%;
+  border: 1px solid gray;
+  color: gray;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 1%;
+`;
+
+const PostDiv = styled.div`
+  grid-column: 2/3;
+  grid-row: 3/4;
+`;
+
+const OotdUpdateForm = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
   const paramsId = useParams().id;
@@ -84,99 +138,88 @@ const OotdUpdateForm = ({ postType, images }) => {
   };
 
   return (
-    <div style={{ paddingTop: 100 + "px", justifyContent: "center" }}>
-      <h1>{postType === 2 ? "OOTD" : "MARKET"}</h1>
-      <div className="album">
-        <div className="container">
-          <div
-            className="card mb-3"
-            style={{
-              width: 100 + "%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+    <>
+      <SectionComponent>
+        <GridContainer>
+          <BoardCategory>OOTD</BoardCategory>
+          <ImageContainer>
             {curPost && (
               <img
                 src={port.url + "/" + curPost?.img.url.split("/")[1]}
-                alt="temp"
-                style={{ width: 80 + "%" }}
+                alt="post"
+                style={{ width: "100%", objectFit: "cover" }}
               />
             )}
-          </div>
-          <div className="mb-3">
-            <label htmlFor="title" className="form-label">
-              제목
-            </label>
-            <input
-              type="text"
-              value={postForm.title}
-              className="form-control"
-              name="title"
-              id="title"
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="content" className="form-label">
-              내용
-            </label>
-            <textarea
-              className="form-control"
-              value={postForm.content}
-              name="content"
-              id="content"
-              rows="3"
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            ></textarea>
-          </div>
-          {myPost ? (
-            <>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                style={{ marginRight: "2%" }}
-                onClick={() => {
-                  handleUpdateSubmitButton();
+          </ImageContainer>
+          <PostDiv>
+            <div className="mb-3">
+              <label htmlFor="title" className="form-label">
+                제목
+              </label>
+              <input
+                type="text"
+                value={postForm.title}
+                className="form-control"
+                name="title"
+                id="title"
+                onChange={(e) => {
+                  handleChange(e);
                 }}
-              >
-                수정완료
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                style={{ marginRight: "2%" }}
-                onClick={() => {
-                  handleRemoveButton();
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="content" className="form-label">
+                내용
+              </label>
+              <textarea
+                className="form-control"
+                name="content"
+                value={postForm.content}
+                id="content"
+                rows="3"
+                onChange={(e) => {
+                  handleChange(e);
                 }}
-              >
-                삭제하기
-              </button>
-            </>
-          ) : (
-            <></>
-          )}
-          <button
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={() => navigate(-1)}
-          >
-            뒤로가기
-          </button>
-        </div>
-      </div>
-    </div>
+              ></textarea>
+            </div>
+            {myPost ? (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  style={{ marginRight: "2%" }}
+                  onClick={() => {
+                    handleUpdateSubmitButton();
+                  }}
+                >
+                  수정완료
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  style={{ marginRight: "2%" }}
+                  onClick={() => {
+                    handleRemoveButton();
+                  }}
+                >
+                  삭제하기
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => navigate(-1)}
+            >
+              뒤로가기
+            </button>
+          </PostDiv>
+        </GridContainer>
+      </SectionComponent>
+    </>
   );
 };
 
-const mapStateToProps = ({ ootdImages }) => {
-  return {
-    images: ootdImages.items,
-  };
-};
-
-export default connect(mapStateToProps)(OotdUpdateForm);
+export default OotdUpdateForm;

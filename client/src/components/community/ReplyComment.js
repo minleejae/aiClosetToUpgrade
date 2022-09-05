@@ -42,38 +42,35 @@ const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
         width: 90 + "%",
         marginLeft: 10 + "%",
       }}
-      className="col-md-11 col-lg-9 col-xl-7 d-flex flex-start mb-1 card w-90 card-body p-4"
+      className="col-md-11 col-lg-9 col-xl-7 d-flex flex-start mb-1 card w-90 card-body"
     >
       {commentUpdateState ? (
-        <>
-          <form style={{ width: 100 + "%" }}>
-            <input
-              type="text"
-              className="form-control"
-              value={commentUpdating}
-              name="recomment"
-              id="recomment"
-              placeholder="댓글을 입력해주세요."
-              style={{ width: 100 + "%" }}
-              onChange={(e) => {
-                setCommentUpdating(e.target.value);
-              }}
-            />
-            <input
-              type="submit"
-              value="댓글 수정"
-              className="btn btn-outline-success"
-              onClick={(e) => {
-                e.preventDefault();
-                if (commentUpdating.trim() === "") {
-                  alert("댓글을 입력해주세요.");
-                  return;
-                }
-                commentUpdateSubmit(e);
-              }}
-            />
-          </form>
-        </>
+        <form>
+          <input
+            type="text"
+            className="form-control"
+            value={commentUpdating}
+            name="recomment"
+            id="recomment"
+            placeholder="댓글을 입력해주세요."
+            onChange={(e) => {
+              setCommentUpdating(e.target.value);
+            }}
+          />
+          <input
+            type="submit"
+            value="댓글 수정"
+            className="btn btn-outline-success"
+            onClick={(e) => {
+              e.preventDefault();
+              if (commentUpdating.trim() === "") {
+                alert("댓글을 입력해주세요.");
+                return;
+              }
+              commentUpdateSubmit(e);
+            }}
+          />
+        </form>
       ) : (
         <>
           <h5>{comment.author.name}</h5>

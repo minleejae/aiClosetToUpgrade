@@ -42,7 +42,7 @@ const Header = ({ width, columns, updateWidth }) => {
   return (
     <nav
       id="nav-container"
-      className={scrollPosition < 33 ? "navbar" : "navbar-scrolled"}
+      className={scrollPosition < 33 ? "navbar" : "navbar navbar-scrolled"}
       style={{
         position: "fixed",
         width: 100 + "%",
@@ -155,7 +155,6 @@ const Header = ({ width, columns, updateWidth }) => {
             <li
               onClick={(e) => {
                 navigate("/login");
-                window.location.reload();
               }}
             >
               Login

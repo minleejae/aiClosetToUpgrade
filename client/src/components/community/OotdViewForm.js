@@ -5,97 +5,90 @@ import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Comments from "./Comments";
-import LikeDislikes from "./LikeDislikes";
 import styled from "styled-components";
-
-const TitleContainer = styled.div`
-  width: 70vw;
-  height: 3vw;
-  margin-top: 100px;
+import PostContainer from "./PostContainer";
+const SectionComponent = styled.section`
   display: flex;
-  justify-content: center;
-`;
-
-const TItleDiv = styled.div`
-  width: 50vw;
-  height: 3vw;
-  color: gray;
-  display: flex;
-  algin-items: center;
-  font-size: 2.3vw;
-`;
-
-const ContainerDiv = styled.div`
-  width: 70vw;
-  height: 40vw;
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  padding: 100px 250px 200px;
+
+  @media screen and (max-width: 1400px) {
+    padding: 100px 150px 150px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    padding: 100px 50px 100px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 100px 0 0;
+  }
 `;
 
-const CommunityTitle = styled.div`
-  width: 50vw;
-  height: 5vw;
+const GridContainer = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  row-gap: 5px;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: repeat(4, auto);
 `;
 
-const ArrowDiv = styled.div`
-  width: 10vw;
-  height: 10vw;
+const BoardCategory = styled.span`
+  grid-column: 2/3;
+  grid-row: 1/2;
+  align-self: end;
+  font-size: calc(20px + 1vw);
+  color: gray;
+`;
+
+const ImageContainer = styled.div`
+  grid-column: 2/3;
+  grid-row: 2/3;
+  width: 100%;
+  border: 1px solid gray;
+  color: gray;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 1%;
+`;
+
+const LeftArrowContainer = styled.div`
+  grid-column: 1/2;
+  grid-row: 2/3;
   display: flex;
-  alight-items: center;
-  justify-content: center;
+  margin: auto;
+  color: silver;
   &:hover {
     color: black;
     cursor: pointer;
   }
-  font-size: 10vw;
+  font-size: calc(50px + 8vw);
+`;
+
+const RightArrowContainer = styled.div`
+  grid-column: 3/4;
+  grid-row: 2/3;
+  display: flex;
+  margin: auto;
   color: silver;
+  &:hover {
+    color: black;
+    cursor: pointer;
+  }
+  font-size: calc(50px + 8vw);
 `;
 
-const ImageDiv = styled.div`
-  width: 50vw;
-  height: 40vw;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  border: 1px solid silver;
+const PostDiv = styled.div`
+  grid-column: 2/3;
+  grid-row: 3/4;
 `;
 
-const ContentDiv = styled.div`
-  width: 50vw;
-  height: 100%;
-  overflow: hidden;
-`;
-
-const ContentContainer = styled.div`
-  width: 70vw;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
-const ContentRow = styled.div`
-  width: 50vw;
-  height: 4vw;
-  display: flex;
-  font-size: 2vw;
-  justify-content: space-between;
-`;
-
-const ContentContentRow = styled.div`
-  width: 50vw;
-  display: flex;
-  font-size: 2vw;
-  justify-content: space-between;
-  overflow: hidden;
-  word-wrap: break-word;
-`;
-
-const ContentRowDivide = styled.div`
-  width: 25vw;
-  height: 4w;
-  position: relative;
+const CommentContainer = styled.div`
+  grid-column: 2/3;
+  grid-row: 4/5;
 `;
 
 const OotdViewForm = ({ postType }) => {
@@ -128,7 +121,7 @@ const OotdViewForm = ({ postType }) => {
         headers: { accessToken: cookies.userData.accessToken },
       }
     );
-    setPrePost(prev.data.targetData.shortId);
+    setPrePost(prev.data.targetData?.shortId);
   };
 
   const getNextPost = async () => {
@@ -138,187 +131,65 @@ const OotdViewForm = ({ postType }) => {
         headers: { accessToken: cookies.userData.accessToken },
       }
     );
-    setNextPost(nxt.data.targetData.shortId);
-  };
-
-  const handleUpdateButton = () => {
-    navigate("update");
-    window.location.reload();
-  };
-
-  const handleRemoveButton = async () => {
-    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
-      alert("취소 했습니다.");
-      return;
-    }
-
-    try {
-      await axios.delete(port.url + `/api/posts/list/${paramsId}/delete`, {
-        headers: { accessToken: cookies.userData.accessToken },
-      });
-    } catch {}
-
-    alert("게시글을 삭제했습니다.");
-    navigate("/board");
-    window.location.reload();
+    setNextPost(nxt.data.targetData?.shortId);
   };
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100vw",
-        }}
-      >
-        <TitleContainer>
-          <TItleDiv>OOTD</TItleDiv>
-        </TitleContainer>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <ContainerDiv>
-            <ArrowDiv>
-              {nextPost && (
-                <i
-                  className="fa-solid fa-angle-left"
-                  style={{
-                    margin: "auto",
-                  }}
-                  onClick={() => {
-                    navigate("/board/" + nextPost);
-                    window.location.reload();
-                  }}
-                ></i>
-              )}
-            </ArrowDiv>
-            <ImageDiv>
-              {curPost && (
-                <img
-                  src={port.url + "/" + curPost?.img.url.split("/")[1]}
-                  alt="post"
-                  style={{ width: "100%" }}
-                />
-              )}
-            </ImageDiv>
-            <ArrowDiv>
-              {prePost && (
-                <i
-                  className="fa-solid fa-angle-right"
-                  style={{
-                    margin: "auto",
-                  }}
-                  onClick={() => {
-                    navigate("/board/" + prePost);
-                    window.location.reload();
-                  }}
-                ></i>
-              )}
-            </ArrowDiv>
-          </ContainerDiv>
-        </div>
-        <ContentContainer>
-          <ContentDiv>
-            <ContentRow>
-              <ContentRowDivide>
-                <div
-                  style={{
-                    fontSize: "1.5vw",
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                  }}
-                >
-                  {curPost && curPost.author.name}
-                </div>
-              </ContentRowDivide>
-              <ContentRowDivide>
-                <div
-                  style={{
-                    textAlign: "right",
-                    color: "#777",
-                    fontSize: "1.3vw",
-                    position: "absolute",
-                    bottom: 0,
-                    right: 0,
-                  }}
-                >
-                  작성일 : {curPost && curPost.createdAt.split("T")[0]}
-                  {" / "}
-                  {"      "} 조회수 : {curPost && curPost.views}
-                </div>
-              </ContentRowDivide>
-            </ContentRow>
-            <p
-              style={{
-                fontSize: "1.5vw",
-                lineHeight: "130%",
-              }}
-            >
-              {curPost && curPost.title}
-              <br></br>
-              {curPost && curPost.content}
-            </p>
-            <ContentRow>
-              <div style={{ fontSize: "1.5vw" }}>
-                <LikeDislikes keyId={paramsId} urlType={"postId"} />
-              </div>
-              <div>
-                {myPost ? (
-                  <>
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary"
-                      style={{
-                        fontSize: "1vw",
-                      }}
-                      onClick={() => {
-                        handleUpdateButton();
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger"
-                      style={{ fontSize: "1vw" }}
-                      onClick={() => {
-                        handleRemoveButton();
-                      }}
-                    >
-                      삭제
-                    </button>
-                  </>
-                ) : (
-                  <></>
-                )}
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary"
-                  style={{ fontSize: "1vw" }}
-                  onClick={() => navigate(-1)}
-                >
-                  뒤로가기
-                </button>
-              </div>
-            </ContentRow>
-            <hr></hr>
-          </ContentDiv>
-        </ContentContainer>
-        <ContentContainer>
-          <ContentDiv>
-            <div>
-              {curPost && (
-                <Comments
-                  postId={paramsId}
-                  curPost={curPost}
-                  getPost={getPost}
-                ></Comments>
-              )}
-            </div>
-          </ContentDiv>
-        </ContentContainer>
-      </div>
+      <SectionComponent>
+        <GridContainer>
+          <BoardCategory>OOTD</BoardCategory>
+          <ImageContainer>
+            {curPost && (
+              <img
+                src={port.url + "/" + curPost?.img.url.split("/")[1]}
+                alt="post"
+                style={{ width: "100%", objectFit: "cover" }}
+              />
+            )}
+          </ImageContainer>
+          <LeftArrowContainer>
+            {nextPost && (
+              <i
+                className="fa-solid fa-angle-left"
+                onClick={() => {
+                  navigate("/board/" + nextPost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
+          </LeftArrowContainer>
+          <RightArrowContainer>
+            {prePost && (
+              <i
+                className="fa-solid fa-angle-right"
+                onClick={() => {
+                  navigate("/board/" + prePost);
+                  window.location.reload();
+                }}
+              ></i>
+            )}
+          </RightArrowContainer>
+          <PostDiv>
+            {curPost && (
+              <PostContainer
+                curPost={curPost}
+                myPost={myPost}
+                paramsId={paramsId}
+              />
+            )}
+          </PostDiv>
+          <CommentContainer>
+            {curPost && (
+              <Comments
+                postId={paramsId}
+                curPost={curPost}
+                getPost={getPost}
+              ></Comments>
+            )}
+          </CommentContainer>
+        </GridContainer>
+      </SectionComponent>
     </>
   );
 };

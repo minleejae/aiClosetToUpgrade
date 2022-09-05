@@ -4,7 +4,7 @@ import port from "../data/port.json";
 import dayjs from "dayjs";
 
 export const socket = socketIo(String(port.url), {
-  withCredentials: true,
+  // withCredentials: true,
 });
 export const SocketContext = createContext(socket);
 
