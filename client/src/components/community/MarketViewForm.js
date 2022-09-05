@@ -7,6 +7,7 @@ import axios from "axios";
 import Comments from "./Comments";
 import styled from "styled-components";
 import PostContainer from "./PostContainer";
+import POST_TYPE from "../../constants/postType";
 
 const SectionComponent = styled.section`
   display: flex;
@@ -92,8 +93,6 @@ const CommentContainer = styled.div`
   grid-row: 4/5;
 `;
 
-// ----------------refactor
-
 const MarketViewForm = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
@@ -119,7 +118,8 @@ const MarketViewForm = () => {
 
   const getPrePost = async () => {
     const prev = await axios.get(
-      port.url + `/api/movepost/prevpost?shortId=${paramsId}&postType=3`,
+      port.url +
+        `/api/movepost/prevpost?shortId=${paramsId}&postType=${POST_TYPE.MARKET}`,
       {
         headers: { accessToken: cookies.userData.accessToken },
       }
@@ -129,7 +129,8 @@ const MarketViewForm = () => {
 
   const getNextPost = async () => {
     const nxt = await axios.get(
-      port.url + `/api/movepost/nextpost?shortId=${paramsId}&postType=3`,
+      port.url +
+        `/api/movepost/nextpost?shortId=${paramsId}&postType=${POST_TYPE.MARKET}`,
       {
         headers: { accessToken: cookies.userData.accessToken },
       }
