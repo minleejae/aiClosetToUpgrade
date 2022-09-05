@@ -24,4 +24,4 @@ yarn-error.log*
 
 
 # port
-/src/data/port.json
+/src/data

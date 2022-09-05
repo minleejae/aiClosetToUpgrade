@@ -16,6 +16,7 @@ import MarketViewForm from "./components/community/MarketViewForm";
 import MarketUpdateForm from "./components/community/MarketUpdateForm";
 import OotdUpdateForm from "./components/community/OotdUpdateForm";
 import Chat from "./components/chat/Chat";
+import POST_TYPE from "./constants/postType";
 
 function App() {
   //login 여부에 따라 Main 렌더링
@@ -28,22 +29,43 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="closet">
           <Route path="" element={<Closet />} />
-          <Route path="upload" element={<WritingForm postType={1} />} />
+          <Route
+            path="upload"
+            element={<WritingForm postType={POST_TYPE.CLOTH} />}
+          />
         </Route>
         <Route path="board">
           <Route path="" element={<Community />} />
-          <Route path="write" element={<WritingForm postType={2} />} />
+          <Route
+            path="write"
+            element={<WritingForm postType={POST_TYPE.OOTD} />}
+          />
           <Route path=":id">
-            <Route path="" element={<OotdViewForm postType={2} />} />
-            <Route path="update" element={<OotdUpdateForm postType={2} />} />
+            <Route
+              path=""
+              element={<OotdViewForm postType={POST_TYPE.OOTD} />}
+            />
+            <Route
+              path="update"
+              element={<OotdUpdateForm postType={POST_TYPE.OOTD} />}
+            />
           </Route>
         </Route>
         <Route path="market">
           <Route path="" element={<Market />} />
-          <Route path="write" element={<WritingForm postType={3} />} />
+          <Route
+            path="write"
+            element={<WritingForm postType={POST_TYPE.MARKET} />}
+          />
           <Route path=":id">
-            <Route path="" element={<MarketViewForm postType={3} />} />
-            <Route path="update" element={<MarketUpdateForm postType={3} />} />
+            <Route
+              path=""
+              element={<MarketViewForm postType={POST_TYPE.MARKET} />}
+            />
+            <Route
+              path="update"
+              element={<MarketUpdateForm postType={POST_TYPE.MARKET} />}
+            />
           </Route>
         </Route>
         <Route path="mypage" element={<MyPage />}></Route>
