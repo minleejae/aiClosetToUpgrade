@@ -1,9 +1,13 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import port from "../../data/port.json";
 import $ from "jquery";
 import SingleComment from "./SingleComment";
 
 //comments 구조 수정 필요
 const Comments = ({ postId, curPost, getPost }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(curPost.comments);
 
@@ -18,6 +22,20 @@ const Comments = ({ postId, curPost, getPost }) => {
       $("#comment").focus();
       return;
     }
+
+    await axios.post(
+      port.url + `/api/market/list/${postId}/comment`,
+      {
+        comment,
+      },
+      {
+        headers: { accessToken: cookies.userData.accessToken },
+      }
+    );
+
+    await getPost().then((res) => {
+      setComment("");
+    });
   };
 
   // 새로운 댓글을 입력할 때 변화 감지 함수
