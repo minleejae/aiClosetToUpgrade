@@ -1,17 +1,11 @@
-import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
-import { useCookies } from "react-cookie";
-import port from "../../data/port.json";
-import LikeDislikes from "./LikeDislikes";
+import React, { useEffect, useState } from "react";
 import $ from "jquery";
 import SingleComment from "./SingleComment";
 
 //comments 구조 수정 필요
 const Comments = ({ postId, curPost, getPost }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(curPost.comments);
-  const commentRef = useRef();
 
   useEffect(() => {
     setComments(curPost.comments);
@@ -24,19 +18,6 @@ const Comments = ({ postId, curPost, getPost }) => {
       $("#comment").focus();
       return;
     }
-
-    const result = await axios.post(
-      port.url + `/api/market/list/${postId}/comment`,
-      {
-        comment,
-      },
-      {
-        headers: { accessToken: cookies.userData.accessToken },
-      }
-    );
-    await getPost().then((res) => {
-      setComment("");
-    });
   };
 
   // 새로운 댓글을 입력할 때 변화 감지 함수
@@ -47,7 +28,7 @@ const Comments = ({ postId, curPost, getPost }) => {
   return (
     <>
       <div className="comments">
-        {comments.map((comment, index) => {
+        {comments.map((comment) => {
           return (
             <SingleComment
               key={comment._id}
