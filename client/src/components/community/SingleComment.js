@@ -49,7 +49,7 @@ const SingleComment = ({ comment, postId, getPost }) => {
   const commentUpdateSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await axios.put(
+    await axios.put(
       port.url + `/api/comment/update/${comment.shortId}`,
       {
         content: commentUpdating,

@@ -4,7 +4,7 @@ import LikeDislikes from "./LikeDislikes";
 import axios from "axios";
 import port from "../../data/port.json";
 
-const ReplyComment = ({ comment, postId, parentCommentId, getPost }) => {
+const ReplyComment = ({ comment, getPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [commentUpdateState, setCommentUpdateState] = useState(false);
   const [commentUpdating, setCommentUpdating] = useState(comment.comment);

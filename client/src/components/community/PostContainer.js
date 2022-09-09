@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
