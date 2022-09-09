@@ -18,7 +18,6 @@ const OotdImages = ({
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
-  const [count, setCount] = useState(0);
   const observer = useRef();
 
   const lastImageElementRef = useCallback(
