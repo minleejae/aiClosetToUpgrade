@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 //회원 정보 업데이트 하는 페이지
 const MyPage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const validPasswordCheck = () => {

@@ -6,7 +6,7 @@ import "./componentsCss/Header.css";
 import { connect } from "react-redux";
 import { updateWidth } from "../redux";
 
-const Header = ({ width, columns, updateWidth }) => {
+const Header = ({ updateWidth }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
 

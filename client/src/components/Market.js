@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./componentsCss/Community.css";
 import MarketImages from "./community/MarketImages";
+import POST_TYPE from "../constants/postType";
 
 const Market = () => {
   const [searchType, setSearchType] = useState("제목");
@@ -84,7 +85,7 @@ const Market = () => {
       </div>
       <div className="image-list">
         <MarketImages
-          postType={3}
+          postType={POST_TYPE.MARKET}
           searchType={searchType}
           searchValue={searchValue}
         ></MarketImages>
