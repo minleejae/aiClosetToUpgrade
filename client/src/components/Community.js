@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import POST_TYPE from "../constants/postType";
 import OotdImages from "./community/OotdImages";
 import "./componentsCss/Community.css";
 
@@ -84,7 +85,7 @@ const Community = () => {
       </div>
       <div className="image-list">
         <OotdImages
-          postType={2}
+          postType={POST_TYPE.OOTD}
           searchType={searchType}
           searchValue={searchValue}
         />
