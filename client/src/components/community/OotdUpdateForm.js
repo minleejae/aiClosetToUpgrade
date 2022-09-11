@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { connect } from "react-redux";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 import axios from "axios";
