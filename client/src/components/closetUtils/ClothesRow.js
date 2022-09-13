@@ -4,6 +4,7 @@ import "./ClothesRow.css";
 import port from "./../../data/port.json";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
+import CLOTH_TYPE from "../../constants/clothType";
 
 const Container = styled.div`
   display: flex;
@@ -225,10 +226,26 @@ const ClothesRow = ({ items, setItems }) => {
 
   return (
     <>
-      <RowComponent key={"TOP"} itemCategroy={"TOP"} categoryIndex={0} />
-      <RowComponent key={"BOTTOM"} itemCategroy={"BOTTOM"} categoryIndex={1} />
-      <RowComponent key={"SHOE"} itemCategroy={"SHOE"} categoryIndex={2} />
-      <RowComponent key={"ETC"} itemCategroy={"ETC"} categoryIndex={3} />
+      <RowComponent
+        key={"TOP"}
+        itemCategroy={"TOP"}
+        categoryIndex={CLOTH_TYPE.TOP}
+      />
+      <RowComponent
+        key={"BOTTOM"}
+        itemCategroy={"BOTTOM"}
+        categoryIndex={CLOTH_TYPE.BOTTOM}
+      />
+      <RowComponent
+        key={"SHOE"}
+        itemCategroy={"SHOE"}
+        categoryIndex={CLOTH_TYPE.SHOE}
+      />
+      <RowComponent
+        key={"ETC"}
+        itemCategroy={"ETC"}
+        categoryIndex={CLOTH_TYPE.ETC}
+      />
       <div style={{ height: "4vw" }}></div>
     </>
   );
