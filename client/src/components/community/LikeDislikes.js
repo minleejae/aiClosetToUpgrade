@@ -7,6 +7,7 @@ import axios from "axios";
 import port from "../../data/port.json";
 import { useCookies } from "react-cookie";
 
+//좋아요 싫어요 개수를 나타내주는 컴포넌트
 const LikeDislikes = ({ keyId, urlType }) => {
   const [Likes, setLikes] = useState(0);
   const [Dislikes, setDislikes] = useState(0);
