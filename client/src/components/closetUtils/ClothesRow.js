@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useCookies } from "react-cookie";
 import CLOTH_TYPE from "../../constants/clothType";
 
+//Clothes Row Container
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -16,6 +17,7 @@ const Container = styled.div`
   margin-top: 1rem;
 `;
 
+//드래그 가능한 이미지를 포함하는 div
 const DraggableDiv = styled.div`
   display: flex;
   padding: 1rem;
@@ -26,6 +28,7 @@ const DraggableDiv = styled.div`
   cursor: grab;
 `;
 
+//각 옷마다 옷을 삭제할 수 있는 버튼을 꾸미는 컴포넌트
 const DeleteButton = styled.input.attrs({
   type: "submit",
   value: "X",
