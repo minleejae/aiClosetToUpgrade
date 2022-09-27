@@ -43,6 +43,7 @@ const DeleteButton = styled.input.attrs({
 
 const CATEGORY_TYPE = ["TOP", "BOTTOM", "SHOE", "ETC"];
 
+//종류에 따른 옷 리스트를 보여주는 컴포넌트
 const ClothesRow = ({ items, setItems }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [draggingItem, setDraggingItem] = useState(null);

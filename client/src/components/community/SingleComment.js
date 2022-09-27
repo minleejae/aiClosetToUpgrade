@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import ReplyComment from "./ReplyComment";
 import $ from "jquery";
 
+// 댓글 하나에 해당하는 컴포넌트
 const SingleComment = ({ comment, postId, getPost }) => {
   const [openReply, setOpenReply] = useState(false);
   const [commentValue, setCommentValue] = useState("");

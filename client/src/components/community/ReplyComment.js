@@ -4,6 +4,7 @@ import LikeDislikes from "./LikeDislikes";
 import axios from "axios";
 import port from "../../data/port.json";
 
+//답글 컴포넌트
 const ReplyComment = ({ comment, getPost }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [commentUpdateState, setCommentUpdateState] = useState(false);
